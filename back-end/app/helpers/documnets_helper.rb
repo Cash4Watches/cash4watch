@@ -1,0 +1,2 @@
+module DocumnetsHelper
+end

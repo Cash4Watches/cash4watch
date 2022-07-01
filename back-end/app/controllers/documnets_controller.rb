@@ -1,0 +1,2 @@
+class DocumnetsController < ApplicationController
+end
