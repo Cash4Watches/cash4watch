@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  resources :documnets
-  resources :orders
-  resources :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # User routes
+   post '/login', to: 'application#create' # login to account
+   get '/profile', to: 'users#profile' # get user profile using token
+   post '/signup', to: 'users#create' # update User Data
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+   # Order routes
+    post '/create-new-order', to: 'orders#create' # create new order
+    post '/check-order', to: 'orders#show' # show order status by ID
 end
