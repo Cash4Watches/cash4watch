@@ -7,4 +7,7 @@ Rails.application.routes.draw do
    # Order routes
     post '/create-new-order', to: 'orders#create' # create new order
     post '/check-order', to: 'orders#show' # show order status by ID
+
+    # Label routes 
+    post '/label', to: 'orders#create_label'
 end
