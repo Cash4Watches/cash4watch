@@ -7,7 +7,10 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import Acordain from "../components/Acordain.jsx";
 import { useState } from "react";
 
 function Landing() {
@@ -54,8 +57,7 @@ function Landing() {
                   Brand Name
                 </InputLabel>
                 <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
+                  value=""
                   label="Brand Name"
                   onChange={() => {
                     console.log("change");
@@ -87,7 +89,38 @@ function Landing() {
             </form>
           </div>
         </div>
+        <div className="Landing__banner-container">
+          <div className="Landing__banner-container__item">
+            <LibraryAddCheckIcon fontSize="inherit" />
+            <p>
+              Complete Form To Get
+              <span style={{ color: "purple", fontWeight: "bolder" }}>
+                {" "}
+                Fed
+              </span>
+              <span style={{ color: "darkorange", fontWeight: "bolder" }}>
+                Ex{" "}
+              </span>
+              label
+            </p>
+          </div>
+          <div className="Landing__banner-container__arrow">
+            <ArrowForwardIcon fontSize="inherit" />
+          </div>
+          <div className="Landing__banner-container__item">
+            <LocalShippingIcon fontSize="inherit" />
+            <p>Ship Your Watches For Free</p>
+          </div>
+          <div className="Landing__banner-container__arrow">
+            <ArrowForwardIcon fontSize="inherit" />
+          </div>
+          <div className="Landing__banner-container__item">
+            <AttachMoneyIcon fontSize="inherit" />
+            <p>Get Paid</p>
+          </div>
+        </div>
       </div>
+      <Acordain />
     </>
   );
 }

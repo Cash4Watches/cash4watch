@@ -1,0 +1,33 @@
+.Acordain {
+  display: flex;
+  width: 100vw;
+  height: 60vh;
+
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 5vh;
+  margin-top: 5vh;
+  &__container {
+    border: 1px solid rgb(226, 223, 223);
+
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    transition: all ease 0.25;
+  }
+  &__question {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    background-color: rgb(242, 239, 239);
+  }
+  &__answer {
+    height: 0px;
+    overflow: hidden;
+    color: green;
+    transition: all ease 0.3s;
+  }
+}
+.show {
+  height: 5rem;
+}
