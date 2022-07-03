@@ -19,6 +19,16 @@ user = User.create!({
     state: "NY",zip: "11435",
     phone: "929-422-6224"
 });
-order = Order.create!({brand_name: "Rolex", model_number: 01010020202, reference_number: 01020202, condition: "New", previous_service: "I got it services at the supermarket", previous_polish: "I got it polished at the barber shop", papers: true, included_items: "All original manuals and shit", extra_comment: "Hurry up plz", user_id: user.id});
+order = Order.create!({
+    brand_name: "Rolex", 
+    model_number: 01010020202, 
+    reference_number: 01020202, 
+    condition: "New", 
+    previous_service: "I got it services at the supermarket",
+     previous_polish: "I got it polished at the barber shop", 
+     papers: true, 
+     included_items: "All original manuals and shit", 
+     extra_comment: "Hurry up plz", 
+     user_id: user.id});
 puts user
 puts order

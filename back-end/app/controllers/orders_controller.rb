@@ -1,16 +1,21 @@
 class OrdersController < ApplicationController
     require 'easypost'
+    require 'open-uri'
+    
     EasyPost.api_key = 'EZTK190799a6ed8a41d483565831b0fe1cfdqFYaBUuIfKNtHPGne8p8SQ'
     def create_label
-        fromAddress = EasyPost::Address.create(
-            name: params[:name],
-            company: params[:company],
-            street1: params[:street1],
-            street2: params[:street2],
-            city: params[:city],
-            state: params[:state],
-            zip: params[:zip],
-            phone: params[:phone]
+        order = Order.find(params[:order_id]);
+        if order
+          user = order.user
+          fromAddress = EasyPost::Address.create(
+            name: user.full_name,
+            company: user.company,
+            street1: user.street1,
+            street2: user.street2,
+            city: user.city,
+            state: user.state,
+            zip: user.zip,
+            phone: user.phone
           )
           toAddress = EasyPost::Address.create(
             company: 'Das Incentives LLC',
@@ -37,8 +42,21 @@ class OrdersController < ApplicationController
                 FEDEX_GROUND'])
           )
           shipment.label(file_format: "PDF")
-          puts shipment.postage_label.label_pdf_url
-## Print Tracking Code
-puts shipment.tracking_code
+          url = shipment.postage_label.label_pdf_url
+          tracking_code = shipment.tracking_code
+          filename = File.basename(URI.parse(url).path)
+          file = URI.open(url)
+          document = Document.create!({name: filename,order_id: order.id});
+          if document
+            document.file.attach(io: file, filename: filename, content_type: 'application/pdf')
+            render json: document
+          else
+            render json: {message: "Failed to create PDF document"}
+          end
+        else
+          render json: {message: "Error Order Number doesn't exist"}
+        end
+        
+         
     end
 end

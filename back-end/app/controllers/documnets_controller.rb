@@ -1,2 +1,0 @@
-class DocumnetsController < ApplicationController
-end
