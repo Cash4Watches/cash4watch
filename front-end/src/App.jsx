@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Landing from "./screens/Landing.jsx";
 import Navbar from "./components/Nav.jsx";
+import Footer from "./components/Footer.jsx";
 function App() {
   return (
     <>
@@ -18,6 +19,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </>
   );
 }

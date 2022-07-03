@@ -1,8 +1,6 @@
 .Acordain {
   display: flex;
   width: 100vw;
-  height: 60vh;
-
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -10,24 +8,40 @@
   margin-top: 5vh;
   &__container {
     border: 1px solid rgb(226, 223, 223);
-
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
+      0 2px 6px 2px rgb(60 64 67 / 15%);
     display: flex;
     flex-direction: column;
     width: 80vw;
     transition: all ease 0.25;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    background-color: rgb(242, 239, 239);
   }
   &__question {
     padding: 0.5rem;
-    font-size: 0.8rem;
-    background-color: rgb(242, 239, 239);
+    font-size: 0.65rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
   }
   &__answer {
+    display: flex;
+
     height: 0px;
-    overflow: hidden;
-    color: green;
+    overflow: scroll;
+    padding-left: 1rem;
+    font-size: 0.52rem;
+    color: rgb(10, 89, 10);
     transition: all ease 0.3s;
+    line-height: 1.6rem;
+    text-indent: 1rem;
+    padding-top: 0px;
+    background-color: white;
   }
 }
 .show {
-  height: 5rem;
+  padding-top: 10px;
+
+  height: 8rem;
 }

@@ -14,7 +14,23 @@ import Acordain from "../components/Acordain.jsx";
 import { useState } from "react";
 
 function Landing() {
-  // const [form, setForm] = useState({});
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    number: "",
+    brand: "",
+  });
+  let updateFormData = (e) => {
+    let { name, value } = e.target;
+    setForm({
+      ...form,
+      [name]: value,
+    });
+  };
+  let handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(form);
+  };
   return (
     <>
       <div className="Landing">
@@ -26,27 +42,24 @@ function Landing() {
             <p>Get your label by completing form</p>
           </div>
           <div className="Landing__form-items">
-            <form onSubmit={(e) => e.preventDefault()}>
+            <form onSubmit={handleSubmit}>
               <TextField
                 label="Full Name"
+                name="name"
                 className="Landing__form-items__text-field"
-                onChange={() => {
-                  console.log("change");
-                }}
+                onChange={updateFormData}
               />
               <TextField
                 label="Email"
+                name="email"
                 className="Landing__form-items__text-field"
-                onChange={() => {
-                  console.log("change");
-                }}
+                onChange={updateFormData}
               />
               <TextField
                 label="Phone Number"
+                name="number"
                 className="Landing__form-items__text-field"
-                onChange={() => {
-                  console.log("change");
-                }}
+                onChange={updateFormData}
               />
 
               <FormControl
@@ -57,11 +70,10 @@ function Landing() {
                   Brand Name
                 </InputLabel>
                 <Select
-                  value=""
+                  value={form.brand}
                   label="Brand Name"
-                  onChange={() => {
-                    console.log("change");
-                  }}
+                  onChange={updateFormData}
+                  name="brand"
                 >
                   <MenuItem value={"Rolex"}>Rolex</MenuItem>
                   <MenuItem value={"Patek Philippe"}>Patek Philippe</MenuItem>
@@ -119,8 +131,19 @@ function Landing() {
             <p>Get Paid</p>
           </div>
         </div>
+        <div className="Landing__about-container">
+          <h1>About</h1>
+          <p>
+            We are a high end watch consignment company with elite methods to
+            maximize your watches' value. Our long and trusted reputation in the
+            industry of over 10 years speaks for itself. Our tenure in the
+            industry has allowed us to build relationships stretching to the
+            other side of the globe which help us get you the most money
+            possible for yoru watch.
+          </p>
+        </div>
+        <Acordain />
       </div>
-      <Acordain />
     </>
   );
 }
