@@ -10,12 +10,14 @@ class ApplicationController < ActionController::Base
     end
     def decode(token)
         JWT.decode(token, secret_key, true, { algorithm: 'HS256'})[0]
+    rescue
+        puts 'FAILED'
     end
     def create
         user = User.find_by(email: params[:email])
         if user && user.authenticate(params[:password])
             # session[:user_id] = user.id
-            payload = {"exp": Time.now.to_i + 1.minute,'user_id': user.id}
+            payload = {"exp": Time.now.to_i + 2.week,'user_id': user.id}
             p payload
             token = encode(payload)
             p token 
