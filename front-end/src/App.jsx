@@ -1,8 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import Landing from "./screens/Landing.jsx";
+import Navbar from "./components/Nav.jsx";
+import Footer from "./components/Footer.jsx";
 function App() {
   return (
     <>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route
@@ -16,6 +19,7 @@ function App() {
           }
         />
       </Routes>
+      <Footer />
     </>
   );
 }
