@@ -10,4 +10,8 @@ Rails.application.routes.draw do
 
     # Label routes 
     post '/label', to: 'orders#create_label'
+
+    #Document routes
+    post '/upload', to: 'documents#create' # Upload documents to order
+    post '/delete-document', to: 'documents#destroy' # destroy documents by ID
 end
