@@ -17,7 +17,7 @@
     margin-top: 20vh;
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
       0 2px 6px 2px rgb(60 64 67 / 15%);
-    border-radius: 30px;
+    border-radius: 30px 0px 30px 0px;
   }
   &__form-submit {
     margin-top: 3rem;
@@ -51,7 +51,7 @@
     padding-bottom: 0px;
     padding-top: 0px;
     width: 70vw;
-    max-width: 500px;
+    max-width: 350px;
     border-radius: 30px 0px 0px 0px;
     display: flex;
     justify-content: center;
@@ -73,7 +73,7 @@
     padding: 1rem;
     align-items: center;
     width: 70vw;
-    max-width: 500px;
+    max-width: 350px;
     border-radius: 0px 0px 30px 0px;
     border: 1px solid black;
 
@@ -99,6 +99,7 @@
       align-items: center;
       flex-direction: column;
       font-size: 6rem;
+      text-align: center;
     }
     &__arrow {
       display: flex;
@@ -112,27 +113,60 @@
     }
   }
   &__about-container {
-    // border: 1px solid red;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    width: 100vw;
     & h1 {
       letter-spacing: 2px;
       background: linear-gradient(
         180deg,
-        transparent 70%,
-        rgb(200, 57, 57) 70%,
-        rgb(200, 57, 57) 95%,
+        transparent 80%,
+        rgb(152, 9, 9) 80%,
+        rgb(152, 9, 9) 95%,
         transparent 95%
       );
     }
     & p {
-      max-width: 80vw;
-      font-size: 1.2rem;
+      width: 75vw;
+      max-width: 500px;
+      font-size: 1rem;
       line-height: 3rem;
       letter-spacing: 1px;
       text-align: left;
+      text-indent: 4rem;
+    }
+  }
+}
+
+@media (min-width: 800px) {
+  .Landing {
+    align-items: flex-start;
+
+    &__form-container {
+      align-self: flex-end;
+      margin-right: 5vw;
+    }
+    &__banner-container {
+      flex-direction: row;
+      overflow: hidden;
+      &__arrow {
+        transform: rotate(0deg);
+      }
+      &__item {
+        max-width: 15rem;
+        min-width: 15rem;
+      }
+    }
+    &__rolex-desktop {
+      position: absolute;
+      z-index: -1;
+      margin-top: 1rem;
+      & img {
+        width: 100%;
+        max-width: 1200px;
+      }
     }
   }
 }

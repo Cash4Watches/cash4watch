@@ -1,5 +1,5 @@
 .Navbar {
-  background-color: #1010106e;
+  background-color: #242951e9;
   display: flex;
   position: relative;
   min-height: 4rem;
@@ -9,7 +9,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
     padding-top: 5px;
     & img {
       width: 100%;
@@ -19,35 +18,35 @@
     }
   }
   &__login {
-    background-color: #666666;
+    background-color: #2429519e;
     color: white;
     border: 1px solid #2b2e4a;
     position: absolute;
     border-radius: 10px;
-    font-size: 0.4rem;
+    font-size: 0.5rem;
     margin-left: 70vw;
     padding-left: 13px;
     padding-right: 13px;
-    letter-spacing: 1.2px;
-    transition: all ease 0.25s;
+    letter-spacing: 2px;
+    transition: color ease 0.25s;
     &:hover {
+      color: #242951;
+      background-color: white;
       cursor: pointer;
-      color: #520606;
-      border-color: #520606;
-      background-color: #fcddc6;
     }
   }
   &__acc {
     position: absolute;
     margin-left: 70vw;
-    font-size: 2rem;
-    color: #464343;
+    font-size: 2.4rem;
+    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: color ease 0.25s;
     &:hover {
       cursor: pointer;
-      color: #790220;
+      color: rgb(189, 196, 255);
     }
   }
 }
