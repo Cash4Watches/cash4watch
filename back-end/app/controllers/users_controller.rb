@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  
     def create
         user = User.create!(user_params)
         if user
@@ -20,8 +21,10 @@ class UsersController < ApplicationController
     end
 
   def profile
-    token = request.headers['Authentication'].split(' ')[1]
-    payload = decode(token)
+    token = request.headers['Authentication'].split(' ')[1] 
+    p token
+    payload = decode(token) 
+    p payload
     user = User.find(payload['user_id'])
     if user
       render json: user

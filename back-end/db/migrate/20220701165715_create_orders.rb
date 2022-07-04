@@ -11,7 +11,7 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.boolean :papers
       t.string :included_items
       t.string :extra_comment
-      t.references  :user, type: :uuid
+      t.references  :user
       t.timestamps
     end
   end

@@ -61,13 +61,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_01_233442) do
     t.boolean "papers"
     t.string "included_items"
     t.string "extra_comment"
-    t.uuid "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "full_name"
     t.string "password_digest"
     t.string "email"

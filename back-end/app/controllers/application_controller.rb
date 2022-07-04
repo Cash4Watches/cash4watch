@@ -1,9 +1,9 @@
 class ApplicationController < ActionController::Base
     skip_before_action :verify_authenticity_token
-    
+    require 'jwt'
     # secret_key = Rails.application.credentials.dig(:jwt_key)
     def secret_key
-        Rails.application.credentials.dig(:jwt_key)
+        'my$ecretK3y'
     end
     def encode(payload)
         JWT.encode(payload, secret_key, 'HS256')
@@ -15,8 +15,10 @@ class ApplicationController < ActionController::Base
         user = User.find_by(email: params[:email])
         if user && user.authenticate(params[:password])
             # session[:user_id] = user.id
-            payload = {'user_id': user.id}
+            payload = {"exp": Time.now.to_i + 1.minute,'user_id': user.id}
+            p payload
             token = encode(payload)
+            p token 
             # result = serialize(user, UserSerializer).
             # merge(serialize(token, UserSerializer)) 
             # include: { posts: {include: { comments: {only: :body } },only: :title } }
