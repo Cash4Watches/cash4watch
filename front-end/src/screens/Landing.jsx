@@ -1,6 +1,7 @@
 import "../styles/Landing.scss";
-// import {useState} from "react"
 import moblieRolex from "../media/rolexMoblie.svg";
+import desktopRolex from "../media/rolexDesktop.svg";
+
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -11,9 +12,10 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import Acordain from "../components/Acordain.jsx";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Landing() {
+  const [background, setBackground] = useState("");
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -31,12 +33,33 @@ function Landing() {
     e.preventDefault();
     console.log(form);
   };
-  return (
-    <>
-      <div className="Landing">
+  let handleResize = () => {
+    if (800 <= window.innerWidth) {
+      setBackground(
+        <div className="Landing__rolex-desktop">
+          <img src={desktopRolex} alt="rolex" />
+        </div>
+      );
+    } else {
+      setBackground(
         <div className="Landing__rolex-moblie">
           <img src={moblieRolex} alt="rolex" />
         </div>
+      );
+    }
+  };
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  return (
+    <>
+      <div className="Landing">
+        {background}
+
         <div className="Landing__form-container">
           <div className="Landing__form__title">
             <p>Get your label by completing form</p>
@@ -101,6 +124,7 @@ function Landing() {
             </form>
           </div>
         </div>
+
         <div className="Landing__banner-container">
           <div className="Landing__banner-container__item">
             <LibraryAddCheckIcon fontSize="inherit" />
@@ -139,7 +163,7 @@ function Landing() {
             industry of over 10 years speaks for itself. Our tenure in the
             industry has allowed us to build relationships stretching to the
             other side of the globe which help us get you the most money
-            possible for yoru watch.
+            possible for your watch.
           </p>
         </div>
         <Acordain />

@@ -1,9 +1,25 @@
 import "../styles/Acordain.scss";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { useState } from "react";
 function Acordain() {
+  const [iconController, setIconController] = useState({
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+    6: true,
+    7: true,
+  });
   let handleClick = (e) => {
     let questionNumber = e.target.dataset.questionnumber;
     let answer = document.querySelector(`.Acordain__answer${questionNumber}`);
     answer.classList.toggle("show");
+    setIconController({
+      ...iconController,
+      [questionNumber]: !iconController[questionNumber],
+    });
   };
   return (
     <div className="Acordain">
@@ -15,6 +31,7 @@ function Acordain() {
           className="Acordain__question"
         >
           <h1 data-questionnumber={1}>What are our rates ?</h1>
+          {iconController[1] ? <AddIcon /> : <RemoveIcon />}
         </div>
         <div className="Acordain__answer Acordain__answer1">
           <h1>
@@ -29,6 +46,7 @@ function Acordain() {
           className="Acordain__question"
         >
           <h1 data-questionnumber={2}>What is the best way to reach us ?</h1>
+          {iconController[2] ? <AddIcon /> : <RemoveIcon />}
         </div>
         <div className="Acordain__answer Acordain__answer2">
           <h1>
@@ -44,6 +62,7 @@ function Acordain() {
           className="Acordain__question"
         >
           <h1 data-questionnumber={3}>What Services do we offer ?</h1>
+          {iconController[3] ? <AddIcon /> : <RemoveIcon />}
         </div>
         <div className="Acordain__answer Acordain__answer3">
           <h1>We offer repairs, polishes, and consignment sales services.</h1>
@@ -54,6 +73,7 @@ function Acordain() {
           className="Acordain__question"
         >
           <h1 data-questionnumber={4}>How does it work ?</h1>
+          {iconController[4] ? <AddIcon /> : <RemoveIcon />}
         </div>
         <div className="Acordain__answer Acordain__answer4">
           <h1>
@@ -70,6 +90,7 @@ function Acordain() {
           className="Acordain__question"
         >
           <h1 data-questionnumber={5}>How long is the consignment period ?</h1>
+          {iconController[5] ? <AddIcon /> : <RemoveIcon />}
         </div>
         <div className="Acordain__answer Acordain__answer5">
           <h1>
@@ -83,6 +104,7 @@ function Acordain() {
           className="Acordain__question"
         >
           <h1 data-questionnumber={6}> Why choose us ?</h1>
+          {iconController[6] ? <AddIcon /> : <RemoveIcon />}
         </div>
         <div className="Acordain__answer Acordain__answer6">
           <h1>
@@ -97,6 +119,7 @@ function Acordain() {
           style={{ border: "none" }}
         >
           <h1 data-questionnumber={7}>Are we insured ?</h1>
+          {iconController[7] ? <AddIcon /> : <RemoveIcon />}
         </div>
         <div className="Acordain__answer Acordain__answer7">
           <h1>
