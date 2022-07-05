@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :steps
   # User routes
    post '/login', to: 'application#create' # login to account
    get '/profile', to: 'users#profile' # get user profile using token
@@ -10,6 +11,7 @@ Rails.application.routes.draw do
 
     # Label routes 
     post '/label', to: 'orders#create_label'
+    
 
     #Document routes
     post '/upload', to: 'documents#create' # Upload documents to order
