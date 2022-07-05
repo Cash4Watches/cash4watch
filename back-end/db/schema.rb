@@ -72,8 +72,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_171251) do
     t.string "title"
     t.string "desc"
     t.boolean "completed"
+    t.uuid "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_steps_on_order_id"
   end
 
   create_table "users", force: :cascade do |t|
