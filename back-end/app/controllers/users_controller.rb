@@ -3,6 +3,7 @@ class UsersController < ApplicationController
     def create
         user = User.create!(user_params)
         if user
+            UserMailer.with(user: user).welcome_email.deliver_later
             payload = {'user_id': user.id}
             token = encode(payload)
             render json: {
