@@ -14,27 +14,28 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import Acordain from "../components/Acordain.jsx";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setForm } from "../state/form.js";
 
 function Landing() {
+  const form = useSelector((state) => state.form.value);
   let navigate = useNavigate();
+  const dispatch = useDispatch();
   const [background, setBackground] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [nameError, setNameError] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    number: "",
-    brand: "",
-  });
+
   let onlySpaces = (str) => {
     return str.trim().length === 0;
   };
   let updateFormData = (e) => {
     let { name, value } = e.target;
-    setForm({
-      ...form,
-      [name]: value,
-    });
+    dispatch(
+      setForm({
+        ...form,
+        [name]: value,
+      })
+    );
   };
   let handleSubmit = (e) => {
     e.preventDefault();

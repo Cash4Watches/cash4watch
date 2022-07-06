@@ -4,4 +4,30 @@
   align-items: center;
   width: 100vw;
   min-height: 100vh;
+  flex-direction: column;
+
+  & form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80vw;
+    height: fit-content;
+    max-width: 600px;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  &-title {
+    color: #790220;
+    background: linear-gradient(
+      180deg,
+      transparent 80%,
+      #6067a1b6 80%,
+      #6067a1b6 95%,
+      transparent 95%
+    );
+  }
+  &-input {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
 }
