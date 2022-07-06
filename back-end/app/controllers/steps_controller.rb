@@ -6,7 +6,7 @@ class StepsController < ApplicationController
             step.save!
             render json: step
         else
-            render json: {message: "Faild to find step with id"}
+            render json: {message: "Failed to find step with id"}
         end
     end
 end

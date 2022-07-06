@@ -3,11 +3,6 @@ class UsersController < ApplicationController
     def create
         user = User.create!(user_params)
         if user
-          user.avatar.attach(
-            io: File.open('./public/default.png'),
-            filename: 'default.png',
-            content_type: 'application/png'
-        )
             payload = {'user_id': user.id}
             token = encode(payload)
             render json: {
