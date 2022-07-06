@@ -13,15 +13,22 @@ import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import Acordain from "../components/Acordain.jsx";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Landing() {
+  let navigate = useNavigate();
   const [background, setBackground] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [nameError, setNameError] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
     number: "",
     brand: "",
   });
+  let onlySpaces = (str) => {
+    return str.trim().length === 0;
+  };
   let updateFormData = (e) => {
     let { name, value } = e.target;
     setForm({
@@ -31,7 +38,9 @@ function Landing() {
   };
   let handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
+    if (form.email.includes("@") && !onlySpaces(form.name)) navigate("/form");
+    !form.email.includes("@") ? setEmailError(true) : setEmailError(false);
+    onlySpaces(form.name) ? setNameError(true) : setNameError(false);
   };
   let handleResize = () => {
     if (800 <= window.innerWidth) {
@@ -71,18 +80,23 @@ function Landing() {
                 name="name"
                 className="Landing__form-items__text-field"
                 onChange={updateFormData}
+                required
+                error={nameError}
               />
               <TextField
                 label="Email"
                 name="email"
                 className="Landing__form-items__text-field"
                 onChange={updateFormData}
+                required
+                error={emailError}
               />
               <TextField
                 label="Phone Number"
                 name="number"
                 className="Landing__form-items__text-field"
                 onChange={updateFormData}
+                required
               />
 
               <FormControl
@@ -97,6 +111,7 @@ function Landing() {
                   label="Brand Name"
                   onChange={updateFormData}
                   name="brand"
+                  required
                 >
                   <MenuItem value={"Rolex"}>Rolex</MenuItem>
                   <MenuItem value={"Patek Philippe"}>Patek Philippe</MenuItem>
