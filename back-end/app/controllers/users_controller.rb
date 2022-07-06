@@ -32,6 +32,10 @@ class UsersController < ApplicationController
       render json: { message: 'Invalid or Missing Token', authenticated: false }
     end
   end
+   
+  def change_password
+    
+  end
   private
 
   def user_params
