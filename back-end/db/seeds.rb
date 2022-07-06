@@ -30,5 +30,10 @@ order = Order.create!({
      included_items: "All original manuals and shit", 
      extra_comment: "Hurry up plz", 
      user_id: user.id});
+     step1 = Step.create!({index: 1,title: "Case Approved",desc: "",completed: false,order_id: order.id})
+          step2 = Step.create!({index: 2,title: "Label Generated",desc: "",completed: false,order_id: order.id})
+          step3 = Step.create!({index: 3,title: "Watch Received",desc: "",completed: false,order_id: order.id})
+          step4 = Step.create!({index: 4,title: "Watch Inspected",desc: "",completed: false,order_id: order.id})
+          step5 = Step.create!({index: 5,title: "Watch Sold",desc: "",completed: false,order_id: order.id})
 puts user
 puts order

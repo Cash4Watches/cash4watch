@@ -1,3 +1,3 @@
 class StepSerializer < ActiveModel::Serializer
-  attributes :id, :step_index, :title, :desc, :completed
+  attributes :id, :index, :title, :desc, :completed
 end
