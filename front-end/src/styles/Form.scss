@@ -30,4 +30,29 @@
     margin-top: 1.5rem !important;
     margin-bottom: 1.5rem !important;
   }
+  &-submit {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border-radius: 20px;
+    border: 1px solid black;
+    background-color: #790220;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all ease 0.25s;
+    color: whitesmoke;
+    font-size: 1.5rem;
+    letter-spacing: 5px;
+    width: 15rem;
+    &:hover {
+      color: #790220;
+      border-color: #790220;
+      background-color: white;
+      cursor: pointer;
+    }
+  }
+  &-submit-icon {
+    margin-left: 0.5rem;
+  }
 }

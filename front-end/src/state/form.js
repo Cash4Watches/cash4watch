@@ -3,7 +3,7 @@ export const formSlice = createSlice({
   name: "form",
   initialState: {
     value: {
-      name: "mustafa",
+      name: "",
       email: "",
       number: "",
       brand: "",
