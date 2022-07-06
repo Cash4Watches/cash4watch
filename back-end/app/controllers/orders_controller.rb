@@ -58,6 +58,10 @@ class OrdersController < ApplicationController
         end
     end
     def create
+      token = request.headers['Authentication'].split(' ')[1] 
+    payload = decode(token) 
+    user = User.find(payload['user_id'])
+    if user
       order = Order.create!(order_params);
       if order
           step1 = Step.create!({index: 1,title: "Case Approved",desc: "",completed: false,order_id: order.id})
@@ -69,6 +73,9 @@ class OrdersController < ApplicationController
       else
           render json: {message: 'Failed to create Order'}
       end
+    else
+      render json: {message: "Invalid or expired token"}
+    end
    end
    def show
     token = request.headers['Authentication'].split(' ')[1] 
