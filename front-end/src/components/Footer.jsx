@@ -9,19 +9,35 @@ function Footer() {
     <>
       <div className="Footer">
         <div className="Footer__icon-container">
-          <a href="tel:2124103030">
+          <a target="_blank" rel="noreferrer" href="tel:2124103030">
             <PhoneInTalkIcon />
           </a>
-          <a href="mailto:info@cash4watches.com">
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="mailto:info@cash4watches.com"
+          >
             <EmailIcon />
           </a>
-          <a href="https://twitter.com/cash4watches">
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://twitter.com/cash4watches"
+          >
             <TwitterIcon />
           </a>
-          <a href="https://www.facebook.com/profile.php?id=100081435379482">
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://www.facebook.com/profile.php?id=100081435379482"
+          >
             <FacebookIcon />
           </a>
-          <a href="https://www.facebook.com/profile.php?id=100081435379482">
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://www.facebook.com/profile.php?id=100081435379482"
+          >
             <InstagramIcon />
           </a>
         </div>
