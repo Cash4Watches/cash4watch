@@ -31,9 +31,9 @@ class UsersController < ApplicationController
     user = User.find_by(email: params[:email])
     if user
       UserMailer.with(user: user).forgot_password.deliver_later
-      # send Email to reset Password 
+      render json: {message: "Email sent"}
     else
-      render json: { message: 'Invalid or Missing Token', authenticated: false }
+      render json: { message: 'Invalid or Wrong Email', authenticated: false }
     end
   end
   private
