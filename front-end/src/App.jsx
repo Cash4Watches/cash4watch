@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import Landing from "./screens/Landing.jsx";
 import Navbar from "./components/Nav.jsx";
 import Footer from "./components/Footer.jsx";
+import Dashboard from "./components/Dashboard.jsx";
 import Form from "./screens/Form.jsx";
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/form" element={<Form />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route
           path="*"
           element={
