@@ -18,9 +18,7 @@ class UsersController < ApplicationController
 
   def profile
     token = request.headers['Authentication'].split(' ')[1] 
-    p token
     payload = decode(token) 
-    p payload
     user = User.find(payload['user_id'])
     if user
       render json: user
@@ -29,8 +27,14 @@ class UsersController < ApplicationController
     end
   end
    
-  def change_password
-    
+  def forgot_password
+    user = User.find_by(email: params[:email])
+    if user
+      UserMailer.with(user: user).forgot_password.deliver_later
+      # send Email to reset Password 
+    else
+      render json: { message: 'Invalid or Missing Token', authenticated: false }
+    end
   end
   private
 
