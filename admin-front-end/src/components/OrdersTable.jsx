@@ -1,8 +1,10 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import '../styles/OrdersTable.scss'
+import { useNavigate } from "react-router-dom";
 function OrdersTable() {
   const [ordersArray, setOrdersArray] = useState([])
+  let navigate = useNavigate();
   useEffect(() => {
     fetch('http://localhost:3000/admin-orders')
     .then(resp=>resp.json())
@@ -26,6 +28,7 @@ function OrdersTable() {
           <th>Papers:</th>
           <th>Included Items:</th>
           <th>Extra Comment:</th>
+          <th>Package Detail:</th>
         </tr>
         </thead>
         <tbody>
@@ -39,9 +42,10 @@ function OrdersTable() {
               <td>{order.condition}</td>
               <td>{order.previous_service}</td>
               <td>{order.previous_polish}</td>
-              <td>{order.papers}</td>
+              <td>{order.papers.toString()}</td>
               <td>{order.included_items}</td>
               <td>{order.extra_comment}</td>
+              <td><button onClick={()=> navigate("/order-detail")}>Manage</button></td>
             </tr>
           )
         })}
