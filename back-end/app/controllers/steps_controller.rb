@@ -24,7 +24,6 @@ class StepsController < ApplicationController
                     # email for step 5
                     OrderMailer.with(user: order.user, order: order).order_update.deliver_later
                 end
-                render json: step
             else
                 render json: {message: "Incorrect or Invalid step_id"}
             end
