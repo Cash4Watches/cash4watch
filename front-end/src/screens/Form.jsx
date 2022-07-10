@@ -1,6 +1,6 @@
 import "../styles/Form.scss";
 import PublishIcon from "@mui/icons-material/Publish";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -15,16 +15,64 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Select from "@mui/material/Select";
 import { useSelector, useDispatch } from "react-redux";
 import { setForm } from "../state/form.js";
+import { useNavigate } from "react-router-dom";
+import { FormHelperText } from "@mui/material";
+
 function Form() {
+  let navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const form = useSelector((state) => state.form.value);
-  const [nameError, setNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-
+  const [formError, setFormError] = useState({
+    name: { value: false, message: "" },
+    email: { value: false, message: "" },
+    passMatch: { value: false, message: "" },
+  });
+  let onlySpaces = (str) => {
+    return str.trim().length === 0;
+  };
+  let passwordisVaild = (password, confirm) => {
+    //i made this a function inorder to allow more vaildation to passwords
+    //but for now im only checking if they match
+    if (password !== confirm) return false;
+    return true;
+  };
+  let vaildateForm = (form) => {
+    let isVaild = true;
+    if (onlySpaces(form["name"].value)) {
+      setFormError({
+        ...formError,
+        name: { value: true, message: "Name cant be empty" },
+      });
+      isVaild = false;
+    }
+    if (
+      !form["email"].value.includes(".") ||
+      !form["email"].value.includes("@")
+    ) {
+      setFormError({
+        ...formError,
+        email: { value: true, message: "Needs to be a vaild emai" },
+      });
+      isVaild = false;
+    }
+    if (!passwordisVaild(form["password"].value, form["confirm"].value)) {
+      isVaild = false;
+      setFormError({
+        ...formError,
+        passMatch: { value: true, message: "Passwords dont match" },
+      });
+    }
+    return isVaild;
+  };
   let handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
+    if (vaildateForm(e.target)) {
+      navigate("/dashboard");
+    } else {
+      // due to time constraints this error message is alert for now
+      alert("Double check form inputs");
+    }
   };
   let updateFormData = (e) => {
     let { name, value } = e.target;
@@ -35,7 +83,15 @@ function Form() {
       })
     );
   };
-
+  let clearError = (e) => {
+    let inputName = e.target.name;
+    if (inputName === "confirm" || inputName === "password")
+      inputName = "passMatch";
+    setFormError({
+      ...formError,
+      [inputName]: { value: false, message: "" },
+    });
+  };
   return (
     <>
       <div className="Form">
@@ -46,7 +102,9 @@ function Form() {
             name="name"
             onChange={updateFormData}
             required
-            error={nameError}
+            error={formError.name.value}
+            helperText={formError.name.message}
+            onKeyDown={clearError}
             fullWidth
             className="Form-input"
             value={form.name || ""}
@@ -56,7 +114,9 @@ function Form() {
             name="email"
             onChange={updateFormData}
             required
-            error={emailError}
+            error={formError.email.value}
+            onKeyDown={clearError}
+            helperText={formError.email.message}
             fullWidth
             className="Form-input"
             value={form.email || ""}
@@ -150,7 +210,8 @@ function Form() {
             </Select>
           </FormControl>
           <TextField
-            label="Whats included (e.g, box, manuals)"
+            label="Whats included "
+            helperText="(e.g, box, manuals)"
             name="included"
             onChange={updateFormData}
             fullWidth
@@ -172,7 +233,7 @@ function Form() {
             value={form.notes || ""}
           />
           {/* PASSWORDS INPUT FIELDS */}
-          <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>
@@ -181,6 +242,8 @@ function Form() {
               value={form.password || ""}
               name="password"
               onChange={updateFormData}
+              error={formError.passMatch.value}
+              onKeyDown={clearError}
               required
               autoComplete="password"
               endAdornment={
@@ -196,8 +259,11 @@ function Form() {
               }
               label="Password"
             />
+            <FormHelperText error={formError.passMatch.value}>
+              {formError.passMatch.message}
+            </FormHelperText>
           </FormControl>
-          <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
+          <FormControl sx={{ m: 1, width: "100%" }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
               Confirm Password
             </InputLabel>
@@ -206,7 +272,10 @@ function Form() {
               value={form.confirm || ""}
               name="confirm"
               onChange={updateFormData}
+              error={formError.passMatch.value}
+              onKeyDown={clearError}
               required
+              label="Confirm Password"
               autoComplete="password"
               endAdornment={
                 <InputAdornment position="end">
@@ -219,8 +288,10 @@ function Form() {
                   </IconButton>
                 </InputAdornment>
               }
-              label="Confirm Password"
             />
+            <FormHelperText error={formError.passMatch.value}>
+              {formError.passMatch.message}
+            </FormHelperText>
           </FormControl>
           <button className="Form-submit" type="submit">
             <p>Submit</p>
