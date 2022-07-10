@@ -8,6 +8,6 @@
 |/create-new-order|Create Order.|<ul><li>brand_name</li><li>model_number:integer</li><li>reference_number:integer</li><li>condition</li><li>previous_service</li><li>previous_polish</li><li>papers:boolean</li><li>included_items</li><li>extra_comment</li><li>Token(Authentication Header)</li></ul>|
 |/check-order|Checks user only orders by token and order ID.|<ul><li>Token(Authentication Header)</li><li>order_id</li></ul>|
 |/label|Tmp route for testing.|<ul><li>order_id</li></ul>|
-|/update-step|toggle step.completed|<ul><li>id</li></ul>|
+|/update-step|toggle step.completed|<ul><li>order_id</li><li>step_id</li></ul>|
 |/upload|Add a Document to an order.|<ul><li>name</li></li><li>order_id</li><li>file:file</li></ul>|
 |/delete-document|Delete Document.|<ul><li>id</li></ul>|

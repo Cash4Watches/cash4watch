@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     post '/check-order', to: 'orders#show' # show order status by ID
 
     # Label routes 
-    post '/label', to: 'orders#create_label'
+    # post '/label', to: 'orders#create_label'
     
     # Step Routes 
     post '/update-step', to: 'steps#update'
