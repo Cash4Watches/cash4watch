@@ -1,0 +1,52 @@
+.Navbar {
+  background-color: #242951e9;
+  display: flex;
+  position: relative;
+  min-height: 4rem;
+  justify-content: center;
+  align-items: center;
+  &__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 5px;
+    & img {
+      width: 100%;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &__login {
+    background-color: #2429519e;
+    color: white;
+    border: 1px solid #2b2e4a;
+    position: absolute;
+    border-radius: 10px;
+    font-size: 0.5rem;
+    margin-left: 70vw;
+    padding-left: 13px;
+    padding-right: 13px;
+    letter-spacing: 2px;
+    transition: color ease 0.25s;
+    &:hover {
+      color: #242951;
+      background-color: white;
+      cursor: pointer;
+    }
+  }
+  &__acc {
+    position: absolute;
+    margin-left: 70vw;
+    font-size: 2.4rem;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: color ease 0.25s;
+    &:hover {
+      cursor: pointer;
+      color: rgb(189, 196, 255);
+    }
+  }
+}
