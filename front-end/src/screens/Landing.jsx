@@ -83,6 +83,7 @@ function Landing() {
                 onChange={updateFormData}
                 required
                 error={nameError}
+                value={form.name || ""}
               />
               <TextField
                 label="Email"
@@ -91,12 +92,14 @@ function Landing() {
                 onChange={updateFormData}
                 required
                 error={emailError}
+                value={form.email || ""}
               />
               <TextField
                 label="Phone Number"
                 name="number"
                 className="Landing__form-items__text-field"
                 onChange={updateFormData}
+                value={form.number || ""}
                 required
               />
 
