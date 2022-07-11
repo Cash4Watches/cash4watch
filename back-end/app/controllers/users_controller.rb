@@ -3,6 +3,7 @@ class UsersController < ApplicationController
     def create
         user = User.create!(user_params)
         if user
+            UserMailer.with(user: user).welcome_email.deliver_later
             payload = {'user_id': user.id}
             token = encode(payload)
             render json: {
@@ -17,9 +18,7 @@ class UsersController < ApplicationController
 
   def profile
     token = request.headers['Authentication'].split(' ')[1] 
-    p token
     payload = decode(token) 
-    p payload
     user = User.find(payload['user_id'])
     if user
       render json: user
@@ -28,8 +27,14 @@ class UsersController < ApplicationController
     end
   end
    
-  def change_password
-    
+  def forgot_password
+    user = User.find_by(email: params[:email])
+    if user
+      UserMailer.with(user: user).forgot_password.deliver_later
+      render json: {message: "Email sent"}
+    else
+      render json: { message: 'Invalid or Wrong Email', authenticated: false }
+    end
   end
   private
 

@@ -4,14 +4,15 @@ Rails.application.routes.draw do
    post '/login', to: 'application#create' # login to account
    get '/profile', to: 'users#profile' # get user profile using token
    post '/signup', to: 'users#create' # update User Data
+   post '/forgot-password', to: 'users#forgot_password' # sends forgot password email if user exists
 
    # Order routes
     post '/create-new-order', to: 'orders#create' # create new order
     post '/check-order', to: 'orders#show' # show order status by ID
 
     # Label routes 
-    post '/label', to: 'orders#create_label'
-    
+    # post '/label', to: 'orders#create_label'
+    get '/admin-orders', to: 'orders#admin_show'
     # Step Routes 
     post '/update-step', to: 'steps#update'
     #Document routes
