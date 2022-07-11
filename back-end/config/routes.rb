@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
     # Label routes 
     # post '/label', to: 'orders#create_label'
-    
+    get '/admin-orders', to: 'orders#admin_show'
     # Step Routes 
     post '/update-step', to: 'steps#update'
     #Document routes

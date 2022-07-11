@@ -1,5 +1,4 @@
 class OrdersController < ApplicationController
-   
     def create
       token = request.headers['Authentication'].split(' ')[1] 
     payload = decode(token) 
@@ -34,6 +33,10 @@ class OrdersController < ApplicationController
     else
       render json: { message: "Invalid or Expired Token"}
     end
+   end
+   def admin_show
+    orders = Order.all
+    render json: {orders: orders}
    end
    private
    def order_params
