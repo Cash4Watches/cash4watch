@@ -35,8 +35,15 @@ class OrdersController < ApplicationController
     end
    end
    def admin_show
-    orders = Order.all
+    token = request.headers['Authentication'].split(' ')[1]
+    payload = decode(token) 
+    if payload['user_id'] == 1
+      orders = Order.all
     render json: {orders: orders}
+    else
+      render json: {message: "Unauthorized Action"}
+    end
+
    end
    private
    def order_params

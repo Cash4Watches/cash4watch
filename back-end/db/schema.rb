@@ -53,8 +53,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_171251) do
 
   create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "brand_name"
-    t.integer "model_number"
-    t.integer "reference_number"
+    t.string "model_number"
+    t.string "reference_number"
     t.string "condition"
     t.string "previous_service"
     t.string "previous_polish"

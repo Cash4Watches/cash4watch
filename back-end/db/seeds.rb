@@ -9,6 +9,17 @@ User.destroy_all
 Order.destroy_all
 
 user = User.create!({
+    full_name: "Admin",
+    password: "123",
+    email: "admin@watches4cash.com",
+    company: "watches4cash",
+    street1: "",
+    street2: "",
+    city: "",
+    state: "",zip: "",
+    phone: ""
+});
+user = User.create!({
     full_name: "Mohamed Muflahi",
     password: "123",
     email: "muflahimohamed88@gmail.com",

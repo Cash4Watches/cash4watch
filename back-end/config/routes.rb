@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :steps
+  
   # User routes
    post '/login', to: 'application#create' # login to account
    get '/profile', to: 'users#profile' # get user profile using token
