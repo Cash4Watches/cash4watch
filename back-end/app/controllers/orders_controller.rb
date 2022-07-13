@@ -39,19 +39,32 @@ class OrdersController < ApplicationController
     payload = decode(token) 
     if payload['user_id'] == 1
       orders = Order.all
-    render json: {orders: orders}
+      render json: {orders: orders}
     else
       render json: {message: "Unauthorized Action"}
     end
    end
+  def my_orders
+    token = request.headers['Authentication'].split(' ')[1] 
+    payload = decode(token) 
+    user = User.find(payload['user_id'])
+    if user
+      orders = user.orders
+      render json: {orders: orders}
+    else
+      render json: {message: "Invalid or Expired Token"}
+    end
+  end
    def admin_destroy_orders
     token = request.headers['Authentication'].split(' ')[1]
     payload = decode(token) 
     if payload['user_id'] == 1
       order = Order.find[params[:order_id]]
       if order
-        
+        order.destroy
+        render json: order
       else
+        render json: {message:"Order not Found"}
       end
     else
       render json: {message: "Unauthorized Action"}

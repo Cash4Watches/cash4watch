@@ -8,7 +8,7 @@
 User.destroy_all
 Order.destroy_all
 
-user = User.create!({
+admin = User.create!({
     full_name: "Admin",
     password: "123",
     email: "admin@watches4cash.com",
