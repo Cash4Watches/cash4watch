@@ -13,9 +13,11 @@ Rails.application.routes.draw do
     # Label routes 
     # post '/label', to: 'orders#create_label'
     get '/admin-orders', to: 'orders#admin_show'
+    post '/delete-user', to: 'users#admin_delete_user'
+    post '/delete-document', to: 'documents#destroy' # destroy documents by ID
+    
     # Step Routes 
     post '/update-step', to: 'steps#update'
-    #Document routes
+    #Document routess
     post '/upload', to: 'documents#create' # Upload documents to order
-    post '/delete-document', to: 'documents#destroy' # destroy documents by ID
 end

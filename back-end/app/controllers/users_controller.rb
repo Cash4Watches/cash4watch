@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  
     def create
         user = User.create!(user_params)
         if user
@@ -15,7 +14,6 @@ class UsersController < ApplicationController
             render json: { message: 'There was an error creating your account' }
         end
     end
-
   def profile
     token = request.headers['Authentication'].split(' ')[1] 
     payload = decode(token) 
@@ -34,6 +32,21 @@ class UsersController < ApplicationController
       render json: {message: "Email sent"}
     else
       render json: { message: 'Invalid or Wrong Email', authenticated: false }
+    end
+  end
+  def admin_delete_user
+    token = request.headers['Authentication'].split(' ')[1]
+    payload = decode(token) 
+    if payload['user_id'] == 1
+      user = User.find(params[:user_id])
+      if user
+        user.destroy
+        render json: user
+      else
+        render json: {message: "User Does not Exist"}
+      end
+    else
+      render json: {message: "Unauthorized Action"}
     end
   end
   private

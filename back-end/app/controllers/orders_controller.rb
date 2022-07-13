@@ -43,8 +43,20 @@ class OrdersController < ApplicationController
     else
       render json: {message: "Unauthorized Action"}
     end
-
    end
+   def admin_destroy_orders
+    token = request.headers['Authentication'].split(' ')[1]
+    payload = decode(token) 
+    if payload['user_id'] == 1
+      order = Order.find[params[:order_id]]
+      if order
+        
+      else
+      end
+    else
+      render json: {message: "Unauthorized Action"}
+    end
+  end
    private
    def order_params
     params.permit(:brand_name, :model_number, :reference_number, :condition, :previous_service,:previous_polish,:papers,:included_items,:extra_comment,:user_id)
