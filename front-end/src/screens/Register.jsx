@@ -1,18 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import "../styles/Register.scss";
 import api from "../services/AxiosConfig.js";
+import TextField from "@mui/material/TextField";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import InputLabel from "@mui/material/InputLabel";
+
+import FormControl from "@mui/material/FormControl";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { FormHelperText } from "@mui/material";
+
 import { useState } from "react";
 function Register() {
   let navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [formError, setFormError] = useState({
+    passMatch: { value: false, message: "" },
+  });
   const [form, setForm] = useState({
-    name: "Name",
-    email: "Email Address",
-    company: "Company Name",
-    streetOne: "Street One",
-    streetTwo: "Street Two",
-    city: "City",
-    state: "State",
-    zip: "Zip Code",
+    name: "",
+    email: "",
+    company: "",
+    streetOne: "",
+    streetTwo: "",
+    city: "",
+    state: "",
+    zip: "",
+    password: "",
+    confirm: "",
   });
   let registerUser = async (e) => {
     e.preventDefault();
@@ -29,64 +46,151 @@ function Register() {
       [name]: value,
     });
   };
+  let clearError = () => {
+    setFormError({
+      passMatch: { value: false, message: "" },
+    });
+  };
   return (
     <>
       <div className="Register">
         <form onSubmit={registerUser}>
-          <input
+          <h1>Register</h1>
+          <TextField
+            fullWidth
             type="text"
             name="name"
+            label="Name"
             onChange={updateForm}
-            placeholder={form.name}
+            value={form.name}
+            inputProps={{ pattern: "[a-zA-Z ]+" }}
             required
           />
-          <input
+          <TextField
+            fullWidth
             type="text"
             name="email"
+            label="Email"
+            placeholder="Email Address"
             onChange={updateForm}
-            placeholder={form.email}
+            value={form.email}
             required
           />
-          <input
+          <TextField
+            fullWidth
             type="text"
             name="company"
+            label="Company"
+            placeholder="Optional"
             onChange={updateForm}
-            placeholder={form.company}
+            value={form.company}
           />
-          <input
+          <TextField
+            fullWidth
             type="text"
             name="streetOne"
+            label="streetOne"
             onChange={updateForm}
-            placeholder={form.streetOne}
+            value={form.streetOne}
             required
           />
-          <input
+          <TextField
+            fullWidth
             type="text"
             name="streetTwo"
+            label="streetTwo"
+            placeholder="Optional"
             onChange={updateForm}
-            placeholder={form.streetTwo}
+            value={form.streetTwo}
           />
-          <input
+          <TextField
+            fullWidth
             type="text"
             name="city"
+            label="City"
             onChange={updateForm}
-            placeholder={form.city}
+            value={form.city}
             required
           />
-          <input
+          <TextField
+            fullWidth
             type="text"
             name="state"
+            label="state"
             onChange={updateForm}
-            placeholder={form.state}
+            value={form.state}
             required
           />
-          <input
+          <TextField
+            fullWidth
+            className="Register-input"
             type="text"
+            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
             name="zip"
+            label="Zip"
+            placeholder="Zip Code"
             onChange={updateForm}
-            placeholder={form.zip}
+            value={form.zip}
             required
           />
+          <FormControl>
+            <InputLabel htmlFor="outlined-adornment-password">
+              Password
+            </InputLabel>
+            <OutlinedInput
+              type={showPassword ? "text" : "password"}
+              value={form.password}
+              name="password"
+              onChange={updateForm}
+              error={formError.passMatch.value}
+              onKeyDown={clearError}
+              required
+              autoComplete="password"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
+            <FormHelperText error={formError.passMatch.value}>
+              {formError.passMatch.message}
+            </FormHelperText>
+          </FormControl>
+          <FormControl>
+            <InputLabel>Confirm Password</InputLabel>
+            <OutlinedInput
+              type={showPassword ? "text" : "password"}
+              value={form.confirm}
+              name="confirm"
+              onChange={updateForm}
+              error={formError.passMatch.value}
+              onKeyDown={clearError}
+              required
+              label="Confirm Password"
+              autoComplete="password"
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+            <FormHelperText error={formError.passMatch.value}>
+              {formError.passMatch.message}
+            </FormHelperText>
+          </FormControl>
           <input type="submit" value={"Register"} />
           <p onClick={() => navigate("/login")}>
             Already have an account ? Login

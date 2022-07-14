@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import "../styles/Login.scss";
 import api from "../services/AxiosConfig.js";
+import TextField from "@mui/material/TextField";
+
 import { useState } from "react";
 function Login() {
   let navigate = useNavigate();
@@ -23,24 +24,29 @@ function Login() {
   };
   return (
     <>
-      <div className="Login">
+      <div className="Register">
         <form onSubmit={logUser}>
-          <input
+          <h1>Login</h1>
+          <TextField
+            label="Email"
             type="text"
             name="email"
             onChange={updateForm}
             value={form.email}
-            placeholder={"Email"}
+            required
           />
-          <input
+          <TextField
             type="text"
             name="password"
+            label="Password"
             onChange={updateForm}
             value={form.password}
-            placeholder={"Password"}
+            required
           />
           <input type="submit" value="Log In" />
-          <p onClick={() => navigate("/register")}>Sign up ?</p>
+          <p onClick={() => navigate("/register")}>
+            Need an account ? Sign up{" "}
+          </p>
         </form>
       </div>
     </>

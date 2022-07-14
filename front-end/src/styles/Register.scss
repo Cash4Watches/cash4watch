@@ -3,21 +3,54 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   & form {
     display: flex;
     flex-direction: column;
-    min-width: 300px;
-    width: 50vw;
-    margin-top: 5vh;
+    justify-content: center;
+    align-items: center;
+
+    width: 65vw;
+    max-width: 500px;
+    margin-top: 10vh;
     margin-bottom: 5vh;
-    & input {
-      padding: 5px;
-      margin-top: 1rem;
+    gap: 1.5rem;
+    & input[type="submit"] {
+      color: white;
+      padding: 1rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      background-color: #5b6bdde9;
+      border: 1px solid #242951e9;
+      border-radius: 20px;
+      width: fit-content;
+      transition: all ease 0.3s;
+      &:hover {
+        cursor: pointer;
+        background-color: white;
+        color: #5b6bdde9;
+        border-color: #5b6bdde9;
+      }
+    }
+    & h1 {
+      color: #242951e9;
+      background: linear-gradient(
+        180deg,
+        transparent 80%,
+        #5b6bdde9 80%,
+        #5b6bdde9 95%,
+        transparent 95%
+      );
     }
     & p {
       color: #242951e9;
+      font-weight: bolder;
+      letter-spacing: 1px;
+      text-align: center;
       &:hover {
-        color: #790220;
+        color: #5b6bdde9;
         cursor: pointer;
       }
     }
