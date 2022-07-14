@@ -96,10 +96,46 @@
     overflow: hidden;
     flex-shrink: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    &-content {
-      border: 1px solid red;
+  }
+  &-active {
+    color: #6529dc;
+    background-color: whitesmoke;
+  }
+}
+
+.Tracking {
+  width: 60vw;
+  min-width: fit-content;
+  max-width: 700px;
+  margin-left: 5rem;
+  margin-top: 20vh;
+  // border: 1px solid red;
+  display: flex;
+  flex-flow: column wrap;
+
+  & input {
+    width: 30vw;
+    min-width: 15rem;
+    max-width: 500px;
+    overflow: scroll;
+    padding: 5px;
+    font-size: 1.2rem;
+    max-height: 1.5rem;
+  }
+  & button {
+    background-color: #9b2442;
+    color: white;
+    font-size: 1.3rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    transition: all ease 0.25s;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
+      0 2px 6px 2px rgb(60 64 67 / 15%);
+    margin-top: 2rem;
+    max-width: 13rem;
+    &:hover,
+    &:focus {
+      color: #790220;
+      background-color: whitesmoke;
     }
   }
 }
@@ -112,6 +148,9 @@
         padding-left: 1rem;
       }
     }
+  }
+  .Tracking {
+    margin-left: 20vw;
   }
 }
 

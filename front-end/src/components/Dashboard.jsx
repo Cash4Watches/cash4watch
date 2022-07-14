@@ -51,6 +51,10 @@ function Dashboard() {
       default:
         break;
     }
+    document
+      .querySelectorAll(".Dashboard-active")
+      .forEach((element) => element.classList.remove("Dashboard-active"));
+    e.target.classList.toggle("Dashboard-active");
   };
   return (
     <>

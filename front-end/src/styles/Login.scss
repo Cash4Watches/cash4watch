@@ -1,0 +1,22 @@
+.Login {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & form {
+    // border: 1px solid red;
+    margin: 3rem;
+    display: flex;
+    flex-direction: column;
+    & input {
+      margin-top: 1rem;
+    }
+    & p {
+      color: #242951e9;
+      &:hover {
+        color: #790220;
+        cursor: pointer;
+      }
+    }
+  }
+}

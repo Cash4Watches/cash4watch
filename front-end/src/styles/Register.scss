@@ -1,0 +1,25 @@
+.Register {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & form {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+    width: 50vw;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    & input {
+      padding: 5px;
+      margin-top: 1rem;
+    }
+    & p {
+      color: #242951e9;
+      &:hover {
+        color: #790220;
+        cursor: pointer;
+      }
+    }
+  }
+}

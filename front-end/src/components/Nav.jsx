@@ -6,22 +6,22 @@ import { useNavigate } from "react-router-dom";
 function Navbar() {
   let navigate = useNavigate();
   const [navbutton, setNavbutton] = useState();
-  let handleResize = () => {
-    if (800 <= window.innerWidth) {
-      setNavbutton(
-        <div className="Navbar__login">
-          <h1>Login</h1>
-        </div>
-      );
-    } else {
-      setNavbutton(
-        <div className="Navbar__acc">
-          <AccountCircleTwoToneIcon fontSize="inherit" />
-        </div>
-      );
-    }
-  };
   useEffect(() => {
+    let handleResize = () => {
+      if (800 <= window.innerWidth) {
+        setNavbutton(
+          <div className="Navbar__login" onClick={() => navigate("/register")}>
+            <h1>Register</h1>
+          </div>
+        );
+      } else {
+        setNavbutton(
+          <div className="Navbar__acc" onClick={() => navigate("/register")}>
+            <AccountCircleTwoToneIcon fontSize="inherit" />
+          </div>
+        );
+      }
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => {
