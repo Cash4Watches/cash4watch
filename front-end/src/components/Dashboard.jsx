@@ -20,14 +20,20 @@ function Dashboard() {
   const [content, setContent] = useState(<Home />);
   const navigate = useNavigate();
   useEffect(() => {
+    // due to differences in screen width the amount to shift by vaires
+    let shiftAmount = "0rem";
+    window.innerWidth >= 900 ? (shiftAmount = "18vw") : (shiftAmount = "7rem");
+    //icon is initally set to false
+    //icon controllers the side nav
+    //when the side nav is visible shift screen to the right by x amount and change color of the horizontal nav
     let navColor = "";
     if (icon) {
       navColor = "#242951e9";
       verticallNav.current.style.transform = "translateX(-100%)";
-      dashboardScreen.current.style.transform = "translateX(0rem)";
+      dashboardScreen.current.style.paddingLeft = "0rem";
     } else {
       navColor = "#790220";
-      dashboardScreen.current.style.transform = "translateX(5rem)";
+      dashboardScreen.current.style.paddingLeft = shiftAmount;
       verticallNav.current.style.transform = "translateX(0%)";
     }
     horizontalNav.current.style.backgroundColor = navColor;
