@@ -6,7 +6,6 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
-
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -14,6 +13,7 @@ import { FormHelperText } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setUser } from "../state/user.js";
 import { useState } from "react";
+
 function Register() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
@@ -52,7 +52,8 @@ function Register() {
     };
     let response = await api.post("/signup", body);
     let data = response.data;
-    dispatch(setUser({ name: data.user.full_name, token: data.token }));
+    localStorage.setItem("jwt_token", data.token);
+    dispatch(setUser({ name: data.user.full_name }));
     navigate("/dashboard");
   };
   let updateForm = (e) => {

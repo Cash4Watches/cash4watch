@@ -105,13 +105,16 @@
 .Home {
   border: 1px solid red;
   width: 100vw;
+  &-username {
+    color: #931434;
+  }
 }
 .Tracking {
   width: 60vw;
   min-width: fit-content;
   max-width: 700px;
-
   margin-top: 20vh;
+  margin-left: 5vw;
   // border: 1px solid red;
   display: flex;
   flex-flow: column wrap;

@@ -16,7 +16,9 @@ function Login() {
     e.preventDefault();
     let response = await api.post("/login", form);
     let data = response.data;
-    dispatch(setUser({ name: data.user.full_name, token: data.token }));
+    localStorage.setItem("jwt_token", data.token);
+
+    dispatch(setUser({ name: data.user.full_name }));
 
     navigate("/dashboard");
     console.log(data);

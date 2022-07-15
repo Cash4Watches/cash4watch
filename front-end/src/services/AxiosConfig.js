@@ -13,7 +13,7 @@ window.location.hostname === "localhost"
 
 const api = axios.create({
   baseURL: apiUrl,
-  headers: { Authorization: `Bearer ${localStorage.getItem("jwt_token")}` },
+  headers: { Authentication: `Bearer ${localStorage.getItem("jwt_token")}` },
 });
 
 export default api;

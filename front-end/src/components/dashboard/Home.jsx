@@ -6,7 +6,7 @@ function Home() {
   return (
     <div className="Home">
       <h1>
-        Hello, <span>{user.name}</span>
+        Hello, <span className="Home-username">{user.name}</span>
       </h1>
     </div>
   );

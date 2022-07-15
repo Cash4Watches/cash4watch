@@ -9,7 +9,6 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       state.name = action.payload.name;
       state.isAuthenticated = true;
-      localStorage.setItem("jwt_token", action.payload.token);
     },
     clearUser: (state, action) => {
       state.name = "Guest";

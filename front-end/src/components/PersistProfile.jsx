@@ -11,7 +11,7 @@ const PresistProfile = () => {
     console.log(response.data);
     dispatch(
       setUser({
-        name: response.data.user.full_name,
+        name: response.data.full_name,
         token: response.data.token,
       })
     );
@@ -20,8 +20,9 @@ const PresistProfile = () => {
     let token = localStorage.getItem("jwt_token");
     //if the user is not authenticated and a token exists attempt to log them in
     if (!user.isAuthenticated && token) {
-      //make api call
-      // grabProfile();
+      // make api call
+      console.log("grabing profile .....");
+      grabProfile();
     } else {
       console.log("isAuthenticated", token);
     }
