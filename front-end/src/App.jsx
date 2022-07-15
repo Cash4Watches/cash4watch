@@ -4,9 +4,13 @@ import Navbar from "./components/Nav.jsx";
 import Footer from "./components/Footer.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import Form from "./screens/Form.jsx";
+import Login from "./screens/Login.jsx";
+import Register from "./screens/Register.jsx";
+import PresistProfile from "./components/PersistProfile.jsx";
 function App() {
   return (
     <>
+      <PresistProfile />
       <Routes>
         <Route
           path="/"
@@ -27,6 +31,24 @@ function App() {
           }
         />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/login"
+          element={
+            <>
+              <Navbar />
+              <Login />
+            </>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <>
+              <Navbar />
+              <Register />
+            </>
+          }
+        />
         <Route
           path="*"
           element={

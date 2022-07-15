@@ -104,6 +104,8 @@ function Form() {
             required
             error={formError.name.value}
             helperText={formError.name.message}
+            inputProps={{ pattern: "[a-zA-Z ]+" }}
+
             onKeyDown={clearError}
             fullWidth
             className="Form-input"

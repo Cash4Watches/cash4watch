@@ -15,6 +15,7 @@
     min-height: 3rem;
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
       0 2px 6px 2px rgb(60 64 67 / 15%);
+
     &-logo {
       display: flex;
       justify-content: center;
@@ -36,6 +37,7 @@
     justify-content: center;
     margin-right: 85vw;
     position: absolute;
+    z-index: 1;
     &:hover {
       cursor: pointer;
       color: rgb(237, 255, 229);
@@ -46,13 +48,15 @@
     flex-direction: column;
     min-height: 100vh;
     min-width: 7rem;
-    width: 100vw;
+    width: 10vw;
     background-color: #790220;
     color: white;
     transition: all ease 0.3s;
     transform: translateX(-100%);
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
       0 2px 6px 2px rgb(60 64 67 / 15%);
+    position: absolute;
+    z-index: 1;
   }
   &-nav-vertical-item {
     margin-top: 3rem;
@@ -69,7 +73,10 @@
     text-align: center;
     font-size: 2rem;
     padding: 10px;
-
+    transition: all ease 0.2s;
+    &-noclick {
+      pointer-events: none;
+    }
     & p {
       font-size: 1rem;
     }
@@ -79,17 +86,62 @@
       cursor: pointer;
     }
   }
-  &-content-container {
+  &-nav-container {
     display: flex;
-    &-screen {
-      transition: all ease 0.25s;
-      min-width: 100vw;
-      overflow: hidden;
-      flex-shrink: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid red;
+  }
+  &-screen {
+    transition: all ease 0.25s;
+    min-width: 100vw;
+    min-height: 100vh;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+  }
+  &-active {
+    color: #6529dc;
+    background-color: rgb(240, 240, 240);
+  }
+}
+.Home {
+  border: 1px solid red;
+  width: 100vw;
+  &-username {
+    color: #931434;
+  }
+}
+.Tracking {
+  width: 60vw;
+  min-width: fit-content;
+  max-width: 700px;
+  margin-top: 20vh;
+  margin-left: 5vw;
+  // border: 1px solid red;
+  display: flex;
+  flex-flow: column wrap;
+
+  & input {
+    width: 30vw;
+    min-width: 15rem;
+    max-width: 500px;
+    overflow: scroll;
+    padding: 5px;
+    font-size: 1.2rem;
+    max-height: 1.5rem;
+  }
+  & button {
+    background-color: #9b2442;
+    color: white;
+    font-size: 1.3rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    transition: all ease 0.25s;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
+      0 2px 6px 2px rgb(60 64 67 / 15%);
+    margin-top: 2rem;
+    max-width: 13rem;
+    &:hover,
+    &:focus {
+      color: #790220;
+      background-color: whitesmoke;
     }
   }
 }
@@ -101,6 +153,21 @@
       & p {
         padding-left: 1rem;
       }
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .Dashboard {
+    &-nav-vertical {
+      width: 18vw;
+      & p {
+        padding-left: 1rem;
+      }
+    }
+    &-nav-vertical-icon {
+      justify-content: flex-start;
+      padding-left: 3.5vw;
     }
   }
 }
