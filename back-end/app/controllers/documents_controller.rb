@@ -7,7 +7,6 @@ class DocumentsController < ApplicationController
             render json: {message: 'Failed to create Document'}
         end
      end
-
       def destroy
         token = request.headers['Authentication'].split(' ')[1]
         payload = decode(token) 
@@ -23,9 +22,7 @@ class DocumentsController < ApplicationController
         render json: {message: "Unauthorized Action"}
         end
       end
-      
     private
-
       def doc_params
         params.permit(:name, :order_id,:file)
       end
