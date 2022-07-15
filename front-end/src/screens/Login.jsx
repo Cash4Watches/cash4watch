@@ -1,18 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import api from "../services/AxiosConfig.js";
 import TextField from "@mui/material/TextField";
+import { setUser } from "../state/user.js";
+import { useDispatch } from "react-redux";
 
 import { useState } from "react";
 function Login() {
+  const dispatch = useDispatch();
   let navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
-  let logUser = (e) => {
+  let logUser = async (e) => {
     e.preventDefault();
-    // navigate("/dashboard");
-    console.log(form);
+    let response = await api.post("/login", form);
+    let data = response.data;
+    dispatch(setUser({ name: data.user.full_name, token: data.token }));
+
+    navigate("/dashboard");
+    console.log(data);
   };
   let updateForm = (e) => {
     let name = e.target.name;

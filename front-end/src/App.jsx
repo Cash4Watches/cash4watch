@@ -6,9 +6,11 @@ import Dashboard from "./components/Dashboard.jsx";
 import Form from "./screens/Form.jsx";
 import Login from "./screens/Login.jsx";
 import Register from "./screens/Register.jsx";
+import PresistProfile from "./components/PersistProfile.jsx";
 function App() {
   return (
     <>
+      <PresistProfile />
       <Routes>
         <Route
           path="/"

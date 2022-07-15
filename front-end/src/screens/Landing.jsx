@@ -36,6 +36,7 @@ function Landing() {
         [name]: value,
       })
     );
+    console.log(form);
   };
   let handleSubmit = (e) => {
     e.preventDefault();
@@ -84,6 +85,7 @@ function Landing() {
                 required
                 error={nameError}
                 value={form.name || ""}
+                inputProps={{ pattern: "[a-zA-Z ]+" }}
               />
               <TextField
                 label="Email"

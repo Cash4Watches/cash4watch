@@ -11,10 +11,13 @@ import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { FormHelperText } from "@mui/material";
-
+import { useDispatch } from "react-redux";
+import { setUser } from "../state/user.js";
 import { useState } from "react";
 function Register() {
   let navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
   const [formError, setFormError] = useState({
     passMatch: { value: false, message: "" },
@@ -22,6 +25,7 @@ function Register() {
   const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
     company: "",
     streetOne: "",
     streetTwo: "",
@@ -33,10 +37,23 @@ function Register() {
   });
   let registerUser = async (e) => {
     e.preventDefault();
-
-    let user = await api.post("/signup", form);
-
-    console.log(user);
+    console.log("registering ....");
+    let body = {
+      full_name: form.name,
+      password: form.password,
+      email: form.email,
+      company: form.company,
+      street1: form.streetOne,
+      street2: form.streetTwo,
+      city: form.city,
+      state: form.state,
+      zip: form.zip,
+      phone: form.phone,
+    };
+    let response = await api.post("/signup", body);
+    let data = response.data;
+    dispatch(setUser({ name: data.user.full_name, token: data.token }));
+    navigate("/dashboard");
   };
   let updateForm = (e) => {
     let name = e.target.name;
@@ -61,6 +78,7 @@ function Register() {
             type="text"
             name="name"
             label="Name"
+            placeholder="Full Name"
             onChange={updateForm}
             value={form.name}
             inputProps={{ pattern: "[a-zA-Z ]+" }}
@@ -74,6 +92,17 @@ function Register() {
             placeholder="Email Address"
             onChange={updateForm}
             value={form.email}
+            required
+          />
+          <TextField
+            fullWidth
+            type="text"
+            name="phone"
+            label="Phone"
+            placeholder="Phone Number"
+            autoComplete="phone"
+            onChange={updateForm}
+            value={form.phone}
             required
           />
           <TextField
@@ -164,7 +193,7 @@ function Register() {
             </FormHelperText>
           </FormControl>
           <FormControl>
-            <InputLabel>Confirm Password</InputLabel>
+            <InputLabel>Confirm</InputLabel>
             <OutlinedInput
               type={showPassword ? "text" : "password"}
               value={form.confirm}
@@ -173,7 +202,8 @@ function Register() {
               error={formError.passMatch.value}
               onKeyDown={clearError}
               required
-              label="Confirm Password"
+              label="Confirm"
+              placeholder="Confirm Password"
               autoComplete="password"
               endAdornment={
                 <InputAdornment position="end">
