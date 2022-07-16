@@ -1,49 +1,19 @@
 import "../styles/Landing.scss";
 import moblieRolex from "../media/rolexMoblie.svg";
 import desktopRolex from "../media/rolexDesktop.svg";
-
-import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import Acordain from "../components/Acordain.jsx";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { setForm } from "../state/form.js";
-
+import { useSelector } from "react-redux";
+import LandingForm from "../components/LandingForm.jsx";
+import LandingBox from "../components/LandingBox.jsx";
 function Landing() {
-  const form = useSelector((state) => state.form.value);
-  let navigate = useNavigate();
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
   const [background, setBackground] = useState("");
-  const [emailError, setEmailError] = useState(false);
-  const [nameError, setNameError] = useState(false);
 
-  let onlySpaces = (str) => {
-    return str.trim().length === 0;
-  };
-  let updateFormData = (e) => {
-    let { name, value } = e.target;
-    dispatch(
-      setForm({
-        ...form,
-        [name]: value,
-      })
-    );
-    console.log(form);
-  };
-  let handleSubmit = (e) => {
-    e.preventDefault();
-    if (form.email.includes("@") && !onlySpaces(form.name)) navigate("/form");
-    !form.email.includes("@") ? setEmailError(true) : setEmailError(false);
-    onlySpaces(form.name) ? setNameError(true) : setNameError(false);
-  };
   let handleResize = () => {
     if (800 <= window.innerWidth) {
       setBackground(
@@ -72,78 +42,7 @@ function Landing() {
         {background}
 
         <div className="Landing__form-container">
-          <div className="Landing__form__title">
-            <p>Get your label by completing form</p>
-          </div>
-          <div className="Landing__form-items">
-            <form onSubmit={handleSubmit}>
-              <TextField
-                label="Full Name"
-                name="name"
-                className="Landing__form-items__text-field"
-                onChange={updateFormData}
-                required
-                error={nameError}
-                value={form.name || ""}
-                inputProps={{ pattern: "[a-zA-Z ]+" }}
-              />
-              <TextField
-                label="Email"
-                name="email"
-                className="Landing__form-items__text-field"
-                onChange={updateFormData}
-                required
-                error={emailError}
-                value={form.email || ""}
-              />
-              <TextField
-                label="Phone Number"
-                name="number"
-                className="Landing__form-items__text-field"
-                onChange={updateFormData}
-                value={form.number || ""}
-                required
-              />
-
-              <FormControl
-                className="Landing__form-items__text-field"
-                fullWidth
-              >
-                <InputLabel id="demo-simple-select-label">
-                  Brand Name
-                </InputLabel>
-                <Select
-                  value={form.brand}
-                  label="Brand Name"
-                  onChange={updateFormData}
-                  name="brand"
-                  required
-                >
-                  <MenuItem value={"Rolex"}>Rolex</MenuItem>
-                  <MenuItem value={"Patek Philippe"}>Patek Philippe</MenuItem>
-                  <MenuItem value={"Cartier"}>Cartier</MenuItem>
-                  <MenuItem value={"Richard Mille"}>Richard Mille</MenuItem>
-                  <MenuItem value={"Vacheron"}>Vacheron</MenuItem>
-                  <MenuItem value={"Omega"}>Omega</MenuItem>
-                  <MenuItem value={"Aude4mars Piguet"}>
-                    Audemars Piguet
-                  </MenuItem>
-                  <MenuItem value={"Tudor"}>Tudor</MenuItem>
-                  <MenuItem value={"IWC"}>IWC</MenuItem>
-                  <MenuItem value={"Bulgari"}>Bulgari</MenuItem>
-                  <MenuItem value={"Panerai"}>Panerai</MenuItem>
-                </Select>
-              </FormControl>
-
-              <button className="Landing__form-submit" type="submit">
-                <p>Get Started</p>
-                <ArrowForwardIcon
-                  className="Landing__form-submit__arrow"
-                  sx={{ fontSize: 25 }}
-                />
-              </button>
-            </form>
-          </div>
+          {!user.isAuthenticated ? <LandingForm /> : <LandingBox />}
         </div>
 
         <div className="Landing__banner-container">
