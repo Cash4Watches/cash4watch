@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  # User routes
+  # Customer Routes
    post '/login', to: 'application#create' # login to account
    get '/profile', to: 'users#profile' # get user profile using token
    post '/signup', to: 'users#create' # update User Data
@@ -10,14 +10,12 @@ Rails.application.routes.draw do
    post '/check-order', to: 'orders#show' # show order status by ID
    post '/my-orders', to: 'orders#my_orders' # returns all the orders of a user
 
-    # Label routes 
-    # post '/label', to: 'orders#create_label'
-    get '/admin-orders', to: 'orders#admin_show'
-    post '/delete-user', to: 'users#admin_delete_user'
+
+    #Admin Routes
+    post '/update-step', to: 'steps#update' # update step of an order
+    post '/upload', to: 'documents#create' # Upload documents to order
+    get '/admin-orders', to: 'orders#admin_show' # Get Orders unrestricted as an admin
+    post '/delete-user', to: 'users#admin_delete_user' # Delete User as a admin
     post '/delete-document', to: 'documents#destroy' # destroy documents by ID
     
-    # Step Routes 
-    post '/update-step', to: 'steps#update'
-    #Document routess
-    post '/upload', to: 'documents#create' # Upload documents to order
 end

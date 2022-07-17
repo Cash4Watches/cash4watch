@@ -80,12 +80,14 @@ class ApplicationController < ActionController::Base
           shipment.label(file_format: "PDF")
           url = shipment.postage_label.label_pdf_url
           tracking_code = shipment.tracking_code
+          order.tracking_number = tracking_code
+          order.save
           filename = File.basename(URI.parse(url).path)
           file = URI.open(url)
           document = Document.create!({name: "label.pdf",order_id: order.id});
           if document
             document.file.attach(io: file, filename: filename, content_type: 'application/pdf')
-            render json: document
+            # render json: document
           else
             render json: {message: "Failed to create PDF document"}
           end

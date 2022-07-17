@@ -61,6 +61,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_171251) do
     t.boolean "papers"
     t.string "included_items"
     t.string "extra_comment"
+    t.string "tracking_number"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -89,6 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_171251) do
     t.string "state"
     t.string "zip"
     t.string "phone"
+    t.boolean "is_admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

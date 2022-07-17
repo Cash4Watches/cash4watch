@@ -6,9 +6,9 @@ class UsersController < ApplicationController
             payload = {'user_id': user.id}
             token = encode(payload)
             render json: {
-                user: user,
+                user: user, 
+                # edit password digest
                 token: token,
-                authenticated: true
             }
         else 
             render json: { message: 'There was an error creating your account' }
@@ -36,18 +36,20 @@ class UsersController < ApplicationController
   end
   def admin_delete_user
     token = request.headers['Authentication'].split(' ')[1]
-    payload = decode(token) 
-    if payload['user_id'] == 1
-      user = User.find(params[:user_id])
-      if user
-        user.destroy
-        render json: user
+    payload = decode(token)
+    user = User.find(payload['user_id'])
+    if user.is_admin
+      user_to_delete = User.find_by(email: params[:email])
+      if user_to_delete
+        user_to_delete.destroy
+        render json: user_to_delete
       else
         render json: {message: "User Does not Exist"}
       end
     else
-      render json: {message: "Unauthorized Action"}
+      render json: {message: "Unauthorized Route"}
     end
+
   end
   private
 
