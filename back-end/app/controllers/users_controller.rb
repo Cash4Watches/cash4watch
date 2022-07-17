@@ -5,8 +5,9 @@ class UsersController < ApplicationController
             UserMailer.with(user: user).welcome_email.deliver_later
             payload = {'user_id': user.id}
             token = encode(payload)
+            x = user.as_json(only: [:id, :full_name,:email,:company,:street1,:street2,:city,:state,:zip,:phone])
             render json: {
-                user: user, 
+                user: x, 
                 # edit password digest
                 token: token,
             }

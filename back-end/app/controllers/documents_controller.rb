@@ -10,7 +10,8 @@ class DocumentsController < ApplicationController
       def destroy
         token = request.headers['Authentication'].split(' ')[1]
         payload = decode(token) 
-        if payload['user_id'] == 1
+        user = User.find(payload['user_id'])
+        if user.is_admin
           doc = Document.find(params[:id])
           if doc
             doc.destroy
@@ -19,7 +20,7 @@ class DocumentsController < ApplicationController
             render json: {message: 'Failed to destroy Document'}
           end
         else
-        render json: {message: "Unauthorized Action"}
+        render json: {message: "Unauthorized Route"}
         end
       end
     private

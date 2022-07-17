@@ -38,11 +38,12 @@ class OrdersController < ApplicationController
    def admin_show
     token = request.headers['Authentication'].split(' ')[1]
     payload = decode(token) 
-    if payload['user_id'] == 1
+    user = User.find(payload['user_id'])
+    if user.is_admin
       orders = Order.all
       render json: {orders: orders}
     else
-      render json: {message: "Unauthorized Action"}
+      render json: {message: "Unauthorized Route"}
     end
    end
   def my_orders
@@ -59,7 +60,8 @@ class OrdersController < ApplicationController
    def admin_destroy_orders
     token = request.headers['Authentication'].split(' ')[1]
     payload = decode(token) 
-    if payload['user_id'] == 1
+    user = User.find(payload['user_id'])
+    if user.is_admin
       order = Order.find[params[:order_id]]
       if order
         order.destroy
@@ -68,7 +70,7 @@ class OrdersController < ApplicationController
         render json: {message:"Order not Found"}
       end
     else
-      render json: {message: "Unauthorized Action"}
+      render json: {message: "Unauthorized Route"}
     end
   end
    private
