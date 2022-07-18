@@ -178,6 +178,7 @@
     flex-wrap: wrap;
     background-color: white;
     padding: 1rem;
+    padding-bottom: 3rem;
     width: 70vw;
     max-width: 350px;
     min-height: 450px;
@@ -187,17 +188,16 @@
       align-self: flex-end;
       color: white;
       padding: 1rem;
-      padding-left: 2rem;
-      padding-right: 2rem;
-      font-size: 1.8rem;
+
+      font-size: 1.5rem;
       background-color: #790220;
       border: 1px solid #a52c4a;
       box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
         0 2px 6px 2px rgb(60 64 67 / 15%);
       border-radius: 20px;
       transition: all ease 0.3s;
-      margin-bottom: 30%;
-      width: 80%;
+      margin: 0px;
+      width: 70%;
       &:hover {
         cursor: pointer;
         background-color: whitesmoke;
