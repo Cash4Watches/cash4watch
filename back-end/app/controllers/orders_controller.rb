@@ -62,7 +62,7 @@ class OrdersController < ApplicationController
     payload = decode(token) 
     user = User.find(payload['user_id'])
     if user.is_admin
-      order = Order.find[params[:order_id]]
+      order = Order.find(params[:order_id])
       if order
         order.destroy
         render json: order
