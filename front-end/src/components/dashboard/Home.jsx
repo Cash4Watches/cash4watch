@@ -10,7 +10,7 @@ function Home() {
         Hello, <span className="Home-username">{user.name}</span>
       </h1>
       <button className="Home-create-btn" onClick={() => navigate("/form")}>
-        New Order{" "}
+        New Order
       </button>
     </div>
   );
