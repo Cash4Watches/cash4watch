@@ -24,6 +24,7 @@ export default function LandingBox() {
             <span>{abbreviateName()}</span>
           </div>
           <button onClick={() => navigate("/dashboard")}>My Dashboard</button>
+          <button onClick={() => navigate("/form")}>New Order</button>
         </div>
       </div>
     </>
