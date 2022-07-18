@@ -16,13 +16,13 @@ function Navbar() {
     let handleIcon = () => {
       if (800 <= window.innerWidth) {
         setNavbutton(
-          <div className="Navbar__login" onClick={() => navigate("/register")}>
-            <h1>Register</h1>
+          <div className="Navbar__login" onClick={() => navigate("/login")}>
+            <h1>Login</h1>
           </div>
         );
       } else {
         setNavbutton(
-          <div className="Navbar__acc" onClick={() => navigate("/register")}>
+          <div className="Navbar__acc" onClick={() => navigate("/login")}>
             <AccountCircleTwoToneIcon fontSize="inherit" />
           </div>
         );

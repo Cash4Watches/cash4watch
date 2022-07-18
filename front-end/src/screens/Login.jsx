@@ -45,7 +45,7 @@ function Login() {
             required
           />
           <TextField
-            type="text"
+            type="password"
             name="password"
             label="Password"
             onChange={updateForm}

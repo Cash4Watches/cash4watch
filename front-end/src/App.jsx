@@ -4,6 +4,7 @@ import Navbar from "./components/Nav.jsx";
 import Footer from "./components/Footer.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import Form from "./screens/Form.jsx";
+import FormSign from "./screens/FormSign.jsx";
 import Login from "./screens/Login.jsx";
 import Register from "./screens/Register.jsx";
 import PresistProfile from "./components/PersistProfile.jsx";
@@ -18,6 +19,7 @@ function App() {
             <>
               <Navbar />
               <Landing />
+              <Footer />
             </>
           }
         />
@@ -27,6 +29,17 @@ function App() {
             <>
               <Navbar />
               <Form />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/form-signup"
+          element={
+            <>
+              <Navbar />
+              <FormSign />
+              <Footer />
             </>
           }
         />
@@ -37,6 +50,7 @@ function App() {
             <>
               <Navbar />
               <Login />
+              <Footer />
             </>
           }
         />
@@ -46,6 +60,7 @@ function App() {
             <>
               <Navbar />
               <Register />
+              <Footer />
             </>
           }
         />
@@ -58,11 +73,11 @@ function App() {
               <div className="Errorpage">
                 Wrong url <a href="/">Click here</a> to go back home
               </div>
+              <Footer />
             </>
           }
         />
       </Routes>
-      <Footer />
     </>
   );
 }

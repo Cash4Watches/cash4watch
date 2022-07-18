@@ -36,7 +36,7 @@ function Dashboard() {
       dashboardScreen.current.style.paddingLeft = shiftAmount;
       verticallNav.current.style.transform = "translateX(0%)";
     }
-    horizontalNav.current.style.backgroundColor = navColor;
+    document.body.style.setProperty("--dashboard-nav-color", navColor);
   }, [icon]);
   let changeContent = (e) => {
     let dashboardContent = e.target.dataset.content;

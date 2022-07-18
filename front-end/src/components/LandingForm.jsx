@@ -28,12 +28,12 @@ const LandingForm = () => {
         [name]: value,
       })
     );
-    console.log(form);
   };
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    if (form.email.includes("@") && !onlySpaces(form.name)) navigate("/form");
+    if (form.email.includes("@") && !onlySpaces(form.name))
+      navigate("/form-signup/#modelnumber");
     !form.email.includes("@") ? setEmailError(true) : setEmailError(false);
     onlySpaces(form.name) ? setNameError(true) : setNameError(false);
   };

@@ -4,8 +4,10 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import ColorHash from "color-hash";
-import { useState, useEffect } from "react";
-const steps = [
+import { useState, useEffect, useRef } from "react";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import api from "../../services/AxiosConfig.js";
+const stepLabels = [
   "Case Approved",
   "Label Generated",
   "Watch Received",
@@ -14,42 +16,70 @@ const steps = [
 ];
 
 export default function OrderView(props) {
-  let colorHash = new ColorHash();
-  const [stepperStyle, setStepperStyle] = useState({
-    alternativeLabel: true,
-    orientation: "horizontal",
-  });
-  useEffect(() => {
-    if (window.innerWidth <= 500) {
-      setStepperStyle({
-        alternativeLabel: false,
-        orientation: "vertical",
-      });
-    } else {
-      setStepperStyle({
-        alternativeLabel: true,
-        orientation: "horizontal",
-      });
-    }
-  }, [window.innerWidth]);
   const {
     id,
     brand_name,
     model_number,
     reference_number,
     condition,
-    previous_service,
-    previous_polish,
+    // previous_service,
+    // previous_polish,
     papers,
-    included_items,
+    // included_items,
     extra_comment,
     created_at,
     updated_at,
   } = props.values;
 
+  let colorHash = new ColorHash();
+  const details = useRef(null);
+  const [stepperStyle, setStepperStyle] = useState({
+    alternativeLabel: true,
+    orientation: "horizontal",
+  });
+  const [stepValue, setStepValue] = useState(0);
+  const [documents, setDocuments] = useState([{}]);
+  let showDetails = () => {
+    details.current.classList.toggle("OrderView-show");
+  };
+  let getStepCount = async () => {
+    let response = await api.post("/check-order", { order_id: id });
+    setDocuments(response.data.documents);
+    let stepsArr = response.data.steps;
+    setStepValue(0);
+    stepsArr.forEach((step) => {
+      if (step.completed) {
+        setStepValue((prev) => prev + 1);
+      }
+    });
+  };
+  useEffect(() => {
+    setStepValue(0);
+    let handleStepperOrentation = () => {
+      if (window.innerWidth <= 500) {
+        setStepperStyle({
+          alternativeLabel: false,
+          orientation: "vertical",
+        });
+      } else {
+        setStepperStyle({
+          alternativeLabel: true,
+          orientation: "horizontal",
+        });
+      }
+    };
+    window.addEventListener("resize", handleStepperOrentation);
+    return () => {
+      window.removeEventListener("resize", handleStepperOrentation);
+    };
+  }, [id]);
+
+  useEffect(() => {
+    if (stepValue === 0) getStepCount();
+  }, [stepValue, id]);
   return (
     <div className="OrderView">
-      <h2 style={{ "border-bottom": `3px solid ${colorHash.hex(id)}` }}>
+      <h2 style={{ borderBottom: `3px solid ${colorHash.hex(id)}` }}>
         {brand_name}
       </h2>
       <div className="OrderView-main">
@@ -63,18 +93,48 @@ export default function OrderView(props) {
           <span>Reference :</span> {reference_number}
         </p>
         <p>
+          <span>Documents :</span>
+
+          {documents.length !== 0 ? (
+            documents.map((doc, i) => (
+              <a target="_blank" rel="noreferrer" href={doc.file_url} key={i}>
+                {doc.name}
+                <PictureAsPdfIcon />
+              </a>
+            ))
+          ) : (
+            <span>Cant seem to grab docs</span>
+          )}
+        </p>
+      </div>
+
+      <h4 onClick={showDetails}>More Details</h4>
+      <div ref={details} className="OrderView-main OrderView-detail-container">
+        <p>
           <span>papers : </span>
           {papers ? "Yes" : "No"}
+        </p>
+        <p>
+          <span>Condition :</span> {condition}
+        </p>
+        <p>
+          <span>Comment :</span> {extra_comment}
+        </p>
+        <p>
+          <span>Created :</span> {created_at.split("T")[0]}
+        </p>
+        <p>
+          <span>Last Updated :</span> {updated_at.split("T")[0]}
         </p>
       </div>
       <h3>Current Status:</h3>
       <Stepper
         className="OrderView-stepper"
-        activeStep={2}
+        activeStep={stepValue}
         alternativeLabel={stepperStyle.alternativeLabel}
         orientation={stepperStyle.orientation}
       >
-        {steps.map((label) => (
+        {stepLabels.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>
