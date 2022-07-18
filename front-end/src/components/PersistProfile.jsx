@@ -8,7 +8,7 @@ const PresistProfile = () => {
   const user = useSelector((state) => state.user);
   let grabProfile = async () => {
     let response = await api.get("/profile");
-    console.log(response.data);
+
     dispatch(
       setUser({
         name: response.data.full_name,
@@ -24,7 +24,6 @@ const PresistProfile = () => {
       console.log("grabing profile .....");
       grabProfile();
     } else {
-      console.log("isAuthenticated", token);
     }
   }, [user]);
   return <></>;
