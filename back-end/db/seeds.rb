@@ -33,7 +33,7 @@ user = User.create!({
     phone: "929-422-6224"
 });
 puts 'Seeding Documents'
-20.times do 
+10.times do 
     order = Order.create!({
         brand_name: "Rolex", 
         model_number: "01010020202", 
@@ -52,7 +52,10 @@ puts 'Seeding Documents'
               step5 = Step.create!({index: 5,title: "Watch Sold",desc: "",completed: false,order_id: order.id})
 end
 puts 'Done.'
-
+    review = Review.create!(rating: 4,comment: "Great Service", user_id: user.id)
+    review = Review.create!(rating: 5,comment: "Fast and Amazing Service", user_id: user.id)
+    review = Review.create!(rating: 4,comment: "Great Service", user_id: user.id)
+    review = Review.create!(rating: 1,comment: "Terrible Service I expected better", user_id: user.id)
 # puts user
 
 # puts order

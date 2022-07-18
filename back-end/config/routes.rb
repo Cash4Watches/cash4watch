@@ -1,5 +1,4 @@
-Rails.application.routes.draw do
-  
+Rails.application.routes.draw do  
   # Customer Routes
    post '/login', to: 'application#create' # login to account
    get '/profile', to: 'users#profile' # get user profile using token
@@ -10,7 +9,9 @@ Rails.application.routes.draw do
    post '/check-order', to: 'orders#show' # show order status by ID
    post '/my-orders', to: 'orders#my_orders' # returns all the orders of a user
    post '/upload', to: 'documents#create' # Upload documents to order
-
+    
+   # Review routes
+   post '/add-review', to: 'reviews#create' # customers create reviews
 
     #Admin Routes
     post '/update-step', to: 'steps#update' # update step of an order
@@ -18,4 +19,6 @@ Rails.application.routes.draw do
     post '/delete-user', to: 'users#admin_delete_user' # Delete User as a admin
     post '/delete-document', to: 'documents#destroy' # destroy documents by ID
     post '/destroy-orders', to: 'orders#admin_destroy_orders' # 
+    post '/delete-review', to: 'reviews#admin_delete' # delete reviews only through admin token
+    post '/edit-review', to: 'reviews#admin_edit' # Edit customer reviews
 end
