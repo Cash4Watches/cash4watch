@@ -53,14 +53,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_171251) do
 
   create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "brand_name"
-    t.integer "model_number"
-    t.integer "reference_number"
+    t.string "model_number"
+    t.string "reference_number"
     t.string "condition"
     t.string "previous_service"
     t.string "previous_polish"
     t.boolean "papers"
     t.string "included_items"
     t.string "extra_comment"
+    t.string "tracking_number"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -89,6 +90,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_05_171251) do
     t.string "state"
     t.string "zip"
     t.string "phone"
+    t.boolean "is_admin", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
