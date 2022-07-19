@@ -12,7 +12,6 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_07_18_120827) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -43,15 +42,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_18_120827) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "documents", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "documents", force: :cascade do |t|
     t.string "name"
-    t.uuid "order_id"
+    t.bigint "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_documents_on_order_id"
   end
 
-  create_table "orders", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "orders", force: :cascade do |t|
     t.string "brand_name"
     t.string "model_number"
     t.string "reference_number"
@@ -68,8 +67,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_18_120827) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "reviews", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.integer "rating"
+  create_table "reviews", force: :cascade do |t|
     t.string "comment"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -77,12 +75,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_18_120827) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
-  create_table "steps", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "steps", force: :cascade do |t|
     t.integer "index"
     t.string "title"
     t.string "desc"
     t.boolean "completed"
-    t.uuid "order_id"
+    t.bigint "order_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_steps_on_order_id"

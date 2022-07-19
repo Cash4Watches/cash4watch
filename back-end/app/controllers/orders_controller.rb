@@ -73,6 +73,17 @@ class OrdersController < ApplicationController
       render json: {message: "Unauthorized Route"}
     end
   end
+  
+  #Admin Route for generating order and user
+  def admin_create_order
+    token = request.headers['Authentication'].split(' ')[1]
+    payload = decode(token) 
+    user = User.find(payload['user_id'])
+    if user.is_admin
+    else
+      render json: {message:"Unauthorized "}
+    end
+  end
    private
    def order_params
     params.permit(:brand_name, :model_number, :reference_number, :condition, :previous_service,:previous_polish,:papers,:included_items,:extra_comment,:user_id)
