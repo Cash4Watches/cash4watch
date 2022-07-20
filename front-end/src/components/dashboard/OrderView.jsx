@@ -20,7 +20,6 @@ export default function OrderView(props) {
     id,
     brand_name,
     model_number,
-    reference_number,
     condition,
     // previous_service,
     // previous_polish,
@@ -56,7 +55,7 @@ export default function OrderView(props) {
   useEffect(() => {
     setStepValue(0);
     let handleStepperOrentation = () => {
-      if (window.innerWidth <= 500) {
+      if (window.innerWidth <= 600) {
         setStepperStyle({
           alternativeLabel: false,
           orientation: "vertical",
@@ -88,9 +87,6 @@ export default function OrderView(props) {
         </p>
         <p>
           <span>Model :</span> {model_number}
-        </p>
-        <p>
-          <span>Reference :</span> {reference_number}
         </p>
         <p>
           <span>Documents :</span>

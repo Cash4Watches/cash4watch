@@ -78,16 +78,6 @@ function Form() {
             value={form.model_number || ""}
           />
           <TextField
-            label="Reference Number"
-            name="reference_number"
-            onChange={updateFormData}
-            required
-            fullWidth
-            className="Form-input"
-            // type="number"
-            value={form.reference_number || ""}
-          />
-          <TextField
             label="Previous Service"
             name="previous_service"
             onChange={updateFormData}
