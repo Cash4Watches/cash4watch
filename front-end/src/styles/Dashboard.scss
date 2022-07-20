@@ -48,7 +48,7 @@
   &-nav-vertical {
     display: flex;
     flex-direction: column;
-    min-height: 92.5vh;
+    min-height: 92.8vh;
     min-width: 7rem;
     width: 10vw;
     background-color: #790220;
@@ -64,7 +64,7 @@
     margin-top: 3rem;
     min-height: 50vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
   }
   &-nav-vertical-icon {
@@ -221,7 +221,7 @@
     transition: all ease 0.3s;
   }
   &-show {
-    height: 250px;
+    height: 350px;
   }
   &-main {
     display: flex;
@@ -277,6 +277,9 @@
 
 @media (min-width: 900px) {
   .Dashboard {
+    &-nav-vertical-icon {
+      height: 6rem;
+    }
     &-nav-vertical {
       min-width: 12rem;
       & p {
