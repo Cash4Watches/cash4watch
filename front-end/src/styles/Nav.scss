@@ -1,7 +1,8 @@
 .Navbar {
   background-color: #242951e9;
   display: flex;
-  position: relative;
+  position: fixed;
+  min-width: 100vw;
   min-height: 4rem;
   justify-content: center;
   align-items: center;

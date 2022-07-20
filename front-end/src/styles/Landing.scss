@@ -102,6 +102,7 @@
       text-align: center;
     }
     &__arrow {
+      z-index: -1;
       display: flex;
       transform: rotate(90deg);
       margin-top: 5vh;
@@ -196,7 +197,6 @@
         0 2px 6px 2px rgb(60 64 67 / 15%);
       border-radius: 20px;
       transition: all ease 0.3s;
-      margin: 0px;
       width: 70%;
       &:hover {
         cursor: pointer;

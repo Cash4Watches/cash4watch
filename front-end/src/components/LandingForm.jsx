@@ -33,7 +33,7 @@ const LandingForm = () => {
   let handleSubmit = (e) => {
     e.preventDefault();
     if (form.email.includes("@") && !onlySpaces(form.name))
-      navigate("/form-signup/#modelnumber");
+      navigate("/form-signup");
     !form.email.includes("@") ? setEmailError(true) : setEmailError(false);
     onlySpaces(form.name) ? setNameError(true) : setNameError(false);
   };

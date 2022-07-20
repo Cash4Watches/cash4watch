@@ -7,10 +7,13 @@ export const formSlice = createSlice({
       email: "",
       number: "",
       brand: "",
-    },
+  },
   },
   reducers: {
     setForm: (state, action) => {
+      state.value = { ...action.payload };
+    },
+    clearForm: (state, action) => {
       state.value = { ...action.payload };
     },
   },

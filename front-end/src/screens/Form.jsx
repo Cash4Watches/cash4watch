@@ -22,7 +22,7 @@ function Form() {
     if (vaildateForm(e.target)) {
       try {
         api.post("/create-new-order", form);
-        // navigate("/dashboard");
+        navigate("/dashboard");
       } catch (e) {
         console.log(e);
       }
