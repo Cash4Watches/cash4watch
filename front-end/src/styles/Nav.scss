@@ -7,6 +7,26 @@
   min-height: 4rem;
   justify-content: center;
   align-items: center;
+  & a {
+    position: absolute;
+    margin-right: 70vw;
+    text-decoration: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(43, 81, 170, 0.5);
+    padding: 0.5rem;
+    gap: 0.5rem;
+    background-color: rgb(15, 128, 43);
+    border-radius: 5px;
+    &:active {
+      color: white;
+    }
+    &:hover {
+      border-color: rgb(47, 159, 28);
+      cursor: pointer;
+    }
+  }
   &__logo {
     display: flex;
     align-items: center;
