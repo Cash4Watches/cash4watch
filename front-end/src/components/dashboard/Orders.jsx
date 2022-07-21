@@ -13,17 +13,29 @@ function Orders() {
     view: null,
   });
   const [orderArr, setOrderArr] = useState([]);
-  let fetchOrders = async () => {
-    let response = await api.post("/my-orders");
-    setOrderArr(response.data.orders);
-  };
+
   useEffect(() => {
+    let fetchOrders = async () => {
+      let response = await api.post("/my-orders");
+      console.log(response.data.orders);
+      if (response.data.orders.length === 0) {
+        setOrderDetail({
+          ...orderDetail,
+          label: "No Order Found :(",
+          view: <h4>NO ORDERS </h4>,
+        });
+      } else {
+        setOrderArr(response.data.orders);
+      }
+    };
     fetchOrders();
+  }, []);
+  useEffect(() => {
     if (orderArr.length === 0) {
       setOrderDetail({
         ...orderDetail,
-        label: "Sorry no Orders here :(",
-        view: <h4>NO ORDERS</h4>,
+        label: "Loading Order(s)",
+        view: <h4>LOADING ORDERS....</h4>,
       });
     } else {
       setOrderDetail({
@@ -32,7 +44,7 @@ function Orders() {
         view: <OrderView values={orderArr[orderDetail.index]} />,
       });
     }
-  }, [orderArr.length, orderDetail.index]);
+  }, [orderArr, orderDetail.index]);
 
   return (
     <div className="Orders">
