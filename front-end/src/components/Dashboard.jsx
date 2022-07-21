@@ -136,7 +136,7 @@ function Dashboard() {
           </div>
 
           <div ref={dashboardScreen} className="Dashboard-screen">
-            <div className="Dashboard-screen-content">{content}</div>
+            {content}
           </div>
         </div>
       </div>

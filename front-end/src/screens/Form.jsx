@@ -21,7 +21,8 @@ function Form() {
     e.preventDefault();
     if (vaildateForm(e.target)) {
       try {
-        api.post("/create-new-order", form);
+        let response = await api.post("/create-new-order", form);
+        console.log(response.data);
         navigate("/dashboard");
       } catch (e) {
         console.log(e);

@@ -16,12 +16,13 @@ function Login() {
     e.preventDefault();
     let response = await api.post("/login", form);
     let data = response.data;
-    localStorage.setItem("jwt_token", data.token);
-
-    dispatch(setUser({ name: data.user.full_name }));
-
-    navigate("/dashboard");
-    console.log(data);
+    if (data["user"]) {
+      localStorage.setItem("jwt_token", data.token);
+      dispatch(setUser({ name: data.user.full_name }));
+      navigate("/dashboard");
+    } else {
+      alert(data["message"]);
+    }
   };
   let updateForm = (e) => {
     let name = e.target.name;
