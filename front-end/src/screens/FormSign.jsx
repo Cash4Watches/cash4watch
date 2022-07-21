@@ -180,16 +180,6 @@ function FormSign() {
             value={form.model || ""}
           />
           <TextField
-            label="Reference Number"
-            name="reference"
-            onChange={updateFormData}
-            required
-            fullWidth
-            className="Form-input"
-            // type="number"
-            value={form.reference || ""}
-          />
-          <TextField
             label="Previous Service"
             name="service"
             onChange={updateFormData}

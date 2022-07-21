@@ -48,15 +48,14 @@
   &-nav-vertical {
     display: flex;
     flex-direction: column;
-    min-height: 92.5vh;
+    min-height: 92.8vh;
     min-width: 7rem;
     width: 10vw;
     background-color: #790220;
     color: white;
     transition: all ease 0.3s;
     transform: translateX(-100%);
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
-      0 2px 6px 2px rgb(60 64 67 / 15%);
+    box-shadow: 0 1px 2px 0 #79022036, 0 2px 6px 2px #79022036;
     position: absolute;
     z-index: 1;
   }
@@ -64,7 +63,7 @@
     margin-top: 3rem;
     min-height: 50vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
   }
   &-nav-vertical-icon {
@@ -84,7 +83,7 @@
     }
     &:hover {
       color: #790220;
-      background-color: whitesmoke;
+      background-color: white;
       cursor: pointer;
     }
   }
@@ -93,7 +92,7 @@
   }
   &-screen {
     transition: all ease 0.25s;
-    min-width: 100vw;
+    max-width: 100vw;
     max-height: 100vh;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -102,7 +101,7 @@
   }
   &-active {
     color: #6529dc;
-    background-color: rgb(240, 240, 240);
+    background-color: white;
   }
 }
 .Home {
@@ -182,17 +181,12 @@
   flex-direction: column;
   width: 100vw;
   height: 90vh;
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
   padding-bottom: 1rem;
+
   & h1 {
     margin-bottom: 2rem;
-    background: linear-gradient(
-      180deg,
-      transparent 80%,
-      rgba(152, 9, 9, 0.5) 80%,
-      rgb(226, 100, 100) 90%,
-      transparent 95%
-    );
   }
   &-dropdown {
     width: 40%;
@@ -228,7 +222,7 @@
     transition: all ease 0.3s;
   }
   &-show {
-    height: 250px;
+    height: 350px;
   }
   &-main {
     display: flex;
@@ -284,6 +278,9 @@
 
 @media (min-width: 900px) {
   .Dashboard {
+    &-nav-vertical-icon {
+      height: 6rem;
+    }
     &-nav-vertical {
       min-width: 12rem;
       & p {
@@ -292,8 +289,10 @@
     }
   }
 }
-@media (max-width: 500px) {
+@media (max-width: 650px) {
   .OrderView {
+    max-width: 80vw;
+
     &-main {
       flex-direction: column;
       align-items: center;

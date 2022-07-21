@@ -49,7 +49,7 @@ function Landing() {
           <div className="Landing__banner-container__item">
             <LibraryAddCheckIcon fontSize="inherit" />
             <p>
-              Complete Form To Get
+              Get Insured
               <span style={{ color: "purple", fontWeight: "bolder" }}>
                 {" "}
                 Fed

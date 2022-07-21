@@ -20,7 +20,6 @@ export default function OrderView(props) {
     id,
     brand_name,
     model_number,
-    reference_number,
     condition,
     // previous_service,
     // previous_polish,
@@ -42,21 +41,11 @@ export default function OrderView(props) {
   let showDetails = () => {
     details.current.classList.toggle("OrderView-show");
   };
-  let getStepCount = async () => {
-    let response = await api.post("/check-order", { order_id: id });
-    setDocuments(response.data.documents);
-    let stepsArr = response.data.steps;
-    setStepValue(0);
-    stepsArr.forEach((step) => {
-      if (step.completed) {
-        setStepValue((prev) => prev + 1);
-      }
-    });
-  };
+
   useEffect(() => {
     setStepValue(0);
     let handleStepperOrentation = () => {
-      if (window.innerWidth <= 500) {
+      if (window.innerWidth <= 650) {
         setStepperStyle({
           alternativeLabel: false,
           orientation: "vertical",
@@ -69,12 +58,25 @@ export default function OrderView(props) {
       }
     };
     window.addEventListener("resize", handleStepperOrentation);
+    handleStepperOrentation();
     return () => {
       window.removeEventListener("resize", handleStepperOrentation);
     };
   }, [id]);
 
   useEffect(() => {
+    let getStepCount = async () => {
+      let response = await api.post("/check-order", { order_id: id });
+      setDocuments(response.data.documents);
+      let stepsArr = response.data.steps;
+      setStepValue(0);
+      stepsArr.forEach((step) => {
+        if (step.completed) {
+          setStepValue((prev) => prev + 1);
+        }
+      });
+    };
+
     if (stepValue === 0) getStepCount();
   }, [stepValue, id]);
   return (
@@ -88,9 +90,6 @@ export default function OrderView(props) {
         </p>
         <p>
           <span>Model :</span> {model_number}
-        </p>
-        <p>
-          <span>Reference :</span> {reference_number}
         </p>
         <p>
           <span>Documents :</span>

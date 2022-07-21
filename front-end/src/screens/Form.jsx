@@ -21,8 +21,9 @@ function Form() {
     e.preventDefault();
     if (vaildateForm(e.target)) {
       try {
-        api.post("/create-new-order", form);
-        // navigate("/dashboard");
+        let response = await api.post("/create-new-order", form);
+        console.log(response.data);
+        navigate("/dashboard");
       } catch (e) {
         console.log(e);
       }
@@ -76,16 +77,6 @@ function Form() {
             className="Form-input"
             // type="number"
             value={form.model_number || ""}
-          />
-          <TextField
-            label="Reference Number"
-            name="reference_number"
-            onChange={updateFormData}
-            required
-            fullWidth
-            className="Form-input"
-            // type="number"
-            value={form.reference_number || ""}
           />
           <TextField
             label="Previous Service"

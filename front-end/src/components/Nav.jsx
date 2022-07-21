@@ -5,6 +5,7 @@ import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { clearUser } from "../state/user.js";
+import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
 
 function Navbar() {
   const user = useSelector((state) => state.user);
@@ -45,6 +46,10 @@ function Navbar() {
   return (
     <>
       <div className="Navbar">
+        <a target="_blank" rel="noreferrer" href="tel:2124103030">
+          <PhoneInTalkIcon />
+          2124103030
+        </a>
         <div className="Navbar__logo">
           <img src={logo} onClick={() => navigate("/")} alt="Cash logo" />
         </div>
