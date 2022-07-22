@@ -11,7 +11,7 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.string :included_items
       t.string :extra_comment
       t.string :tracking_number
-      t.references  :user
+      t.references :user
       t.timestamps
     end
   end

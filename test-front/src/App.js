@@ -26,7 +26,7 @@ function App() {
     let filename = file.replace(/^.*[\\\/]/, '')
     let type;
     if(match[1]== "pdf"){
-
+      type = 
     }else{
       type = match ? `image/${match[1]}` : `image`;
     }

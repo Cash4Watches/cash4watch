@@ -1,10 +1,18 @@
 class DocumentsController < ApplicationController
      def create
-        doc = Document.create!(doc_params);
-        if doc
+        p params
+        order_id = params[:order_id].to_i
+        order = Order.find(order_id)
+        if order 
+          doc = Document.create!(name: params[:name], order_id: order.id)
+          doc.file.attach(io: params[:file], filename: params[:name], content_type: 'application/pdf')
+          if doc
             render json: doc
-        else
+          else
             render json: {message: 'Failed to create Document'}
+          end
+        else
+          render json: {message: "Incorrect Order ID"}
         end
      end
       def destroy
@@ -23,7 +31,6 @@ class DocumentsController < ApplicationController
         render json: {message: "Unauthorized Route"}
         end
       end
-    private
       def doc_params
         params.permit(:name, :order_id,:file)
       end
