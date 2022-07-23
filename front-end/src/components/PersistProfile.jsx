@@ -21,7 +21,6 @@ const PresistProfile = () => {
     //if the user is not authenticated and a token exists attempt to log them in
     if (!user.isAuthenticated && token) {
       // make api call
-      console.log("grabing profile .....");
       grabProfile();
     } else {
     }

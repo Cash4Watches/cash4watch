@@ -25,7 +25,6 @@ function Register() {
   const [form, setForm] = useState({});
   let registerUser = async (e) => {
     e.preventDefault();
-    console.log("registering ....", form);
     let response = await api.post("/signup", form);
     let data = response.data;
     localStorage.setItem("jwt_token", data.token);
