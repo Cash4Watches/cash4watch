@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { FormHelperText } from "@mui/material";
 
 function FormSign() {
-  const addressRef = useRef(null);
+  const brandRef = useRef(null);
   let navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
@@ -95,7 +95,7 @@ function FormSign() {
   };
 
   useEffect(() => {
-    addressRef.current.scrollIntoView();
+    brandRef.current.scrollIntoView();
   }, []);
   return (
     <>
@@ -136,19 +136,10 @@ function FormSign() {
             className="Form-input"
             value={form.number || ""}
           />
-          <TextField
-            fullWidth
-            ref={addressRef}
-            type="text"
-            name="streetOne"
-            label="Street Address"
-            onChange={updateFormData}
-            value={form.streetOne}
-            required
-          />
           <FormControl fullWidth className="Form-input">
             <InputLabel id="demo-simple-select-label">Brand Name</InputLabel>
             <Select
+              ref={brandRef}
               value={form.brand || ""}
               label="Brand Name"
               onChange={updateFormData}
@@ -168,7 +159,48 @@ function FormSign() {
               <MenuItem value={"Panerai"}>Panerai</MenuItem>
             </Select>
           </FormControl>
-          {/* MORE INPUT FIELDS */}
+          <TextField
+            fullWidth
+            type="text"
+            name="streetOne"
+            label="Street Address"
+            className="Form-input"
+            onChange={updateFormData}
+            value={form.streetOne}
+            required
+          />
+          <TextField
+            fullWidth
+            type="text"
+            name="city"
+            label="City"
+            onChange={updateFormData}
+            value={form["city"] || ""}
+            required
+          />
+          <TextField
+            fullWidth
+            type="text"
+            name="state"
+            label="state"
+            onChange={updateFormData}
+            value={form["state"] || ""}
+            required
+          />
+          <TextField
+            fullWidth
+            className="Register-input"
+            type="text"
+            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+            name="zip"
+            label="Zip"
+            placeholder="Zip Code"
+            onChange={updateFormData}
+            value={form["zip"] || ""}
+            required
+          />
+          {/* MORE WATCH FIELDS */}
+
           <TextField
             label="Model Number"
             name="model"

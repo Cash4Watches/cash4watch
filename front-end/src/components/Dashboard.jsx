@@ -12,6 +12,7 @@ import Home from "../components/dashboard/Home.jsx";
 import Orders from "../components/dashboard/Orders.jsx";
 import Tracking from "../components/dashboard/Tracking.jsx";
 import Account from "../components/dashboard/Account.jsx";
+
 function Dashboard() {
   const horizontalNav = useRef(null);
   const verticallNav = useRef(null);
@@ -38,6 +39,7 @@ function Dashboard() {
     }
     document.body.style.setProperty("--dashboard-nav-color", navColor);
   }, [icon]);
+
   let changeContent = (e) => {
     let dashboardContent = e.target.dataset.content;
     switch (dashboardContent) {

@@ -7,13 +7,6 @@ import ColorHash from "color-hash";
 import { useState, useEffect, useRef } from "react";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import api from "../../services/AxiosConfig.js";
-const stepLabels = [
-  "Case Approved",
-  "Label Generated",
-  "Watch Received",
-  "Watch Inspected",
-  "Watch Sold",
-];
 
 export default function OrderView(props) {
   const {
@@ -38,11 +31,22 @@ export default function OrderView(props) {
   });
   const [stepValue, setStepValue] = useState(0);
   const [documents, setDocuments] = useState([{}]);
+  const [stepsArr, setStepsArr] = useState([]);
   let showDetails = () => {
     details.current.classList.toggle("OrderView-show");
   };
 
+  let checkProgress = () => {
+    stepValue(0);
+    stepsArr.forEach((step) => {
+      if (step) {
+        if (step.completed) setStepValue((prev) => prev + 1);
+      }
+    });
+  };
+
   useEffect(() => {
+    //if the id changes the progress resets
     setStepValue(0);
     let handleStepperOrentation = () => {
       if (window.innerWidth <= 650) {
@@ -66,19 +70,29 @@ export default function OrderView(props) {
 
   useEffect(() => {
     let getStepCount = async () => {
-      let response = await api.post("/check-order", { order_id: id });
-      setDocuments(response.data.documents);
-      let stepsArr = response.data.steps;
-      setStepValue(0);
-      stepsArr.forEach((step) => {
-        if (step.completed) {
-          setStepValue((prev) => prev + 1);
+      let response = await api.post(
+        "/check-order",
+        { order_id: id },
+        {
+          headers: {
+            Authentication: `Bearer ${localStorage.getItem("jwt_token")}`,
+          },
         }
-      });
+      );
+      setDocuments(response.data.documents);
+      setStepsArr(response.data.steps);
     };
 
-    if (stepValue === 0) getStepCount();
-  }, [stepValue, id]);
+    getStepCount();
+  }, [id]);
+
+  useEffect(() => {
+    checkProgress();
+  }, [stepsArr]);
+
+  useEffect(() => {
+    console.log(stepValue);
+  }, [stepValue]);
   return (
     <div className="OrderView">
       <h2 style={{ borderBottom: `3px solid ${colorHash.hex(id)}` }}>
@@ -133,9 +147,9 @@ export default function OrderView(props) {
         alternativeLabel={stepperStyle.alternativeLabel}
         orientation={stepperStyle.orientation}
       >
-        {stepLabels.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
+        {stepsArr.map((label) => (
+          <Step key={label.title}>
+            <StepLabel>{label.title}</StepLabel>
           </Step>
         ))}
       </Stepper>

@@ -16,8 +16,15 @@ function Orders() {
 
   useEffect(() => {
     let fetchOrders = async () => {
-      let response = await api.post("/my-orders");
-      console.log(response.data.orders);
+      let response = await api.post(
+        "/my-orders",
+        {},
+        {
+          headers: {
+            Authentication: `Bearer ${localStorage.getItem("jwt_token")}`,
+          },
+        }
+      );
       if (response.data.orders.length === 0) {
         setOrderDetail({
           ...orderDetail,
@@ -67,7 +74,7 @@ function Orders() {
           >
             {orderArr.map((order, i) => (
               <MenuItem value={i} key={i}>
-                {order.id.split("-")[0]}
+                {order.id}
               </MenuItem>
             ))}
           </Select>
