@@ -22,35 +22,11 @@ function Register() {
   const [formError, setFormError] = useState({
     passMatch: { value: false, message: "" },
   });
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    streetOne: "",
-    streetTwo: "",
-    city: "",
-    state: "",
-    zip: "",
-    password: "",
-    confirm: "",
-  });
+  const [form, setForm] = useState({});
   let registerUser = async (e) => {
     e.preventDefault();
-    console.log("registering ....");
-    let body = {
-      full_name: form.name,
-      password: form.password,
-      email: form.email,
-      company: form.company,
-      street1: form.streetOne,
-      street2: form.streetTwo,
-      city: form.city,
-      state: form.state,
-      zip: form.zip,
-      phone: form.phone,
-    };
-    let response = await api.post("/signup", body);
+    console.log("registering ....", form);
+    let response = await api.post("/signup", form);
     let data = response.data;
     localStorage.setItem("jwt_token", data.token);
     dispatch(setUser({ name: data.user.full_name }));
@@ -77,11 +53,12 @@ function Register() {
           <TextField
             fullWidth
             type="text"
-            name="name"
+            name="full_name"
             label="Name"
             placeholder="Full Name"
             onChange={updateForm}
-            value={form.name}
+            autoComplete="full name"
+            value={form["full_name"] || ""}
             inputProps={{ pattern: "[a-zA-Z ]+" }}
             required
           />
@@ -91,8 +68,9 @@ function Register() {
             name="email"
             label="Email"
             placeholder="Email Address"
+            autoComplete="email"
             onChange={updateForm}
-            value={form.email}
+            value={form["email"] || ""}
             required
           />
           <TextField
@@ -103,7 +81,7 @@ function Register() {
             placeholder="Phone Number"
             autoComplete="phone"
             onChange={updateForm}
-            value={form.phone}
+            value={form["phone"] || ""}
             required
           />
           <TextField
@@ -113,25 +91,27 @@ function Register() {
             label="Company"
             placeholder="Optional"
             onChange={updateForm}
-            value={form.company}
+            value={form["company"] || ""}
           />
           <TextField
             fullWidth
             type="text"
-            name="streetOne"
-            label="streetOne"
+            name="street1"
+            label="Street One"
             onChange={updateForm}
-            value={form.streetOne}
+            value={form["street1"] || ""}
+            autoComplete="street-address"
             required
           />
           <TextField
             fullWidth
             type="text"
-            name="streetTwo"
-            label="streetTwo"
+            name="street2"
+            label="Street Two"
             placeholder="Optional"
+            autoComplete="none"
             onChange={updateForm}
-            value={form.streetTwo}
+            value={form["street2"] || ""}
           />
           <TextField
             fullWidth
@@ -139,7 +119,7 @@ function Register() {
             name="city"
             label="City"
             onChange={updateForm}
-            value={form.city}
+            value={form["city"] || ""}
             required
           />
           <TextField
@@ -148,7 +128,7 @@ function Register() {
             name="state"
             label="state"
             onChange={updateForm}
-            value={form.state}
+            value={form["state"] || ""}
             required
           />
           <TextField
@@ -160,7 +140,7 @@ function Register() {
             label="Zip"
             placeholder="Zip Code"
             onChange={updateForm}
-            value={form.zip}
+            value={form["zip"] || ""}
             required
           />
           <FormControl>
@@ -169,13 +149,13 @@ function Register() {
             </InputLabel>
             <OutlinedInput
               type={showPassword ? "text" : "password"}
-              value={form.password}
+              value={form["password"] || ""}
               name="password"
               onChange={updateForm}
               error={formError.passMatch.value}
               onKeyDown={clearError}
               required
-              autoComplete="password"
+              autoComplete="current-password"
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -197,7 +177,7 @@ function Register() {
             <InputLabel>Confirm</InputLabel>
             <OutlinedInput
               type={showPassword ? "text" : "password"}
-              value={form.confirm}
+              value={form["confirm"] || ""}
               name="confirm"
               onChange={updateForm}
               error={formError.passMatch.value}

@@ -5,7 +5,6 @@
   width: 100vw;
   min-height: 100vh;
   flex-direction: column;
-
   & form {
     display: flex;
     justify-content: center;
@@ -17,6 +16,8 @@
     padding: 1rem;
   }
   &-title {
+    margin-top: 10vh;
+
     color: #790220;
     background: linear-gradient(
       180deg,

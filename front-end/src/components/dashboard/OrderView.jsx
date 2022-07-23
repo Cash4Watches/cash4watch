@@ -7,15 +7,15 @@ import ColorHash from "color-hash";
 import { useState, useEffect, useRef } from "react";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import api from "../../services/AxiosConfig.js";
-const stepLabels = [
-  "Case Approved",
-  "Label Generated",
-  "Watch Received",
-  "Watch Inspected",
-  "Watch Sold",
-];
 
 export default function OrderView(props) {
+  const stepLabels = [
+    "Case Approved",
+    "Label Generated",
+    "Watch Received",
+    "Watch Inspected",
+    "Watch Sold",
+  ];
   const {
     id,
     brand_name,
@@ -66,7 +66,15 @@ export default function OrderView(props) {
 
   useEffect(() => {
     let getStepCount = async () => {
-      let response = await api.post("/check-order", { order_id: id });
+      let response = await api.post(
+        "/check-order",
+        { order_id: id },
+        {
+          headers: {
+            Authentication: `Bearer ${localStorage.getItem("jwt_token")}`,
+          },
+        }
+      );
       setDocuments(response.data.documents);
       let stepsArr = response.data.steps;
       setStepValue(0);

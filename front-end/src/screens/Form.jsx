@@ -11,6 +11,7 @@ import api from "../services/AxiosConfig.js";
 function Form() {
   let navigate = useNavigate();
   const [form, setForm] = useState({});
+  const [disable, setDisable] = useState(false);
 
   let vaildateForm = (form) => {
     let isVaild = true;
@@ -21,8 +22,8 @@ function Form() {
     e.preventDefault();
     if (vaildateForm(e.target)) {
       try {
-        let response = await api.post("/create-new-order", form);
-        console.log(response.data);
+        setDisable(true);
+        await api.post("/create-new-order", form);
         navigate("/dashboard");
       } catch (e) {
         console.log(e);
@@ -31,6 +32,7 @@ function Form() {
       // due to time constraints this error message is alert for now
       alert("Double check form inputs");
     }
+    setDisable(false);
   };
   let updateFormData = (e) => {
     let { name, value } = e.target;
@@ -113,18 +115,19 @@ function Form() {
               <MenuItem value={"no"}>No</MenuItem>
             </Select>
           </FormControl>
-          <TextField
-            label="Condition"
-            helperText="Used or not Used?"
-            name="condition"
-            onChange={updateFormData}
-            fullWidth
-            multiline
-            minRows={2}
-            maxRows={5}
-            className="Form-input"
-            value={form.condition || ""}
-          />
+          <FormControl fullWidth className="Form-input">
+            <InputLabel id="demo-simple-select-label">Condition</InputLabel>
+            <Select
+              value={form.condition || ""}
+              label="condition"
+              onChange={updateFormData}
+              name="condition"
+              required
+            >
+              <MenuItem value={"New"}>New</MenuItem>
+              <MenuItem value={"Used"}>Used</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             label="Whats included "
             helperText="(e.g, box, manuals)"
@@ -148,7 +151,7 @@ function Form() {
             className="Form-input"
             value={form.extra_comment || ""}
           />
-          <button className="Form-submit" type="submit">
+          <button className="Form-submit" type="submit" disabled={disable}>
             <p>Submit</p>
             <PublishIcon className="Form-submit-icon" sx={{ fontSize: 40 }} />
           </button>
