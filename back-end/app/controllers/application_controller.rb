@@ -84,7 +84,7 @@ class ApplicationController < ActionController::Base
           order.save
           filename = File.basename(URI.parse(url).path)
           file = URI.open(url)
-          document = Document.create!({name: "label.pdf",order_id: order.id});
+          document = Document.create({name: "label.pdf",order_id: order.id});
           if document
             document.file.attach(io: file, filename: filename, content_type: 'application/pdf')
             # render json: document

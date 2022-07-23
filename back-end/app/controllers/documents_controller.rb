@@ -4,7 +4,7 @@ class DocumentsController < ApplicationController
         order_id = params[:order_id].to_i
         order = Order.find(order_id)
         if order 
-          doc = Document.create!(name: params[:name], order_id: order.id)
+          doc = Document.create(name: params[:name], order_id: order.id)
           doc.file.attach(io: params[:file], filename: params[:name], content_type: 'application/pdf')
           if doc
             render json: doc

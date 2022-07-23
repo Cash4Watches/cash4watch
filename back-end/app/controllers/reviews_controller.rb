@@ -4,7 +4,7 @@ class ReviewsController < ApplicationController
         payload = decode(token) 
         user = User.find(payload['user_id'])
         if user
-            review = create!(rating_params)
+            review = create(rating_params)
             if review
                 render json: review
             else

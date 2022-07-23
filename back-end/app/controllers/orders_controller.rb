@@ -4,13 +4,12 @@ class OrdersController < ApplicationController
     payload = decode(token) 
     user = User.find(payload['user_id'])
     if user
-      order = Order.create!(brand_name: params[:brand_name], model_number: params[:model_number], reference_number: params[:reference_number], condition: params[:condition], previous_service: params[:previous_service],previous_polish: params[:previous_polish],papers: params[:papers],included_items: params[:included_items],extra_comment: params[:extra_comment],user_id:user.id);
-      if order
-          step1 = Step.create!({index: 1,title: "Case Approved",desc: "",completed: false,order_id: order.id})
-          step2 = Step.create!({index: 2,title: "Label Generated",desc: "",completed: false,order_id: order.id})
-          step3 = Step.create!({index: 3,title: "Watch Received",desc: "",completed: false,order_id: order.id})
-          step4 = Step.create!({index: 4,title: "Watch Inspected",desc: "",completed: false,order_id: order.id})
-          step5 = Step.create!({index: 5,title: "Watch Sold",desc: "",completed: false,order_id: order.id})
+      if order = Order.create(brand_name: params[:brand_name], model_number: params[:model_number], reference_number: params[:reference_number], condition: params[:condition], previous_service: params[:previous_service],previous_polish: params[:previous_polish],papers: params[:papers],included_items: params[:included_items],extra_comment: params[:extra_comment],user_id:user.id).valid?
+          step1 = Step.create({index: 1,title: "Case Approved",desc: "",completed: false,order_id: order.id})
+          step2 = Step.create({index: 2,title: "Label Generated",desc: "",completed: false,order_id: order.id})
+          step3 = Step.create({index: 3,title: "Watch Received",desc: "",completed: false,order_id: order.id})
+          step4 = Step.create({index: 4,title: "Watch Inspected",desc: "",completed: false,order_id: order.id})
+          step5 = Step.create({index: 5,title: "Watch Sold",desc: "",completed: false,order_id: order.id})
           render json: order
       else
           render json: {message: 'Failed to create Order'}
