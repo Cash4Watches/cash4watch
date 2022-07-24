@@ -36,8 +36,7 @@ puts 'Seeding Documents'
 10.times do 
     order = Order.create!({
         brand_name: "Rolex", 
-        model_number: "01010020202", 
-        reference_number: "01020202", 
+        model_number: "01010020202",
         condition: "New", 
         previous_service: "I got it services at the supermarket",
          previous_polish: "I got it polished at the barber shop", 

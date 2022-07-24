@@ -1,18 +1,52 @@
 class OrdersController < ApplicationController
     def create
-      token = request.headers['Authentication'].split(' ')[1] 
+    token = request.headers['Authentication'].split(' ')[1] 
     payload = decode(token) 
     user = User.find(payload['user_id'])
     if user
-      if order = Order.create(brand_name: params[:brand_name], model_number: params[:model_number], reference_number: params[:reference_number], condition: params[:condition], previous_service: params[:previous_service],previous_polish: params[:previous_polish],papers: params[:papers],included_items: params[:included_items],extra_comment: params[:extra_comment],user_id:user.id).valid?
-          step1 = Step.create({index: 1,title: "Case Approved",desc: "",completed: false,order_id: order.id})
-          step2 = Step.create({index: 2,title: "Label Generated",desc: "",completed: false,order_id: order.id})
-          step3 = Step.create({index: 3,title: "Watch Received",desc: "",completed: false,order_id: order.id})
-          step4 = Step.create({index: 4,title: "Watch Inspected",desc: "",completed: false,order_id: order.id})
-          step5 = Step.create({index: 5,title: "Watch Sold",desc: "",completed: false,order_id: order.id})
-          render json: order
-      else
+      if params[:order_type]
+        order = Order.create(brand_name: params[:brand_name], model_number: params[:model_number],condition: params[:condition], previous_service: params[:previous_service],previous_polish: params[:previous_polish],papers: params[:papers],included_items: params[:included_items],extra_comment: params[:extra_comment],user_id:user.id, order_type: params[:order_type])
+        if order
+          case params[:order_type]
+          when 'consignment'
+            step1 = Step.create({index: 1,title: "Case Approved",desc: "",completed: false,order_id: order.id})
+            step2 = Step.create({index: 2,title: "Label Generated",desc: "",completed: false,order_id: order.id})
+            step3 = Step.create({index: 3,title: "Watch Received",desc: "",completed: false,order_id: order.id})
+            step4 = Step.create({index: 4,title: "Watch Inspected",desc: "",completed: false,order_id: order.id})
+            step5 = Step.create({index: 5,title: "Watch Sold",desc: "",completed: false,order_id: order.id})
+            render json: order
+          when 'service'
+            step1 = Step.create({index: 1,title: "Case Approved",desc: "",completed: false,order_id: order.id})
+            step2 = Step.create({index: 2,title: "Label Generated",desc: "",completed: false,order_id: order.id})
+            step3 = Step.create({index: 3,title: "Watch Received",desc: "",completed: false,order_id: order.id})
+            step4 = Step.create({index: 4,title: "Watch Serviced",desc: "",completed: false,order_id: order.id})
+            step5 = Step.create({index: 5,title: "Shipped Back",desc: "",completed: false,order_id: order.id})
+            render json: order
+          when 'polish'
+            step1 = Step.create({index: 1,title: "Case Approved",desc: "",completed: false,order_id: order.id})
+            step2 = Step.create({index: 2,title: "Label Generated",desc: "",completed: false,order_id: order.id})
+            step3 = Step.create({index: 3,title: "Watch Received",desc: "",completed: false,order_id: order.id})
+            step4 = Step.create({index: 4,title: "Watch Polished",desc: "",completed: false,order_id: order.id})
+            step5 = Step.create({index: 5,title: "Shipped Back",desc: "",completed: false,order_id: order.id})
+            render json: order
+          else
+            render json: {message: "Incorrect Order_type"}
+          end
+        else
           render json: {message: 'Failed to create Order'}
+        end
+      else
+        order = Order.create(brand_name: params[:brand_name], model_number: params[:model_number],condition: params[:condition], previous_service: params[:previous_service],previous_polish: params[:previous_polish],papers: params[:papers],included_items: params[:included_items],extra_comment: params[:extra_comment],user_id:user.id)
+        if order
+            step1 = Step.create({index: 1,title: "Case Approved",desc: "",completed: false,order_id: order.id})
+            step2 = Step.create({index: 2,title: "Label Generated",desc: "",completed: false,order_id: order.id})
+            step3 = Step.create({index: 3,title: "Watch Received",desc: "",completed: false,order_id: order.id})
+            step4 = Step.create({index: 4,title: "Watch Inspected",desc: "",completed: false,order_id: order.id})
+            step5 = Step.create({index: 5,title: "Watch Sold",desc: "",completed: false,order_id: order.id})
+            render json: order
+        else
+          render json: {message: 'Failed to create Order'}
+        end
       end
     else
       render json: {message: "Invalid or expired token"}
@@ -25,7 +59,7 @@ class OrdersController < ApplicationController
     if user
       order = user.orders.where(id: params[:order_id])[0]
       if order
-        # x = order.as_json(only: [:id, :brand_name, :model_number, :reference_number, :condition, :previous_service,:previous_polish, :papers,:included_items, :extra_comment, :steps, :documents])
+        # x = order.as_json(only: [:id, :brand_name, :model_number, :condition, :previous_service,:previous_polish, :papers,:included_items, :extra_comment, :steps, :documents])
         render json: order
       else
         render json: {message: "Order not found"}
@@ -85,6 +119,6 @@ class OrdersController < ApplicationController
   end
    private
    def order_params
-    params.permit(:brand_name, :model_number, :reference_number, :condition, :previous_service,:previous_polish,:papers,:included_items,:extra_comment,:user_id)
+    params.permit(:brand_name, :model_number,:condition, :previous_service,:previous_polish,:papers,:included_items,:extra_comment,:user_id)
    end
 end
