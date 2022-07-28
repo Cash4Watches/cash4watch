@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
     def create
     token = request.headers['Authentication'].split(' ')[1] 
     payload = decode(token) 
+    if payload
     user = User.find(payload['user_id'])
     if user
       if params[:order_type]
@@ -51,10 +52,14 @@ class OrdersController < ApplicationController
     else
       render json: {message: "Invalid or expired token"}
     end
+  else
+    render json: {message: 'Missing Token'}
+  end
    end
    def show
     token = request.headers['Authentication'].split(' ')[1] 
     payload = decode(token) 
+    if payload
     user = User.find(payload['user_id'])
     if user
       order = user.orders.where(id: params[:order_id])[0]
@@ -67,21 +72,53 @@ class OrdersController < ApplicationController
     else
       render json: { message: "Invalid or Expired Token"}
     end
+  else
+    render json: {message: "Missing Token"}
+  end
+   end
+   def admin_show_one
+    token = request.headers['Authentication'].split(' ')[1]
+    payload = decode(token) 
+    if payload
+    user = User.find(payload['user_id'])
+    if user.is_admin
+      order = Order.find(params[:order_id])
+      if order
+        render json: order
+      else
+        render json: {message:"Incorrect Order id"}
+      end
+    else
+      render json: {message: "Unauthorized Route"}
+    end
+  else
+    render json: {message: "Missing Token"}
+  end
    end
    def admin_show
     token = request.headers['Authentication'].split(' ')[1]
     payload = decode(token) 
+    if payload
     user = User.find(payload['user_id'])
     if user.is_admin
-      orders = Order.all
+      if params[:page]
+        page_param = params[:page]
+      else
+        page_param = 1
+      end
+      orders = Order.order(:created_at).page params[:page]
       render json: {orders: orders}
     else
       render json: {message: "Unauthorized Route"}
     end
+  else
+    render json: {message: "Missing Token"}
+  end
    end
   def my_orders
     token = request.headers['Authentication'].split(' ')[1] 
     payload = decode(token) 
+    if payload
     user = User.find(payload['user_id'])
     if user
       orders = user.orders
@@ -89,10 +126,14 @@ class OrdersController < ApplicationController
     else
       render json: {message: "Invalid or Expired Token"}
     end
+  else
+    render json: {message: "Missing Token"}
+  end
   end
    def admin_destroy_orders
     token = request.headers['Authentication'].split(' ')[1]
     payload = decode(token) 
+    if payload
     user = User.find(payload['user_id'])
     if user.is_admin
       order = Order.find(params[:order_id])
@@ -105,17 +146,24 @@ class OrdersController < ApplicationController
     else
       render json: {message: "Unauthorized Route"}
     end
+  else
+    render json: {message: "Missing Token"}
+  end
   end
   
   #Admin Route for generating order and user
   def admin_create_order
     token = request.headers['Authentication'].split(' ')[1]
     payload = decode(token) 
+    if payload
     user = User.find(payload['user_id'])
     if user.is_admin
     else
       render json: {message:"Unauthorized "}
     end
+  else
+    render json: {message: "Missing Token"}
+  end
   end
    private
    def order_params

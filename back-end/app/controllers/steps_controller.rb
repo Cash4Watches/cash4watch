@@ -53,7 +53,8 @@ class StepsController < ApplicationController
                 end
             else
                 render json: {message: "Unauthorized Route"}
-            end  
+            end 
+             
         else
             render json: {message: 'Missing Token'}
         end

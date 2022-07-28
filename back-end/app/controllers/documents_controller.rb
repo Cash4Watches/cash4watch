@@ -18,6 +18,7 @@ class DocumentsController < ApplicationController
       def destroy
         token = request.headers['Authentication'].split(' ')[1]
         payload = decode(token) 
+        if payload
         user = User.find(payload['user_id'])
         if user.is_admin
           doc = Document.find(params[:id])
@@ -30,6 +31,9 @@ class DocumentsController < ApplicationController
         else
         render json: {message: "Unauthorized Route"}
         end
+      else
+        render json: {message: 'Missing Token'}
+      end
       end
       def doc_params
         params.permit(:name, :order_id,:file)

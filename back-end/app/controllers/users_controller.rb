@@ -18,14 +18,17 @@ class UsersController < ApplicationController
   def profile
     token = request.headers['Authentication'].split(' ')[1] 
     payload = decode(token) 
+    if payload
     user = User.find(payload['user_id'])
     if user
       render json: user
     else
       render json: { message: 'Invalid or Missing Token', authenticated: false }
     end
+  else
+    render json: {message: "Missing Token"}
   end
-   
+  end
   def forgot_password
     user = User.find_by(email: params[:email])
     if user
@@ -38,6 +41,7 @@ class UsersController < ApplicationController
   def admin_delete_user
     token = request.headers['Authentication'].split(' ')[1]
     payload = decode(token)
+    if payload
     user = User.find(payload['user_id'])
     if user.is_admin
       user_to_delete = User.find_by(email: params[:email])
@@ -50,7 +54,9 @@ class UsersController < ApplicationController
     else
       render json: {message: "Unauthorized Route"}
     end
-
+  else
+    render json: {message: "Missing Token"}
+  end
   end
   private
 

@@ -7,6 +7,9 @@
 #   Character.create(name: "Luke", movie: movies.first)
 User.destroy_all
 Order.destroy_all
+Step.destroy_all
+Document.destroy_all
+Review.destroy_all
 puts 'Seeding Users'
 admin = User.create!({
     full_name: "Admin",

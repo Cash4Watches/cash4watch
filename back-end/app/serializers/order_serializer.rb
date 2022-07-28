@@ -3,7 +3,7 @@ class OrderSerializer < ActiveModel::Serializer
 
   def documents
     object.documents.collect do |document|
-    {name: document.name, file_url: document.file_url}
+    {id: document.id ,name: document.name, file_url: document.file_url}
     end
   end
 end
