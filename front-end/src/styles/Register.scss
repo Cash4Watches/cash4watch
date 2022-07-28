@@ -1,0 +1,61 @@
+.Register {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 65vw;
+    max-width: 500px;
+    margin-top: 10vh;
+    margin-bottom: 5vh;
+    gap: 1.5rem;
+    & input[type="submit"] {
+      color: white;
+      padding: 1rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      background-color: #5b6bdde9;
+      border: 1px solid #7180f1e9;
+      box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
+        0 2px 6px 2px rgb(60 64 67 / 15%);
+      border-radius: 20px;
+      width: 160px;
+      transition: all ease 0.3s;
+      &:hover {
+        cursor: pointer;
+        background-color: white;
+        color: #5b6bdde9;
+        border-color: #5b6bdde9;
+        border-radius: 23px;
+      }
+    }
+    & h1 {
+      color: #242951e9;
+      background: linear-gradient(
+        180deg,
+        transparent 80%,
+        #5b6bdde9 80%,
+        #5b6bdde9 95%,
+        transparent 95%
+      );
+    }
+    & p {
+      color: #242951e9;
+      font-weight: bolder;
+      letter-spacing: 1px;
+      text-align: center;
+      &:hover {
+        color: #5b6bdde9;
+        cursor: pointer;
+      }
+    }
+  }
+}

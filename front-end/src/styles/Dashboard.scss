@@ -1,0 +1,323 @@
+.Dashboard {
+  display: flex;
+  max-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  flex-direction: column;
+  max-width: 100vw;
+
+  &-nav-horizontal {
+    background-color: var(--dashboard-nav-color);
+    color: white;
+    padding: 0.25rem;
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+    transition: all ease 0.3s;
+    min-height: 5vh;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
+      0 2px 6px 2px rgb(60 64 67 / 15%);
+
+    &-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 5px;
+      & img {
+        width: 100%;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  &-nav-toggle {
+    font-size: 2.5rem;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 85vw;
+    position: absolute;
+    z-index: 1;
+    &:hover {
+      cursor: pointer;
+      color: whitesmoke;
+    }
+  }
+  &-nav-vertical {
+    display: flex;
+    flex-direction: column;
+    min-height: 92.8vh;
+    min-width: 7rem;
+    width: 10vw;
+    background-color: #790220;
+    color: white;
+    transition: all ease 0.3s;
+    transform: translateX(-100%);
+    box-shadow: 0 1px 2px 0 #79022036, 0 2px 6px 2px #79022036;
+    position: absolute;
+    z-index: 1;
+  }
+  &-nav-vertical-item {
+    margin-top: 3rem;
+    min-height: 50vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  &-nav-vertical-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+    font-size: 2rem;
+    padding: 10px;
+    transition: all ease 0.2s;
+    &-noclick {
+      pointer-events: none;
+    }
+    & p {
+      font-size: 1rem;
+    }
+    &:hover {
+      color: #790220;
+      background-color: white;
+      cursor: pointer;
+    }
+  }
+  &-nav-container {
+    display: flex;
+  }
+  &-screen {
+    transition: all ease 0.25s;
+    max-width: 100vw;
+    max-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-shrink: 0;
+    display: flex;
+  }
+  &-active {
+    color: #6529dc;
+    background-color: white;
+  }
+}
+.Home {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2rem;
+  & h1 {
+    margin-top: 3rem;
+  }
+  &-username {
+    color: var(--dashboard-nav-color);
+  }
+  &-create-btn {
+    color: white;
+    padding: 1rem;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    word-spacing: 0.5rem;
+    background-color: var(--dashboard-nav-color);
+    border: 1px solid black;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
+      0 2px 6px 2px rgb(60 64 67 / 15%);
+    border-radius: 20px;
+    width: 250px;
+    transition: all ease 0.3s;
+    &:hover {
+      cursor: pointer;
+      background-color: white;
+      color: var(--dashboard-nav-color);
+      border-color: var(--dashboard-nav-color);
+      border-radius: 23px;
+    }
+  }
+}
+.Tracking {
+  width: 60vw;
+  min-width: fit-content;
+  max-width: 700px;
+  margin-top: 20vh;
+  margin-left: 5vw;
+  // border: 1px solid red;
+  display: flex;
+  flex-flow: column wrap;
+
+  & input {
+    width: 30vw;
+    min-width: 15rem;
+    max-width: 500px;
+    overflow: scroll;
+    padding: 5px;
+    font-size: 1.2rem;
+    max-height: 1.5rem;
+  }
+  & button {
+    background-color: #9b2442;
+    color: white;
+    font-size: 1.3rem;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    transition: all ease 0.25s;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
+      0 2px 6px 2px rgb(60 64 67 / 15%);
+    margin-top: 2rem;
+    max-width: 13rem;
+    &:hover,
+    &:focus {
+      color: #790220;
+      background-color: whitesmoke;
+    }
+  }
+}
+.Orders {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 90vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-bottom: 1rem;
+
+  & h1 {
+    margin-bottom: 2rem;
+  }
+  &-dropdown {
+    width: 40%;
+    min-width: 200px;
+    max-width: 500px;
+  }
+}
+.OrderView {
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: 3rem;
+  margin-top: 3rem;
+
+  & h2 {
+    font-size: 2rem;
+  }
+  & h4 {
+    color: rgba(99, 69, 69, 0.647);
+    text-decoration: underline;
+    &:hover {
+      color: black;
+      cursor: pointer;
+    }
+  }
+  &-detail-container {
+    height: 0px;
+    overflow: hidden;
+    transition: all ease 0.3s;
+  }
+  &-show {
+    height: 350px;
+  }
+  &-main {
+    display: flex;
+    width: 450px;
+    flex-wrap: wrap;
+
+    & p {
+      display: flex;
+      gap: 1rem;
+      width: 100%;
+      & span {
+        color: rgba(99, 69, 69, 0.647);
+      }
+      & a {
+        color: var(--dashboard-nav-color);
+        font-weight: bolder;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        width: 100px;
+        &:hover {
+          color: #6529dc;
+        }
+      }
+    }
+  }
+}
+
+.Account {
+  display: flex;
+  width: 100vw;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  & h1 {
+    color: var(--dashboard-nav-color);
+  }
+  &-fields {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    height: 600px;
+    width: 90%;
+    gap: 1rem;
+    overflow: scroll;
+    padding-top: 2rem;
+    border: 1px solid red;
+  }
+}
+
+@media (min-width: 900px) {
+  .Dashboard {
+    &-nav-vertical-icon {
+      height: 6rem;
+    }
+    &-nav-vertical {
+      min-width: 12rem;
+      & p {
+        padding-left: 1rem;
+      }
+    }
+  }
+}
+@media (max-width: 650px) {
+  .OrderView {
+    max-width: 80vw;
+
+    &-main {
+      flex-direction: column;
+      align-items: center;
+      & p {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+  .Dashboard {
+    &-nav-vertical {
+      width: 18vw;
+      & p {
+        padding-left: 1rem;
+      }
+    }
+    &-nav-vertical-icon {
+      justify-content: flex-start;
+      padding-left: 3.5vw;
+    }
+  }
+}
