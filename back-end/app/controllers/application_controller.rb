@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
             # result = serialize(user, UserSerializer).
             # merge(serialize(token, UserSerializer)) 
             # include: { posts: {include: { comments: {only: :body } },only: :title } }
-            x = user.as_json(only: [:id, :full_name,:email,:company,:street1,:street2,:city,:state,:zip,:phone])
+            x = user.as_json(only: [:id, :full_name,:email,:company,:street1,:street2,:city,:state,:zip,:phone,:is_admin])
             render json: {user: x, token: token}
             
         else 
