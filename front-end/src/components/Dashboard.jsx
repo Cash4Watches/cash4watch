@@ -1,10 +1,6 @@
 import "../styles/Dashboard.scss";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import InboxRoundedIcon from "@mui/icons-material/InboxRounded";
-import ShareLocationRoundedIcon from "@mui/icons-material/ShareLocationRounded";
-import KeyRoundedIcon from "@mui/icons-material/KeyRounded";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import { useState, useEffect, useRef } from "react";
 import logo from "../media/logo.svg";
 import { useNavigate } from "react-router-dom";
@@ -12,13 +8,22 @@ import Home from "../components/dashboard/Home.jsx";
 import Orders from "../components/dashboard/Orders.jsx";
 import Tracking from "../components/dashboard/Tracking.jsx";
 import Account from "../components/dashboard/Account.jsx";
-
+import CustomerNav from "../components/dashboard/navbars/Customer.jsx";
+import AdminNav from "../components/dashboard/navbars/Admin.jsx";
+import AdminMarket from "../components/dashboard/admin/AdminMarket.jsx";
+import AdminOrders from "../components/dashboard/admin/AdminOrders.jsx";
+import AdminReviews from "../components/dashboard/admin/AdminReviews.jsx";
+import AdminHome from "../components/dashboard/admin/AdminHome.jsx";
+import { useSelector } from "react-redux";
 function Dashboard() {
+  const user = useSelector((state) => state.user);
   const horizontalNav = useRef(null);
   const verticallNav = useRef(null);
   const dashboardScreen = useRef(null);
   const [icon, setIcon] = useState(false);
-  const [content, setContent] = useState(<Home />);
+  const [content, setContent] = useState(
+    user.profile.is_admin ? <AdminHome /> : <Home />
+  );
   const navigate = useNavigate();
   useEffect(() => {
     // due to differences in screen width the amount to shift by vaires
@@ -55,6 +60,18 @@ function Dashboard() {
       case "Account":
         setContent(<Account />);
         break;
+      case "Admin Market":
+        setContent(<AdminMarket />);
+        break;
+      case "Admin Orders":
+        setContent(<AdminOrders />);
+        break;
+      case "Admin Reviews":
+        setContent(<AdminReviews />);
+        break;
+      case "Admin Home":
+        setContent(<AdminHome />);
+        break;
 
       default:
         break;
@@ -86,54 +103,11 @@ function Dashboard() {
         <div className="Dashboard-nav-container">
           <div className="Dashboard-nav-vertical" ref={verticallNav}>
             <div className="Dashboard-nav-vertical-item">
-              <div
-                onClick={changeContent}
-                data-content="Home"
-                className="Dashboard-nav-vertical-icon"
-              >
-                <HomeRoundedIcon
-                  className="Dashboard-nav-vertical-icon-noclick"
-                  fontSize="inherit"
-                />
-                <p className="Dashboard-nav-vertical-icon-noclick">Dashboard</p>
-              </div>
-              <div
-                onClick={changeContent}
-                data-content="Orders"
-                className="Dashboard-nav-vertical-icon"
-              >
-                <InboxRoundedIcon
-                  className="Dashboard-nav-vertical-icon-noclick"
-                  fontSize="inherit"
-                />
-                <p className="Dashboard-nav-vertical-icon-noclick">My Orders</p>
-              </div>
-              <div
-                onClick={changeContent}
-                data-content="Tracking"
-                className="Dashboard-nav-vertical-icon"
-              >
-                <ShareLocationRoundedIcon
-                  className="Dashboard-nav-vertical-icon-noclick"
-                  fontSize="inherit"
-                />
-                <p className="Dashboard-nav-vertical-icon-noclick">
-                  Track Packages
-                </p>
-              </div>
-              <div
-                onClick={changeContent}
-                data-content="Account"
-                className="Dashboard-nav-vertical-icon"
-              >
-                <KeyRoundedIcon
-                  className="Dashboard-nav-vertical-icon-noclick"
-                  fontSize="inherit"
-                />
-                <p className="Dashboard-nav-vertical-icon-noclick">
-                  Account Details
-                </p>
-              </div>
+              {!user.profile.is_admin ? (
+                <CustomerNav handleClick={changeContent} />
+              ) : (
+                <AdminNav handleClick={changeContent} />
+              )}
             </div>
           </div>
 

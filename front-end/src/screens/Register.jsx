@@ -25,11 +25,17 @@ function Register() {
   const [form, setForm] = useState({});
   let registerUser = async (e) => {
     e.preventDefault();
+
     let response = await api.post("/signup", form);
     let data = response.data;
-    localStorage.setItem("jwt_token", data.token);
-    dispatch(setUser({ name: data.user.full_name }));
-    navigate("/dashboard");
+    console.log(data);
+    if (data["message"]) {
+      alert(data.message);
+    } else {
+      localStorage.setItem("jwt_token", data.token);
+      dispatch(setUser({ name: data.user.full_name, profile: data.user }));
+      navigate("/dashboard");
+    }
   };
   let updateForm = (e) => {
     let name = e.target.name;

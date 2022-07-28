@@ -5,6 +5,7 @@ export const userSlice = createSlice({
     name: "Guest",
     profile: {},
     isAuthenticated: false,
+    isAdmin: false,
   },
   reducers: {
     setUser: (state, action) => {

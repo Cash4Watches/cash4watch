@@ -8,11 +8,10 @@ const PresistProfile = () => {
   const user = useSelector((state) => state.user);
   let grabProfile = async () => {
     let response = await api.get("/profile");
-
     dispatch(
       setUser({
         name: response.data.full_name,
-        token: response.data.token,
+        profile: response.data,
       })
     );
   };
@@ -22,7 +21,6 @@ const PresistProfile = () => {
     if (!user.isAuthenticated && token) {
       // make api call
       grabProfile();
-    } else {
     }
   }, [user]);
   return <></>;
