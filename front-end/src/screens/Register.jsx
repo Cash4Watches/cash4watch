@@ -33,7 +33,7 @@ function Register() {
       alert(data.message);
     } else {
       localStorage.setItem("jwt_token", data.token);
-      dispatch(setUser({ name: data.user.full_name }));
+      dispatch(setUser({ name: data.user.full_name, profile: data.user }));
       navigate("/dashboard");
     }
   };
