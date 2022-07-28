@@ -3,11 +3,13 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     name: "Guest",
+    profile: {},
     isAuthenticated: false,
   },
   reducers: {
     setUser: (state, action) => {
       state.name = action.payload.name;
+      state.profile = { ...action.payload.profile };
       state.isAuthenticated = true;
     },
     clearUser: (state, action) => {
