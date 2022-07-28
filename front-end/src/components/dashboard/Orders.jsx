@@ -25,14 +25,22 @@ function Orders() {
           },
         }
       );
-      if (response.data.orders.length === 0) {
+      if (response.data["message"]) {
         setOrderDetail({
           ...orderDetail,
           label: "No Order Found :(",
-          view: <h4>NO ORDERS </h4>,
+          view: <h4>Error : {response.data.message}</h4>,
         });
       } else {
-        setOrderArr(response.data.orders);
+        if (response.data.orders.length === 0) {
+          setOrderDetail({
+            ...orderDetail,
+            label: "No Order Found :(",
+            view: <h4>NO ORDERS </h4>,
+          });
+        } else {
+          setOrderArr(response.data.orders);
+        }
       }
     };
     fetchOrders();
