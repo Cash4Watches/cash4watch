@@ -1,15 +1,26 @@
-# Rails Backend
+
 
 # Table Of Contents
+
+## Customer Routes
 
 - [`/login` - Login User](#/login)
 - [`/profile` - Login User using Token](#/profile)
 - [`/signup` - Sign Up User](#/signup)
+- [`/forgot-password` - Email to reset account ](#/forsgot-password)
 - [`/create-new-order` - Create Order](#/create-new-order)
 - [`/check-order` - Check Indivdual User Order](#/check-order)
 - [`/my-orders` - Check User Orders](#/my-orders)
-  
-
+- [`/upload` - Upload Documents to an Order](#/upload)
+- [`/add-review` - Create A Review](#/add-review)
+## Admin Routes
+- [`/update-step` - Update the Step on an Order](#/update-step)
+- [`/admin-orders` - See all Orders as an Admin](#/admin-orders)
+- [`/delete-user` - Delete User along with all related data](#/delete-user)
+- [`/delete-document` - Delete Doument attached to order](#/delete-document)
+- [`/destroy-orders` - Delete an Order](#/destroy-orders)
+- [`/delete-review` - Delete a Review](#/delete-review)
+- [`/edit-review` - Edit details of a Review](#/edit-review)
 #
 
 <div id='/login'></div>
@@ -426,5 +437,320 @@ Example:
 
 ```
 
+<div id='/upload'></div>
+
+## `/upload` - Upload Documents
 
 
+**Heroku Deployed Link**
+
+- `https://pacific-escarpment-97348.herokuapp.com/upload`
+
+#### Method
+
+| URI | HTTP Method | Authentication | Headers |
+| --- | ----------- | -------------- | ------- |
+| `upload` | POST | N/A | N/A|
+
+
+#### Request Parameters
+
+| Parameter | Type | Description | Default | Required? |
+| --------- | ---- | ----------- | ------- | --------- |
+| **name** | String |  | N/A | Yes |
+| **file** | File | File Data to Attach| N/A | Yes |
+| **order_id** | Integer | Order ID | N/A | Yes |
+
+Note that the `Authentication` header has to say `Bearer` in the value
+
+Example:
+`Authentication: Bearer <Hash>`
+
+
+**Example Response:**
+
+```JSON
+{
+
+}
+```
+<div id='/add-review'></div>
+
+## `/add-review` - Check User's Individual Order
+
+
+**Heroku Deployed Link**
+
+- `https://pacific-escarpment-97348.herokuapp.com/add-review`
+
+#### Method
+
+| URI | HTTP Method | Authentication | Headers |
+| --- | ----------- | -------------- | ------- |
+| `add-review` | POST | [User Token](#authentication)| Authentication|
+
+
+#### Request Parameters
+
+| Parameter | Type | Description | Default | Required? |
+| --------- | ---- | ----------- | ------- | --------- |
+| **X** | String | Order ID Hash | N/A | Yes |
+
+Note that the `Authentication` header has to say `Bearer` in the value
+
+Example:
+`Authentication: Bearer <Hash>`
+
+
+**Example Response:**
+
+```JSON
+{
+
+}
+```
+<div id='/update-step'></div>
+
+## `/update-step` - Check User's Individual Order
+
+
+**Heroku Deployed Link**
+
+- `https://pacific-escarpment-97348.herokuapp.com/update-step`
+
+#### Method
+
+| URI | HTTP Method | Authentication | Headers |
+| --- | ----------- | -------------- | ------- |
+| `update-step` | POST | [User Token](#authentication)| Authentication|
+
+
+#### Request Parameters
+
+| Parameter | Type | Description | Default | Required? |
+| --------- | ---- | ----------- | ------- | --------- |
+| **X** | String | Order ID Hash | N/A | Yes |
+
+Note that the `Authentication` header has to say `Bearer` in the value
+
+Example:
+`Authentication: Bearer <Hash>`
+
+
+**Example Response:**
+
+```JSON
+{
+
+}
+```
+<div id='/admin-orders'></div>
+
+## `/admin-orders` - Check User's Individual Order
+
+
+**Heroku Deployed Link**
+
+- `https://pacific-escarpment-97348.herokuapp.com/admin-orders`
+
+#### Method
+
+| URI | HTTP Method | Authentication | Headers |
+| --- | ----------- | -------------- | ------- |
+| `admin-orders` | POST | [User Token](#authentication)| Authentication|
+
+
+#### Request Parameters
+
+| Parameter | Type | Description | Default | Required? |
+| --------- | ---- | ----------- | ------- | --------- |
+| **X** | String | Order ID Hash | N/A | Yes |
+
+Note that the `Authentication` header has to say `Bearer` in the value
+
+Example:
+`Authentication: Bearer <Hash>`
+
+
+**Example Response:**
+
+```JSON
+{
+
+}
+```
+<div id='/delete-user'></div>
+
+## `/delete-user` - Check User's Individual Order
+
+
+**Heroku Deployed Link**
+
+- `https://pacific-escarpment-97348.herokuapp.com/delete-user`
+
+#### Method
+
+| URI | HTTP Method | Authentication | Headers |
+| --- | ----------- | -------------- | ------- |
+| `delete-user` | POST | [User Token](#authentication)| Authentication|
+
+
+#### Request Parameters
+
+| Parameter | Type | Description | Default | Required? |
+| --------- | ---- | ----------- | ------- | --------- |
+| **X** | String | Order ID Hash | N/A | Yes |
+
+Note that the `Authentication` header has to say `Bearer` in the value
+
+Example:
+`Authentication: Bearer <Hash>`
+
+
+**Example Response:**
+
+```JSON
+{
+
+}
+```
+<div id='/delete-document'></div>
+
+## `/delete-document` - Check User's Individual Order
+
+
+**Heroku Deployed Link**
+
+- `https://pacific-escarpment-97348.herokuapp.com/delete-document`
+
+#### Method
+
+| URI | HTTP Method | Authentication | Headers |
+| --- | ----------- | -------------- | ------- |
+| `delete-document` | POST | [User Token](#authentication)| Authentication|
+
+
+#### Request Parameters
+
+| Parameter | Type | Description | Default | Required? |
+| --------- | ---- | ----------- | ------- | --------- |
+| **X** | String | Order ID Hash | N/A | Yes |
+
+Note that the `Authentication` header has to say `Bearer` in the value
+
+Example:
+`Authentication: Bearer <Hash>`
+
+
+**Example Response:**
+
+```JSON
+{
+
+}
+```
+<div id='/destroy-orders'></div>
+
+## `/destroy-orders` - Check User's Individual Order
+
+
+**Heroku Deployed Link**
+
+- `https://pacific-escarpment-97348.herokuapp.com/destroy-orders`
+
+#### Method
+
+| URI | HTTP Method | Authentication | Headers |
+| --- | ----------- | -------------- | ------- |
+| `destroy-orders` | POST | [User Token](#authentication)| Authentication|
+
+
+#### Request Parameters
+
+| Parameter | Type | Description | Default | Required? |
+| --------- | ---- | ----------- | ------- | --------- |
+| **X** | String | Order ID Hash | N/A | Yes |
+
+Note that the `Authentication` header has to say `Bearer` in the value
+
+Example:
+`Authentication: Bearer <Hash>`
+
+
+**Example Response:**
+
+```JSON
+{
+
+}
+```
+<div id='/delete-review'></div>
+
+## `/delete-review` - Check User's Individual Order
+
+
+**Heroku Deployed Link**
+
+- `https://pacific-escarpment-97348.herokuapp.com/delete-review`
+
+#### Method
+
+| URI | HTTP Method | Authentication | Headers |
+| --- | ----------- | -------------- | ------- |
+| `delete-review` | POST | [User Token](#authentication)| Authentication|
+
+
+#### Request Parameters
+
+| Parameter | Type | Description | Default | Required? |
+| --------- | ---- | ----------- | ------- | --------- |
+| **X** | String | Order ID Hash | N/A | Yes |
+
+Note that the `Authentication` header has to say `Bearer` in the value
+
+Example:
+`Authentication: Bearer <Hash>`
+
+
+**Example Response:**
+
+```JSON
+{
+
+}
+```
+<div id='/edit-review'></div>
+
+## `/edit-review` - Check User's Individual Order
+
+
+**Heroku Deployed Link**
+
+- `https://pacific-escarpment-97348.herokuapp.com/edit-review`
+
+#### Method
+
+| URI | HTTP Method | Authentication | Headers |
+| --- | ----------- | -------------- | ------- |
+| `edit-review` | POST | [User Token](#authentication)| Authentication|
+
+
+#### Request Parameters
+
+| Parameter | Type | Description | Default | Required? |
+| --------- | ---- | ----------- | ------- | --------- |
+| **X** | String | Order ID Hash | N/A | Yes |
+
+Note that the `Authentication` header has to say `Bearer` in the value
+
+Example:
+`Authentication: Bearer <Hash>`
+
+
+**Example Response:**
+
+```JSON
+{
+
+}
+```
