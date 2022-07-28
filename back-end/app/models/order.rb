@@ -1,5 +1,6 @@
 class Order < ApplicationRecord
     # before_create :randomize_id
+    default_scope { order('created_at DESC') }
     belongs_to :user
     has_many :documents, dependent: :destroy
     has_many :steps, dependent: :destroy
