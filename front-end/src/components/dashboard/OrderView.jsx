@@ -37,7 +37,6 @@ export default function OrderView(props) {
   };
 
   let checkProgress = () => {
-    stepValue(0);
     stepsArr.forEach((step) => {
       if (step) {
         if (step.completed) setStepValue((prev) => prev + 1);
@@ -47,7 +46,7 @@ export default function OrderView(props) {
 
   useEffect(() => {
     //if the id changes the progress resets
-    setStepValue(0);
+
     let handleStepperOrentation = () => {
       if (window.innerWidth <= 650) {
         setStepperStyle({
@@ -90,9 +89,6 @@ export default function OrderView(props) {
     checkProgress();
   }, [stepsArr]);
 
-  useEffect(() => {
-    console.log(stepValue);
-  }, [stepValue]);
   return (
     <div className="OrderView">
       <h2 style={{ borderBottom: `3px solid ${colorHash.hex(id)}` }}>
