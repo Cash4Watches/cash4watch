@@ -103,10 +103,10 @@ function Dashboard() {
         <div className="Dashboard-nav-container">
           <div className="Dashboard-nav-vertical" ref={verticallNav}>
             <div className="Dashboard-nav-vertical-item">
-              {!user.profile.is_admin ? (
-                <CustomerNav handleClick={changeContent} />
-              ) : (
+              {user.profile.is_admin ? (
                 <AdminNav handleClick={changeContent} />
+              ) : (
+                <CustomerNav handleClick={changeContent} />
               )}
             </div>
           </div>
