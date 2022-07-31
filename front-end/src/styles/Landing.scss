@@ -140,6 +140,26 @@
       text-indent: 4rem;
     }
   }
+  &-Reviews {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 3rem;
+    padding-top: 1rem;
+    background-color: #242951;
+    width: 100vw;
+    &-title {
+      color: white;
+      font-size: 1.5rem;
+    }
+    &-container {
+      width: 88%;
+      overflow: scroll;
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+    }
+  }
 }
 
 .LandingBox {
@@ -196,7 +216,20 @@
     }
   }
 }
-
+@media (max-width: 800px) {
+  .Review {
+    margin-right: 4rem;
+  }
+  .Landing-Reviews {
+    border-color: blue;
+    &-container {
+      width: 400px;
+      display: flex;
+      justify-content: flex-start;
+      gap: 0rem;
+    }
+  }
+}
 @media (min-width: 800px) {
   .Landing {
     align-items: flex-start;
