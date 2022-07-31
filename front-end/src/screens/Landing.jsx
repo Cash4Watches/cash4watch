@@ -6,14 +6,34 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import Acordain from "../components/Acordain.jsx";
-import { useState, useEffect } from "react";
+import Review from "../components/Review.jsx";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import LandingForm from "../components/LandingForm.jsx";
 import LandingBox from "../components/LandingBox.jsx";
 function Landing() {
+  let fakeReviews = [
+    {
+      content: "Rolly Avanlanche",
+      author: "Mustafa",
+    },
+    {
+      content: "Excellent service i would highly recommend",
+      author: "Mohamed",
+    },
+    {
+      content: "Rolly Avanlanche",
+      author: "Mustafa",
+    },
+    {
+      content: "Excellent service i would highly recommend",
+      author: "Mohamed",
+    },
+  ];
+  const reviewContainer = useRef(null);
   const user = useSelector((state) => state.user);
   const [background, setBackground] = useState("");
-
+  const [reviews, setReviews] = useState(fakeReviews);
   let handleResize = () => {
     if (800 <= window.innerWidth) {
       setBackground(
@@ -36,6 +56,11 @@ function Landing() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  useEffect(() => {
+    if (reviews.length > 3) {
+      reviewContainer.current.style.justifyContent = "flex-start";
+    }
+  }, [reviews]);
   return (
     <>
       <div className="Landing">
@@ -85,6 +110,16 @@ function Landing() {
             other side of the globe which help us get you the most money
             possible for your watch.
           </p>
+        </div>
+        <div className="Landing-Reviews">
+          <div className="Landing-Reviews-title">
+            <p>Hear what our customers are saying about us !</p>
+          </div>
+          <div ref={reviewContainer} className="Landing-Reviews-container">
+            {reviews.map((review) => (
+              <Review author={review["author"]} review={review["content"]} />
+            ))}
+          </div>
         </div>
         <Acordain />
       </div>
