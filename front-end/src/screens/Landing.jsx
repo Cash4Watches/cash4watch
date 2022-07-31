@@ -29,6 +29,14 @@ function Landing() {
       content: "Excellent service i would highly recommend",
       author: "Mohamed",
     },
+    {
+      content: "Rolly Avanlanche",
+      author: "Mustafa",
+    },
+    {
+      content: "Excellent service i would highly recommend",
+      author: "Mohamed",
+    },
   ];
   const reviewContainer = useRef(null);
   const user = useSelector((state) => state.user);
