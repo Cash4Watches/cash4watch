@@ -124,8 +124,12 @@ function Landing() {
             <p>Hear what our customers are saying about us !</p>
           </div>
           <div ref={reviewContainer} className="Landing-Reviews-container">
-            {reviews.map((review) => (
-              <Review author={review["author"]} review={review["content"]} />
+            {reviews.map((review, i) => (
+              <Review
+                key={i}
+                author={review["author"]}
+                review={review["content"]}
+              />
             ))}
           </div>
         </div>
