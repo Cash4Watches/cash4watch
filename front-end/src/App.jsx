@@ -33,16 +33,6 @@ function App() {
             </>
           }
         />
-        <Route
-          path="/form-signup"
-          element={
-            <>
-              <Navbar />
-              <FormSign />
-              <Footer />
-            </>
-          }
-        />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route
           path="/login"
