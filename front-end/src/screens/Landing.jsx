@@ -83,12 +83,9 @@ function Landing() {
             <LibraryAddCheckIcon fontSize="inherit" />
             <p>
               Get Insured
-              <span style={{ color: "purple", fontWeight: "bolder" }}>
-                {" "}
-                Fed
-              </span>
+              <span style={{ color: "purple", fontWeight: "bolder" }}>Fed</span>
               <span style={{ color: "darkorange", fontWeight: "bolder" }}>
-                Ex{" "}
+                Ex
               </span>
               label
             </p>
