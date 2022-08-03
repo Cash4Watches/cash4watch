@@ -23,7 +23,11 @@ function Form() {
     if (vaildateForm(e.target)) {
       try {
         setDisable(true);
-        await api.post("/create-new-order", form);
+        await api.post("/create-new-order", form, {
+          headers: {
+            Authentication: `Bearer ${localStorage.getItem("jwt_token")}`,
+          },
+        });
         navigate("/dashboard");
       } catch (e) {
         console.log(e);

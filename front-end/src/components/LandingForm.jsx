@@ -18,14 +18,19 @@ const LandingForm = () => {
   const form = useSelector((state) => state.form.value);
   const [showPassword, setShowPassword] = useState(false);
   const [formError, setFormError] = useState({
+    emailError: { value: false, message: "" },
+    nameError: { value: false, message: "" },
     passMatch: { value: false, message: "" },
   });
   let navigate = useNavigate();
   const dispatch = useDispatch();
-  let clearError = () => {
-    setFormError({
-      passMatch: { value: false, message: "" },
-    });
+  //this clears the error of what ever input field in being typed in
+  let clearError = (e) => {
+    console.log(e.target);
+    // setFormError({
+    //   ...formError,
+    //   passMatch: { value: false, message: "" },
+    // });
   };
   let onlySpaces = (str) => {
     return str.trim().length === 0;
@@ -39,13 +44,47 @@ const LandingForm = () => {
       })
     );
   };
+  let registerUser = async () => {
+    console.log(form);
+    // let response = await api.post("/signup", form);
+    // let data = response.data;
+    // console.log(data);
+    // if (data["message"]) {
+    //   alert(data.message);
+    // } else {
+    //   localStorage.setItem("jwt_token", data.token);
+    //   dispatch(setUser({ name: data.user.full_name, profile: data.user }));
+    //   navigate("/dashboard");
+    // }
+  };
+  let handleFormError = (nameErr = false, emailErr = false) => {
+    if (!nameErr && !emailErr) {
+      clearError();
+    } else {
+      if (nameErr) {
+        setFormError({
+          ...formError,
+          nameError: { value: true, message: "Incorrect naming" },
+        });
+      }
+      if (emailErr) {
+        setFormError({
+          ...formError,
+          emailError: { value: true, message: "Incorrect email" },
+        });
+      }
+    }
+  };
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    // if (form.email.includes("@") && !onlySpaces(form.name))
-    //   navigate("/form-signup");
-    // !form.email.includes("@") ? setEmailError(true) : setEmailError(false);
-    // onlySpaces(form.name) ? setNameError(true) : setNameError(false);
+    if (form.email.includes("@") && !onlySpaces(form.name)) registerUser();
+    !form.email.includes("@")
+      ? handleFormError(false, true)
+      : handleFormError(false, false);
+    onlySpaces(form.name)
+      ? handleFormError(true, false)
+      : handleFormError(false, false);
   };
 
   return (
@@ -114,8 +153,9 @@ const LandingForm = () => {
             className="Landing__form-items-inputs"
             type="text"
             name="state"
-            label="state"
+            label="State"
             onChange={updateFormData}
+            autoComplete="address-level1"
             value={form["state"] || ""}
             required
           />
