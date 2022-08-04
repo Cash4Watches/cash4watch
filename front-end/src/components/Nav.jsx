@@ -42,7 +42,7 @@ function Navbar() {
       price: "1245",
     },
     {
-      name: "Rolex3",
+      name: "LAST",
       price: "1245",
     },
   ];

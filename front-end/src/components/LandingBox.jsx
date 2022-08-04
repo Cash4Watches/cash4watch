@@ -16,8 +16,8 @@ export default function LandingBox() {
   return (
     <>
       <div className="LandingBox">
-        <div className="Landing__form__title">
-          <p className="LandingBox-title">Cash4Watches</p>
+        <div className="LandingBox-title">
+          <p>Cash4Watches</p>
         </div>
         <div className="LandingBox-content">
           <div className="LandingBox-content-text">
