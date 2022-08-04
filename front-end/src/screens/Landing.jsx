@@ -11,37 +11,12 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import LandingForm from "../components/LandingForm.jsx";
 import LandingBox from "../components/LandingBox.jsx";
+import api from "../services/AxiosConfig.js";
 function Landing() {
-  let fakeReviews = [
-    {
-      content: "Rolly Avanlanche",
-      author: "Mustafa",
-    },
-    {
-      content: "Excellent service i would highly recommend",
-      author: "Mohamed",
-    },
-    {
-      content: "Rolly Avanlanche",
-      author: "Mustafa",
-    },
-    {
-      content: "Excellent service i would highly recommend",
-      author: "Mohamed",
-    },
-    {
-      content: "Rolly Avanlanche",
-      author: "Mustafa",
-    },
-    {
-      content: "Excellent service i would highly recommend",
-      author: "Mohamed",
-    },
-  ];
   const reviewContainer = useRef(null);
   const user = useSelector((state) => state.user);
   const [background, setBackground] = useState("");
-  const [reviews, setReviews] = useState(fakeReviews);
+  const [reviews, setReviews] = useState([]);
   let handleResize = () => {
     if (800 <= window.innerWidth) {
       setBackground(
@@ -57,7 +32,16 @@ function Landing() {
       );
     }
   };
+  let grabReviews = async () => {
+    try {
+      let response = await api.get("/reviews");
+      setReviews(response.data.Reviews);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
+    grabReviews();
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => {
@@ -107,6 +91,17 @@ function Landing() {
             <p>Get Paid</p>
           </div>
         </div>
+        <div className="Landing-brand-video-container">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/RLgVOi1ydQw"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
         <div className="Landing__about-container">
           <h1>About</h1>
           <p>
@@ -126,8 +121,8 @@ function Landing() {
             {reviews.map((review, i) => (
               <Review
                 key={i}
-                author={review["author"]}
-                review={review["content"]}
+                author={review["user_id"]}
+                review={review["comment"]}
               />
             ))}
           </div>
