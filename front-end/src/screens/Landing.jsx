@@ -72,10 +72,12 @@ function Landing() {
   return (
     <>
       <div className="Landing">
-        {background}
+        <div className="Landing__landing-wrapper">
+          {background}
 
-        <div className="Landing__form-container">
-          {!user.isAuthenticated ? <LandingForm /> : <LandingBox />}
+          <div className="Landing__form-container">
+            {!user.isAuthenticated ? <LandingForm /> : <LandingBox />}
+          </div>
         </div>
 
         <div className="Landing__banner-container">
@@ -83,12 +85,9 @@ function Landing() {
             <LibraryAddCheckIcon fontSize="inherit" />
             <p>
               Get Insured
-              <span style={{ color: "purple", fontWeight: "bolder" }}>
-                {" "}
-                Fed
-              </span>
+              <span style={{ color: "purple", fontWeight: "bolder" }}>Fed</span>
               <span style={{ color: "darkorange", fontWeight: "bolder" }}>
-                Ex{" "}
+                Ex
               </span>
               label
             </p>

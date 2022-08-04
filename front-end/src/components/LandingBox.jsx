@@ -7,17 +7,21 @@ export default function LandingBox() {
   let navigate = useNavigate();
   const user = useSelector((state) => state.user);
   let abbreviateName = () => {
-    if (user.name.split(" ")[1]) {
-      return user.name.split(" ")[1];
-    } else {
-      return user.name;
+    try {
+      if (user.name.split(" ")[1]) {
+        return user.name.split(" ")[1];
+      } else {
+        return user.name;
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
   return (
     <>
       <div className="LandingBox">
-        <div className="Landing__form__title">
-          <p className="LandingBox-title">Cash4Watches</p>
+        <div className="LandingBox-title">
+          <p>Cash4Watches</p>
         </div>
         <div className="LandingBox-content">
           <div className="LandingBox-content-text">
