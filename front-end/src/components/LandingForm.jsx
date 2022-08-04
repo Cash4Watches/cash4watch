@@ -13,24 +13,25 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setForm } from "../state/form.js";
 import { useState } from "react";
-
+import api from "../services/AxiosConfig.js";
+import { setUser } from "../state/user.js";
 const LandingForm = () => {
   const form = useSelector((state) => state.form.value);
   const [showPassword, setShowPassword] = useState(false);
   const [formError, setFormError] = useState({
     emailError: { value: false, message: "" },
-    nameError: { value: false, message: "" },
-    passMatch: { value: false, message: "" },
+    full_nameError: { value: false, message: "" },
+    passwordError: { value: false, message: "" },
   });
+  const [isLoading, setIsLoading] = useState(false);
   let navigate = useNavigate();
   const dispatch = useDispatch();
   //this clears the error of what ever input field in being typed in
   let clearError = (e) => {
-    console.log(e.target);
-    // setFormError({
-    //   ...formError,
-    //   passMatch: { value: false, message: "" },
-    // });
+    setFormError({
+      ...formError,
+      [`${e.target.name}Error`]: { value: false, message: "" },
+    });
   };
   let onlySpaces = (str) => {
     return str.trim().length === 0;
@@ -45,50 +46,52 @@ const LandingForm = () => {
     );
   };
   let registerUser = async () => {
-    console.log(form);
-    // let response = await api.post("/signup", form);
-    // let data = response.data;
-    // console.log(data);
-    // if (data["message"]) {
-    //   alert(data.message);
-    // } else {
-    //   localStorage.setItem("jwt_token", data.token);
-    //   dispatch(setUser({ name: data.user.full_name, profile: data.user }));
-    //   navigate("/dashboard");
-    // }
+    try {
+      if (!isLoading) {
+        setIsLoading(true);
+        let response = await api.post("/signup", form);
+        let data = response.data;
+        console.log(data);
+        if (data["message"]) {
+          alert(data.message);
+        } else {
+          localStorage.setItem("jwt_token", data.token);
+          dispatch(setUser({ name: data.user.full_name, profile: data.user }));
+          navigate("/dashboard");
+        }
+        setIsLoading(false);
+      } else {
+        alert("Please wait .... registering user ...");
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
   let handleFormError = (nameErr = false, emailErr = false) => {
-    if (!nameErr && !emailErr) {
-      clearError();
-    } else {
-      if (nameErr) {
-        setFormError({
-          ...formError,
-          nameError: { value: true, message: "Incorrect naming" },
-        });
-      }
-      if (emailErr) {
-        setFormError({
-          ...formError,
-          emailError: { value: true, message: "Incorrect email" },
-        });
-      }
+    if (nameErr) {
+      setFormError({
+        ...formError,
+        full_nameError: { value: true, message: "Incorrect naming" },
+      });
+    } else if (emailErr) {
+      setFormError({
+        ...formError,
+        emailError: { value: true, message: "Incorrect email" },
+      });
     }
   };
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    if (form.email.includes("@") && !onlySpaces(form.name)) registerUser();
-    !form.email.includes("@")
-      ? handleFormError(false, true)
-      : handleFormError(false, false);
-    onlySpaces(form.name)
-      ? handleFormError(true, false)
-      : handleFormError(false, false);
+    if (form.email.includes("@") && !onlySpaces(form.full_name)) registerUser();
+
+    if (!form.email.includes("@")) handleFormError(false, true);
+
+    if (onlySpaces(form.full_name)) handleFormError(true, false);
   };
 
   return (
-    <>
+    <div className="Landing-Form">
       <div className="Landing__form__title">
         <p>We Buy Your Watches at Top End Prices</p>
       </div>
@@ -104,6 +107,9 @@ const LandingForm = () => {
             autoComplete="full name"
             value={form["full_name"] || ""}
             inputProps={{ pattern: "[a-zA-Z ]+" }}
+            error={formError.full_nameError.value}
+            helperText={formError.full_nameError.message}
+            onKeyDown={clearError}
             required
           />
           <TextField
@@ -115,6 +121,9 @@ const LandingForm = () => {
             autoComplete="email"
             onChange={updateFormData}
             value={form["email"] || ""}
+            error={formError.emailError.value}
+            helperText={formError.emailError.message}
+            onKeyDown={clearError}
             required
           />
           <TextField
@@ -180,7 +189,7 @@ const LandingForm = () => {
                 value={form["password"] || ""}
                 name="password"
                 onChange={updateFormData}
-                error={formError.passMatch.value}
+                error={formError.passwordError.value}
                 onKeyDown={clearError}
                 required
                 autoComplete="current-password"
@@ -197,8 +206,8 @@ const LandingForm = () => {
                 }
                 label="Password"
               />
-              <FormHelperText error={formError.passMatch.value}>
-                {formError.passMatch.message}
+              <FormHelperText error={formError.passwordError.value}>
+                {formError.passwordError.message}
               </FormHelperText>
             </FormControl>
             <FormControl className="Landing__form-items-inputs">
@@ -208,7 +217,7 @@ const LandingForm = () => {
                 value={form["confirm"] || ""}
                 name="confirm"
                 onChange={updateFormData}
-                error={formError.passMatch.value}
+                error={formError.passwordError.value}
                 onKeyDown={clearError}
                 required
                 label="Confirm"
@@ -226,8 +235,8 @@ const LandingForm = () => {
                   </InputAdornment>
                 }
               />
-              <FormHelperText error={formError.passMatch.value}>
-                {formError.passMatch.message}
+              <FormHelperText error={formError.passwordError.value}>
+                {formError.passwordError.message}
               </FormHelperText>
             </FormControl>
           </div>
@@ -240,7 +249,7 @@ const LandingForm = () => {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

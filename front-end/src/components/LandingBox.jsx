@@ -7,10 +7,14 @@ export default function LandingBox() {
   let navigate = useNavigate();
   const user = useSelector((state) => state.user);
   let abbreviateName = () => {
-    if (user.name.split(" ")[1]) {
-      return user.name.split(" ")[1];
-    } else {
-      return user.name;
+    try {
+      if (user.name.split(" ")[1]) {
+        return user.name.split(" ")[1];
+      } else {
+        return user.name;
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
   return (

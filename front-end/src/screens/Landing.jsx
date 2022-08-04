@@ -72,10 +72,12 @@ function Landing() {
   return (
     <>
       <div className="Landing">
-        {background}
+        <div className="Landing__landing-wrapper">
+          {background}
 
-        <div className="Landing__form-container">
-          {!user.isAuthenticated ? <LandingForm /> : <LandingBox />}
+          <div className="Landing__form-container">
+            {!user.isAuthenticated ? <LandingForm /> : <LandingBox />}
+          </div>
         </div>
 
         <div className="Landing__banner-container">
