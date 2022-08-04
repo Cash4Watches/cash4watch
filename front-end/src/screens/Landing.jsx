@@ -107,6 +107,17 @@ function Landing() {
             <p>Get Paid</p>
           </div>
         </div>
+        <div className="Landing-brand-video-container">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/RLgVOi1ydQw"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
         <div className="Landing__about-container">
           <h1>About</h1>
           <p>

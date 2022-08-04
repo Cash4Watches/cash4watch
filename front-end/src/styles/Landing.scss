@@ -5,6 +5,13 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  &-brand-video-container {
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+  }
   &__rolex-moblie {
     position: absolute;
     z-index: -1;
