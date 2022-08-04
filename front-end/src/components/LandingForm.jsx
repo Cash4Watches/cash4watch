@@ -28,9 +28,12 @@ const LandingForm = () => {
   const dispatch = useDispatch();
   //this clears the error of what ever input field in being typed in
   let clearError = (e) => {
+    let name = e.target.name;
+    // in the event the user presses a key on the confirm box it should instead clear both the conform and password fields
+    if (name === "confirm") name = "password";
     setFormError({
       ...formError,
-      [`${e.target.name}Error`]: { value: false, message: "" },
+      [`${name}Error`]: { value: false, message: "" },
     });
   };
   let onlySpaces = (str) => {
@@ -51,7 +54,6 @@ const LandingForm = () => {
         setIsLoading(true);
         let response = await api.post("/signup", form);
         let data = response.data;
-        console.log(data);
         if (data["message"]) {
           alert(data.message);
         } else {
@@ -67,7 +69,11 @@ const LandingForm = () => {
       alert(error);
     }
   };
-  let handleFormError = (nameErr = false, emailErr = false) => {
+  let handleFormError = (
+    nameErr = false,
+    emailErr = false,
+    passErr = false
+  ) => {
     if (nameErr) {
       setFormError({
         ...formError,
@@ -78,16 +84,28 @@ const LandingForm = () => {
         ...formError,
         emailError: { value: true, message: "Incorrect email" },
       });
+    } else if (passErr) {
+      setFormError({
+        ...formError,
+        passwordError: { value: true, message: "Passwords do not match" },
+      });
     }
   };
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    if (form.email.includes("@") && !onlySpaces(form.full_name)) registerUser();
+    if (
+      form.email.includes("@") &&
+      !onlySpaces(form.full_name) &&
+      form.password === form.confirm
+    )
+      registerUser();
 
     if (!form.email.includes("@")) handleFormError(false, true);
 
     if (onlySpaces(form.full_name)) handleFormError(true, false);
+
+    if (form.password !== form.confirm) handleFormError(false, false, true);
   };
 
   return (
@@ -190,6 +208,7 @@ const LandingForm = () => {
                 name="password"
                 onChange={updateFormData}
                 error={formError.passwordError.value}
+                helpertext={formError.passwordError.message}
                 onKeyDown={clearError}
                 required
                 autoComplete="current-password"
@@ -218,6 +237,7 @@ const LandingForm = () => {
                 name="confirm"
                 onChange={updateFormData}
                 error={formError.passwordError.value}
+                helpertext={formError.passwordError.message}
                 onKeyDown={clearError}
                 required
                 label="Confirm"
