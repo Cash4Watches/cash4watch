@@ -43,6 +43,9 @@ export default function AdminOrders() {
       {orders.map((order)=>{
       return <OrderCard key={order.id} order={order}/>
     })}
+    {orders.map((order)=>{
+      return <OrderCard key={order.id} order={order}/>
+    })}
      </div>
      </div>
     </>
