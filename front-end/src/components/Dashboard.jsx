@@ -15,15 +15,14 @@ import AdminOrders from "../components/dashboard/admin/AdminOrders.jsx";
 import AdminReviews from "../components/dashboard/admin/AdminReviews.jsx";
 import AdminHome from "../components/dashboard/admin/AdminHome.jsx";
 import { useSelector } from "react-redux";
+import "../styles/Admin.scss";
 function Dashboard() {
   const user = useSelector((state) => state.user);
   const horizontalNav = useRef(null);
   const verticallNav = useRef(null);
   const dashboardScreen = useRef(null);
   const [icon, setIcon] = useState(false);
-  const [content, setContent] = useState(
-    user.profile.is_admin ? <AdminHome /> : <Home />
-  );
+  const [content, setContent] = useState(<Home />);
   const navigate = useNavigate();
   useEffect(() => {
     // due to differences in screen width the amount to shift by vaires
@@ -44,7 +43,9 @@ function Dashboard() {
     }
     document.body.style.setProperty("--dashboard-nav-color", navColor);
   }, [icon]);
-
+  useEffect(() => {
+    if (user.isAdmin) setContent(<AdminHome />);
+  }, [user.isAdmin]);
   let changeContent = (e) => {
     let dashboardContent = e.target.dataset.content;
     switch (dashboardContent) {

@@ -1,0 +1,45 @@
+.SubmitReview {
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.1),
+    0 2px 6px 2px rgb(60 64 67 / 0.1%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & p {
+      color: green;
+    }
+    & button {
+      background-color: var(--dashboard-nav-color);
+      width: 50%;
+      color: white;
+      border: 1px solid var(--dashboard-nav-color);
+      padding: 0.5rem;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+      border-radius: 10px;
+      transition: all ease 0.25s;
+      &:hover {
+        cursor: pointer;
+        color: var(--dashboard-nav-color);
+        background-color: white;
+      }
+    }
+    & textarea {
+      width: 100%;
+      border: 0.5px solid var(--dashboard-nav-color);
+      border-radius: 10px;
+      height: 10rem;
+      box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 15%),
+        0 2px 6px 2px rgb(60 64 67 / 15%);
+      padding: 1rem;
+      font-size: 1.4rem;
+    }
+  }
+}

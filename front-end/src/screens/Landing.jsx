@@ -6,14 +6,17 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import LibraryAddCheckIcon from "@mui/icons-material/LibraryAddCheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import Acordain from "../components/Acordain.jsx";
-import { useState, useEffect } from "react";
+import Review from "../components/Review.jsx";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import LandingForm from "../components/LandingForm.jsx";
 import LandingBox from "../components/LandingBox.jsx";
+import api from "../services/AxiosConfig.js";
 function Landing() {
+  const reviewContainer = useRef(null);
   const user = useSelector((state) => state.user);
   const [background, setBackground] = useState("");
-
+  const [reviews, setReviews] = useState([]);
   let handleResize = () => {
     if (800 <= window.innerWidth) {
       setBackground(
@@ -29,20 +32,36 @@ function Landing() {
       );
     }
   };
+  let grabReviews = async () => {
+    try {
+      let response = await api.get("/reviews");
+      setReviews(response.data.Reviews);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
+    grabReviews();
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  useEffect(() => {
+    if (reviews.length > 3) {
+      reviewContainer.current.style.justifyContent = "flex-start";
+    }
+  }, [reviews]);
   return (
     <>
       <div className="Landing">
-        {background}
+        <div className="Landing__landing-wrapper">
+          {background}
 
-        <div className="Landing__form-container">
-          {!user.isAuthenticated ? <LandingForm /> : <LandingBox />}
+          <div className="Landing__form-container">
+            {!user.isAuthenticated ? <LandingForm /> : <LandingBox />}
+          </div>
         </div>
 
         <div className="Landing__banner-container">
@@ -50,12 +69,9 @@ function Landing() {
             <LibraryAddCheckIcon fontSize="inherit" />
             <p>
               Get Insured
-              <span style={{ color: "purple", fontWeight: "bolder" }}>
-                {" "}
-                Fed
-              </span>
+              <span style={{ color: "purple", fontWeight: "bolder" }}>Fed</span>
               <span style={{ color: "darkorange", fontWeight: "bolder" }}>
-                Ex{" "}
+                Ex
               </span>
               label
             </p>
@@ -75,6 +91,17 @@ function Landing() {
             <p>Get Paid</p>
           </div>
         </div>
+        <div className="Landing-brand-video-container">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/RLgVOi1ydQw"
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
         <div className="Landing__about-container">
           <h1>About</h1>
           <p>
@@ -85,6 +112,20 @@ function Landing() {
             other side of the globe which help us get you the most money
             possible for your watch.
           </p>
+        </div>
+        <div className="Landing-Reviews">
+          <div className="Landing-Reviews-title">
+            <p>Hear what our customers are saying about us !</p>
+          </div>
+          <div ref={reviewContainer} className="Landing-Reviews-container">
+            {reviews.map((review, i) => (
+              <Review
+                key={i}
+                author={review["user_id"]}
+                review={review["comment"]}
+              />
+            ))}
+          </div>
         </div>
         <Acordain />
       </div>

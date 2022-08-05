@@ -72,6 +72,42 @@
     }
   }
 }
+.Market {
+  z-index: 2;
+  position: fixed;
+  width: 100vw;
+  margin-top: 4rem;
+  min-height: 2rem;
+  max-height: 2rem;
+  overflow: hidden;
+  background-color: #790220;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  &-container {
+    display: flex;
+    align-items: flex-end;
+    gap: 20vw;
+    transition: all ease 2s;
+    animation: marketLoop 20s linear 0.1s infinite alternate none;
+    letter-spacing: 1px;
+
+    & p {
+      width: max-content;
+    }
+  }
+}
+@keyframes marketLoop {
+  0% {
+    margin-right: var(--neg-animation-shift);
+  }
+
+  100% {
+    margin-right: var(--pos-animation-shift);
+  }
+}
 
 @media (max-width: 600px) {
   .Navbar {
