@@ -18,7 +18,6 @@ const SubmitReview = () => {
           },
         }
       );
-      console.log(response.status);
       if (response.status === 200) {
         textArea.current.value = "";
         setHelperText("Your Review has been submited");

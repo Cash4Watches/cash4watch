@@ -12,6 +12,7 @@ export const userSlice = createSlice({
       state.name = action.payload.name;
       state.profile = { ...action.payload.profile };
       state.isAuthenticated = true;
+      state.isAdmin = action.payload.profile.is_admin;
     },
     clearUser: (state, action) => {
       state.name = "Guest";
