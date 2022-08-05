@@ -58,7 +58,6 @@ function App() {
           element={
             <>
               <Navbar />
-
               <div className="Errorpage">
                 Wrong url <a href="/">Click here</a> to go back home
               </div>

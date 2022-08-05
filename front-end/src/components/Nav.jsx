@@ -81,7 +81,7 @@ function Navbar() {
     return () => {
       window.removeEventListener("resize", handleIcon);
     };
-  }, [user]);
+  }, [user.isAuthenticated]);
   useEffect(() => {
     if (market.length > 0) {
       let shiftAmount = marketRef.current.offsetWidth / 2 + 300;

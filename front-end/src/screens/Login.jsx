@@ -18,7 +18,7 @@ function Login() {
     let data = response.data;
     if (data["user"]) {
       localStorage.setItem("jwt_token", data.token);
-      dispatch(setUser({ name: data.user.full_name }));
+      dispatch(setUser({ name: data.user.full_name, profile: data.user }));
       navigate("/dashboard");
     } else {
       alert(data["message"]);

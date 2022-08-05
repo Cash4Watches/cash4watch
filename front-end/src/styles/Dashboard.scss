@@ -111,6 +111,7 @@
   align-items: center;
   flex-direction: column;
   gap: 2rem;
+  overflow: scroll;
   & h1 {
     margin-top: 3rem;
   }

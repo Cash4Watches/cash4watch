@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import SubmitReview from "../SubmitReview.jsx";
 function Home() {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -12,6 +13,7 @@ function Home() {
       <button className="Home-create-btn" onClick={() => navigate("/form")}>
         New Order
       </button>
+      <SubmitReview />
     </div>
   );
 }
