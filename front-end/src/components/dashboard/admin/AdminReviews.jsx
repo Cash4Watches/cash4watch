@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import api from "../../../services/AxiosConfig.js";
 import Review from "./mini-components/AdminReviewView.jsx";
+import axios from "axios";
 export default function AdminReviews() {
   const [reviews, setReviews] = useState({
     content: [],
@@ -8,17 +8,16 @@ export default function AdminReviews() {
   });
   useEffect(() => {
     let grabReviews = async () => {
+      let token = localStorage.getItem("jwt_token");
       try {
-        let response = await api.get(
-          "/admin-show-reviews",
-          {},
+        let response = await axios.get(
+          "https://pacific-escarpment-97348.herokuapp.com/admin-show-reviews",
           {
             headers: {
-              Authentication: `Bearer ${localStorage.getItem("jwt_token")}`,
+              Authentication: `Bearer ${token}`,
             },
           }
         );
-        console.log(response.data);
         !response.data["message"]
           ? setReviews({
               content: response.data,
@@ -26,7 +25,7 @@ export default function AdminReviews() {
             })
           : alert(response.data["message"]);
       } catch (e) {
-        console.log(e);
+        alert(e.response.statusText);
       }
     };
     if (!reviews.isLoaded) grabReviews();
