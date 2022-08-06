@@ -65,8 +65,8 @@ const LandingForm = () => {
       } else {
         alert("Please wait .... registering user ...");
       }
-    } catch (error) {
-      alert(error);
+    } catch (e) {
+      alert(e.response.statusText);
     }
   };
   let handleFormError = (

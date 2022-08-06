@@ -30,7 +30,7 @@ function Form() {
         });
         navigate("/dashboard");
       } catch (e) {
-        console.log(e);
+        alert(e.response.statusText);
       }
     } else {
       // due to time constraints this error message is alert for now

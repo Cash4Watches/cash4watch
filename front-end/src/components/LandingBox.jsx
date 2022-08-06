@@ -14,7 +14,7 @@ export default function LandingBox() {
         return user.name;
       }
     } catch (e) {
-      console.log(e);
+      alert(e.response.statusText);
     }
   };
   return (

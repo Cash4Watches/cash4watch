@@ -1,6 +1,8 @@
 .Navbar {
   z-index: 2;
   background-color: #242951e9;
+  backdrop-filter: blur(6px);
+
   display: flex;
   position: fixed;
   min-width: 100vw;
@@ -80,7 +82,7 @@
   min-height: 2rem;
   max-height: 2rem;
   overflow: hidden;
-  background-color: #790220;
+  background-color: #8c0728f0;
   color: white;
   display: flex;
   justify-content: center;
@@ -91,11 +93,12 @@
     align-items: flex-end;
     gap: 20vw;
     transition: all ease 2s;
-    animation: marketLoop 20s linear 0.1s infinite alternate none;
+    animation: marketLoop 30s linear 0.1s infinite alternate none;
     letter-spacing: 1px;
-
     & p {
       width: max-content;
+      font-size: 0.8rem;
+      font-weight: bold;
     }
   }
 }

@@ -36,8 +36,8 @@ function Landing() {
     try {
       let response = await api.get("/reviews");
       setReviews(response.data.Reviews);
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      alert(e.response.statusText);
     }
   };
   useEffect(() => {
@@ -121,7 +121,7 @@ function Landing() {
             {reviews.map((review, i) => (
               <Review
                 key={i}
-                author={review["user_id"]}
+                author={review["user_name"]}
                 review={review["comment"]}
               />
             ))}
