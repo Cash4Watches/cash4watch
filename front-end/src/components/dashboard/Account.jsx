@@ -1,9 +1,12 @@
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
-
+import { useSelector } from "react-redux";
 function Account() {
-  const [form, setForm] = useState({});
+  const user = useSelector((state) => state.user);
+  const [form, setForm] = useState({ ...user.profile });
+
   let updateForm = (e) => {
+    console.log(user.profile);
     let { name, value } = e.target;
     setForm({
       ...form,
@@ -17,11 +20,11 @@ function Account() {
         <div className="Account-fields">
           <TextField
             type="text"
-            name="name"
+            name="full_name"
             label="Name"
             placeholder="Full Name"
             onChange={updateForm}
-            value={form.name}
+            value={form.full_name}
             inputProps={{ pattern: "[a-zA-Z ]+" }}
             required
           />
@@ -54,19 +57,19 @@ function Account() {
           />
           <TextField
             type="text"
-            name="streetOne"
+            name="street1"
             label="streetOne"
             onChange={updateForm}
-            value={form.streetOne}
+            value={form.street1}
             required
           />
           <TextField
             type="text"
-            name="streetTwo"
+            name="street2"
             label="streetTwo"
             placeholder="Optional"
             onChange={updateForm}
-            value={form.streetTwo}
+            value={form.street2}
           />
           <TextField
             type="text"
