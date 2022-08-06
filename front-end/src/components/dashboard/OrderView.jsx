@@ -112,10 +112,12 @@ export default function OrderView({ data }) {
   let handleSubmitImage = async () => {
     let uploadForm = new FormData();
     let fileName = imageRef.current.files[0].name;
+    let file = imageRef.current.files[0]
     let type = imageRef.current.files[0].type;
     let uri = imageRef.current.value;
     console.log(fileName, type, uri);
-    uploadForm.append("file", { uri: uri, name: fileName, type: type });
+    uploadForm.append("file", file);
+    uploadForm.append("type", type);
     uploadForm.append("name", fileName);
     uploadForm.append("order_id", data.id);
     try {

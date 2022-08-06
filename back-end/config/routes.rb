@@ -28,4 +28,5 @@ Rails.application.routes.draw do
   post '/update-review', to: 'reviews#admin_approve_review' # Update approved status of review
   post '/add-market', to: 'markets#create'
   post '/remove-market', to: 'markets#delete'
+  post'/update-account', to: 'users#user_update_details'
 end

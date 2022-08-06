@@ -42,7 +42,12 @@ class MarketsController < ApplicationController
   end
 
   def show_all
-    markets = Market.all
+    if params[:page]
+      page_param = params[:page]
+    else
+      page_param = 1 
+    end
+    markets = Market.order(:created_at).page params[:page]
     render json: { markets: markets }
   end
 

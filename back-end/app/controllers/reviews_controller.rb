@@ -55,7 +55,7 @@ class ReviewsController < ApplicationController
     end
     def user_reviews
         reviews = Review.all.where(approved: true)
-        render json: {Reviews:reviews}
+        render json: reviews
     end
     def admin_approve_review
         token = request.headers['Authentication'].split(' ')[1] 

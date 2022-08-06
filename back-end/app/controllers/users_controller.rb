@@ -58,6 +58,17 @@ class UsersController < ApplicationController
     render json: {message: "Missing Token"}
   end
   end
+  def user_update_details
+    token = request.headers['Authentication'].split(' ')[1]
+    payload = decode(token)
+    if payload
+      user = User.find(payload['user_id'])
+      user.update(user_edit_params)
+      render json: user
+    else
+      render json: {message: "Missing Token"}
+    end
+  end
   private
 
   def user_params
@@ -65,6 +76,17 @@ class UsersController < ApplicationController
         :full_name,
         :password,
         :email,
+        :company,
+        :street1,
+        :street2,
+        :city,
+        :state,
+        :zip,
+        :phone)
+  end
+  def user_edit_params
+    params.permit(
+        :full_name,
         :company,
         :street1,
         :street2,

@@ -7,7 +7,9 @@ class ImagesController < ApplicationController
       file = params[:file]
       if file
         image = Image.create(alt: params[:name], order_id: order.id)
-        image.file.attach(io: params[:file], filename: file.original_filename, content_type: file.content_type)
+        image.file.attach(io: file, filename: params[:name], content_type: params[:type])
+        p file
+        p params[:type]
         if image
           render json: image
         else

@@ -124,7 +124,8 @@ class OrdersController < ApplicationController
       if user.is_admin
         page_param = params[:page] || 1
         orders = Order.order(:created_at).page params[:page]
-        render json: { orders: orders }
+        count = Order.count
+        render json: { orders: orders, count: count}
       else
         render json: { message: 'Unauthorized Route' }
       end
