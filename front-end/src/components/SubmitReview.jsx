@@ -23,7 +23,7 @@ const SubmitReview = () => {
         setHelperText("Your Review has been submited");
       }
     } catch (e) {
-      console.log(e);
+      alert(e.response.statusText);
     }
   };
   const textArea = useRef(null);

@@ -29,7 +29,7 @@ const AdminReviewView = (props) => {
         });
       }
     } catch (e) {
-      console.log(e);
+      alert(e.response.statusText);
     }
   };
   let handleToggle = async (e) => {
@@ -47,14 +47,23 @@ const AdminReviewView = (props) => {
       );
       setApproved(response.data.approved);
     } catch (e) {
-      console.log(e);
+      alert(e.response.statusText);
+    }
+  };
+  let cleanDataString = (date) => {
+    if (typeof date === "string") {
+      let filteredDate = date.split("T")[0];
+      filteredDate = filteredDate.replace(/-/g, "/");
+      return filteredDate;
+    } else {
+      return "";
     }
   };
   return (
     <div className="Admin-Review-view">
       <div className="Admin-Review-view-left">
         <section>
-          <h1>{data.user_id}</h1>
+          <h1>{data.user_name}</h1>
           <p>{data.comment}</p>
         </section>
         {!approved ? (
@@ -74,7 +83,7 @@ const AdminReviewView = (props) => {
         <p>Toggle</p>
       </div>
       <div className="Admin-Review-view-right">
-        <h1>0/0/2022</h1>
+        <h1>{cleanDataString(data.created_at)}</h1>
         <DeleteForeverRoundedIcon
           onClick={handleDelete}
           className="Admin-Review-view-right-trash"

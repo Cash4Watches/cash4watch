@@ -6,52 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { clearUser } from "../state/user.js";
 import PhoneInTalkIcon from "@mui/icons-material/PhoneInTalk";
-
+import api from "../services/AxiosConfig.js";
 function Navbar() {
-  let fakeMarketValues = [
-    {
-      name: "Rolex",
-      price: "10000",
-    },
-    {
-      name: "Cartier",
-      price: "69420",
-    },
-    {
-      name: "Omega",
-      price: "9999",
-    },
-    {
-      name: "Bulgari",
-      price: "1245",
-    },
-    {
-      name: "Bulgari",
-      price: "1245",
-    },
-    {
-      name: "Rolex",
-      price: "1245",
-    },
-    {
-      name: "Rolex",
-      price: "1245",
-    },
-    {
-      name: "Rolex2",
-      price: "1245",
-    },
-    {
-      name: "LAST",
-      price: "1245",
-    },
-  ];
   const marketRef = useRef(null);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   let navigate = useNavigate();
   const [navbutton, setNavbutton] = useState();
-  const [market, setMarket] = useState(fakeMarketValues);
+  const [market, setMarket] = useState({
+    content: [],
+    isLoaded: false,
+  });
   useEffect(() => {
     let handleIcon = () => {
       if (800 <= window.innerWidth) {
@@ -83,8 +48,33 @@ function Navbar() {
     };
   }, [user.isAuthenticated]);
   useEffect(() => {
-    if (market.length > 0) {
-      let shiftAmount = marketRef.current.offsetWidth / 2 + 300;
+    let grabMarket = async () => {
+      let token = localStorage.getItem("jwt_token");
+      try {
+        let response = await api.get(
+          "/market",
+          {},
+          {
+            headers: {
+              Authentication: `Bearer ${token}`,
+            },
+          }
+        );
+        !response.data["message"]
+          ? setMarket({
+              content: response.data.markets,
+              isLoaded: true,
+            })
+          : alert(response.data["message"]);
+      } catch (e) {
+        alert(e.response.statusText);
+      }
+    };
+    if (!market.isLoaded) grabMarket();
+  }, [market.isLoaded]);
+  useEffect(() => {
+    if (market.content.length > 0) {
+      let shiftAmount = marketRef.current.offsetWidth * 0.8;
       document.body.style.setProperty(
         "--pos-animation-shift",
         `${shiftAmount}px`
@@ -94,7 +84,7 @@ function Navbar() {
         `-${shiftAmount}px`
       );
     }
-  }, [market]);
+  }, [market.content]);
   return (
     <>
       <div className="Navbar">
@@ -109,11 +99,16 @@ function Navbar() {
       </div>
       <div className="Market">
         <div ref={marketRef} className="Market-container">
-          {market.map((ticker, i) => (
-            <p key={i}>
-              {ticker.name} : <span> {ticker.price}</span>
-            </p>
-          ))}
+          {market.isLoaded ? (
+            market.content.map((ticker, i) => (
+              <p key={i}>
+                {ticker.name} :
+                <span style={{ color: "lawnGreen" }}> $ {ticker.price}</span>
+              </p>
+            ))
+          ) : (
+            <p>Loading ....</p>
+          )}
         </div>
       </div>
     </>
