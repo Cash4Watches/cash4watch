@@ -35,7 +35,7 @@ function Landing() {
   let grabReviews = async () => {
     try {
       let response = await api.get("/reviews");
-      setReviews(response.data.Reviews);
+      setReviews(response.data);
     } catch (e) {
       alert(e.response.statusText);
     }

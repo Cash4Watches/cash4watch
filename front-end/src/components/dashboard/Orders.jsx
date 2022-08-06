@@ -56,7 +56,7 @@ function Orders() {
       setOrderDetail({
         ...orderDetail,
         label: "Order Number(s)",
-        view: <OrderView values={orderArr[orderDetail.index]} />,
+        view: <OrderView data={orderArr[orderDetail.index]} />,
       });
     }
   }, [orderArr, orderDetail.index]);

@@ -52,6 +52,19 @@ function Form() {
         <h1 className="Form-title">Watch Submission Form</h1>
         <form onSubmit={handleSubmit}>
           <FormControl fullWidth className="Form-input">
+            <InputLabel id="demo-simple-select-label">Order Type</InputLabel>
+            <Select
+              value={form.order_type || ""}
+              label="Order Type"
+              onChange={updateFormData}
+              name="order_type"
+            >
+              <MenuItem value={"consignment"}>Consignment/Sell</MenuItem>
+              <MenuItem value={"service"}>Repair/Service</MenuItem>
+              <MenuItem value={"polish"}>Polish</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl fullWidth className="Form-input">
             <InputLabel id="demo-simple-select-label">Brand Name</InputLabel>
             <Select
               value={form.brand_name || ""}

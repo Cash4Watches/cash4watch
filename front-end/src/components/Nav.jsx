@@ -103,7 +103,7 @@ function Navbar() {
             market.content.map((ticker, i) => (
               <p key={i}>
                 {ticker.name} :
-                <span style={{ color: "lawnGreen" }}> $ {ticker.price}</span>
+                <span style={{ color: "lawnGreen" }}> ${ticker.price}</span>
               </p>
             ))
           ) : (
