@@ -205,7 +205,32 @@
   flex-direction: column;
   padding-bottom: 3rem;
   margin-top: 3rem;
+  &-images-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    & span {
+      color: rgba(99, 69, 69, 0.647);
+    }
+    & a {
+      display: flex;
+      flex-direction: column-reverse;
+      color: var(--dashboard-nav-color);
+      font-weight: bolder;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30%;
+      max-width: 85px;
+      font-size: 0.8rem;
 
+      overflow: hidden;
+      &:hover {
+        color: #6529dc;
+      }
+    }
+  }
   & h2 {
     font-size: 2rem;
   }
@@ -363,6 +388,11 @@
       & p {
         padding-left: 1rem;
       }
+    }
+  }
+  .OrderView-images-container {
+    & a {
+      max-width: fit-content;
     }
   }
 }
