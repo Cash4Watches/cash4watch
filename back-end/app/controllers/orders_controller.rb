@@ -155,7 +155,7 @@ class OrdersController < ApplicationController
         end
         
         
-        count = orders.length / 10
+        count = (orders.length / 10.to_f).ceil
         orders = orders.page params[:page]
       
         x = orders.as_json(only: [:id, :brand_name, :model_number, :condition, :previous_service, :previous_polish, :papers, :included_items,
