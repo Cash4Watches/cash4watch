@@ -26,7 +26,7 @@ export default function LandingBox() {
         <div className="LandingBox-content">
           <div className="LandingBox-content-text">
             <h1>
-              Hey, <span>{abbreviateName()}</span>
+              Hello, <span>{abbreviateName()}</span>
             </h1>
           </div>
           <button onClick={() => navigate("/dashboard")}>My Dashboard</button>

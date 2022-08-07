@@ -6,6 +6,7 @@ import StepLabel from "@mui/material/StepLabel";
 import ColorHash from "color-hash";
 import { useState, useEffect, useRef } from "react";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import ImageRoundedIcon from "@mui/icons-material/ImageRounded";
 import api from "../../services/AxiosConfig.js";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -13,6 +14,7 @@ import Modal from "@mui/material/Modal";
 
 export default function OrderView({ data }) {
   let colorHash = new ColorHash();
+  const [reFetch, setReFetch] = useState(false);
   const details = useRef(null);
   const imageRef = useRef(null);
   const [stepperStyle, setStepperStyle] = useState({
@@ -21,6 +23,7 @@ export default function OrderView({ data }) {
   });
   const [stepValue, setStepValue] = useState(0);
   const [documents, setDocuments] = useState([{}]);
+  const [imageArr, setImageArr] = useState([{}]);
   const [stepsArr, setStepsArr] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -76,6 +79,7 @@ export default function OrderView({ data }) {
           window.location.reload();
         } else {
           setDocuments(response.data.documents);
+          setImageArr(response.data.images);
           setStepsArr(response.data.steps);
         }
       } catch (e) {
@@ -84,7 +88,7 @@ export default function OrderView({ data }) {
     };
 
     getStepCount();
-  }, [data.id]);
+  }, [data.id, reFetch]);
 
   useEffect(() => {
     checkProgress();
@@ -109,13 +113,23 @@ export default function OrderView({ data }) {
       return "";
     }
   };
+  let cleanFileName = (fileName) => {
+    if (fileName) {
+      if (fileName.length < 10) {
+        return fileName;
+      } else {
+        let name = fileName.split(".")[0];
+        let apprevatedName = name.slice(0, 6) + "~ .";
+        return apprevatedName + fileName.split(".")[1];
+      }
+    }
+  };
   let handleSubmitImage = async () => {
     let uploadForm = new FormData();
     let fileName = imageRef.current.files[0].name;
-    let file = imageRef.current.files[0]
+    let file = imageRef.current.files[0];
     let type = imageRef.current.files[0].type;
     let uri = imageRef.current.value;
-    console.log(fileName, type, uri);
     uploadForm.append("file", file);
     uploadForm.append("type", type);
     uploadForm.append("name", fileName);
@@ -131,7 +145,10 @@ export default function OrderView({ data }) {
       if (response.data["message"]) {
         alert(response.data["message"]);
       } else {
-        console.log(response);
+        if (response.status === 200) {
+          setReFetch((prev) => !prev);
+          setModalOpen(false);
+        }
       }
     } catch (e) {
       alert(e.response.statusText);
@@ -175,9 +192,6 @@ export default function OrderView({ data }) {
       </h2>
       <div className="OrderView-main">
         <p>
-          <span>Full ID :</span> {data.id}
-        </p>
-        <p>
           <span>Model :</span> {data.model_number}
         </p>
         <p>
@@ -190,9 +204,22 @@ export default function OrderView({ data }) {
               </a>
             ))
           ) : (
-            <span>Cant seem to grab docs</span>
+            <span>No Docs</span>
           )}
         </p>
+        <div className="OrderView-images-container">
+          <span>Images :</span>
+          {imageArr.length !== 0 ? (
+            imageArr.map((img, i) => (
+              <a target="_blank" rel="noreferrer" href={img.file_url} key={i}>
+                {cleanFileName(img.name)}
+                <ImageRoundedIcon fontSize="large" />
+              </a>
+            ))
+          ) : (
+            <span>No Images</span>
+          )}
+        </div>
       </div>
 
       <h4 onClick={showDetails}>More Details</h4>
