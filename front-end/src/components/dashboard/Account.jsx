@@ -1,17 +1,36 @@
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
 import { useSelector } from "react-redux";
+import api from "../../services/AxiosConfig.js";
 function Account() {
   const user = useSelector((state) => state.user);
   const [form, setForm] = useState({ ...user.profile });
-
+  const [loading, setLoading] = useState({
+    value: false,
+    done: false,
+    message: "Submit",
+  });
   let updateForm = (e) => {
-    console.log(user.profile);
     let { name, value } = e.target;
     setForm({
       ...form,
       [name]: value,
     });
+  };
+  let handleUpdateAccount = async () => {
+    try {
+      let token = localStorage.getItem("jwt_token");
+      let response = await api.post("/update-account", form, {
+        headers: {
+          Authentication: `Bearer ${token}`,
+        },
+      });
+      !response.data["message"]
+        ? console.log(response.data)
+        : alert(response.data["message"]);
+    } catch (e) {
+      alert(e.response.statusText);
+    }
   };
   return (
     <div className="Account">
@@ -26,15 +45,6 @@ function Account() {
             onChange={updateForm}
             value={form.full_name}
             inputProps={{ pattern: "[a-zA-Z ]+" }}
-            required
-          />
-          <TextField
-            type="text"
-            name="email"
-            label="Email"
-            placeholder="Email Address"
-            onChange={updateForm}
-            value={form.email}
             required
           />
           <TextField
@@ -99,7 +109,9 @@ function Account() {
             required
           />
         </div>
-        <button className="Account-submit"> Update </button>
+        <button className="Account-submit" onClick={handleUpdateAccount}>
+          Update
+        </button>
       </div>
     </div>
   );

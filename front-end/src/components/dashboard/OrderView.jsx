@@ -11,7 +11,9 @@ import api from "../../services/AxiosConfig.js";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 export default function OrderView({ data }) {
   let colorHash = new ColorHash();
   const [reFetch, setReFetch] = useState(false);
@@ -25,6 +27,11 @@ export default function OrderView({ data }) {
   const [documents, setDocuments] = useState([{}]);
   const [imageArr, setImageArr] = useState([{}]);
   const [stepsArr, setStepsArr] = useState([]);
+  const [loadingPhase, setLoadingPhase] = useState({
+    isLoading: false,
+    isDone: false,
+    isError: false,
+  });
   const [modalOpen, setModalOpen] = useState(false);
 
   let showDetails = () => {
@@ -92,7 +99,14 @@ export default function OrderView({ data }) {
 
   useEffect(() => {
     checkProgress();
-  }, [stepsArr]);
+    if (!modalOpen) {
+      setLoadingPhase({
+        isDone: false,
+        isLoading: false,
+        isError: false,
+      });
+    }
+  }, [stepsArr, modalOpen]);
   const style = {
     position: "absolute",
     top: "50%",
@@ -125,11 +139,20 @@ export default function OrderView({ data }) {
     }
   };
   let handleSubmitImage = async () => {
+    if (imageRef.current.files.length === 0) {
+      alert("Please enter a file ");
+      return false;
+    }
+
+    setLoadingPhase({
+      isDone: false,
+      isLoading: true,
+      isError: false,
+    });
     let uploadForm = new FormData();
     let fileName = imageRef.current.files[0].name;
     let file = imageRef.current.files[0];
     let type = imageRef.current.files[0].type;
-    let uri = imageRef.current.value;
     uploadForm.append("file", file);
     uploadForm.append("type", type);
     uploadForm.append("name", fileName);
@@ -144,13 +167,28 @@ export default function OrderView({ data }) {
       });
       if (response.data["message"]) {
         alert(response.data["message"]);
+        setLoadingPhase({
+          isDone: false,
+          isLoading: false,
+          isError: true,
+        });
       } else {
         if (response.status === 200) {
+          setLoadingPhase({
+            isDone: true,
+            isLoading: false,
+            isError: false,
+          });
           setReFetch((prev) => !prev);
           setModalOpen(false);
         }
       }
     } catch (e) {
+      setLoadingPhase({
+        isDone: false,
+        isLoading: false,
+        isError: true,
+      });
       alert(e.response.statusText);
     }
   };
@@ -173,7 +211,17 @@ export default function OrderView({ data }) {
               accept="image/png, image/gif, image/jpeg"
               ref={imageRef}
             />
-            <button onClick={handleSubmitImage}>Submit</button>
+            {loadingPhase.isError ? (
+              <Alert severity="error">
+                Something went wrong try refreshing or trying at a later date!
+              </Alert>
+            ) : loadingPhase.isLoading ? (
+              <CircularProgress sx={{ color: "green" }} />
+            ) : loadingPhase.isDone ? (
+              <CheckCircleOutlineIcon sx={{ color: "green" }} />
+            ) : (
+              <button onClick={handleSubmitImage}>Submit</button>
+            )}
           </div>
         </Box>
       </Modal>
@@ -196,29 +244,33 @@ export default function OrderView({ data }) {
         </p>
         <p>
           <span>Documents :</span>
-          {documents.length !== 0 ? (
-            documents.map((doc, i) => (
-              <a target="_blank" rel="noreferrer" href={doc.file_url} key={i}>
-                {doc.name}
-                <PictureAsPdfIcon />
-              </a>
-            ))
-          ) : (
-            <span>No Docs</span>
-          )}
+          <div className="OrderView-document-map-containers">
+            {documents.length !== 0 ? (
+              documents.map((doc, i) => (
+                <a target="_blank" rel="noreferrer" href={doc.file_url} key={i}>
+                  {doc.name}
+                  <PictureAsPdfIcon />
+                </a>
+              ))
+            ) : (
+              <p>No Documents</p>
+            )}
+          </div>
         </p>
         <div className="OrderView-images-container">
           <span>Images :</span>
-          {imageArr.length !== 0 ? (
-            imageArr.map((img, i) => (
-              <a target="_blank" rel="noreferrer" href={img.file_url} key={i}>
-                {cleanFileName(img.name)}
-                <ImageRoundedIcon fontSize="large" />
-              </a>
-            ))
-          ) : (
-            <span>No Images</span>
-          )}
+          <div className="OrderView-document-map-containers">
+            {imageArr.length !== 0 ? (
+              imageArr.map((img, i) => (
+                <a target="_blank" rel="noreferrer" href={img.file_url} key={i}>
+                  {cleanFileName(img.name)}
+                  <ImageRoundedIcon fontSize="large" />
+                </a>
+              ))
+            ) : (
+              <p>No Images</p>
+            )}
+          </div>
         </div>
       </div>
 

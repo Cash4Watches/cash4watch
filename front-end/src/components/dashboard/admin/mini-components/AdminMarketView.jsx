@@ -5,9 +5,9 @@ import api from "../../../../services/AxiosConfig.js";
 export default function AdminMarketView(props) {
   const { data, setMarket, market } = props;
   let handleDelete = async () => {
-    let token = localStorage.getItem("jwt_token");
     console.log(data.id);
     try {
+      let token = localStorage.getItem("jwt_token");
       let response = await api.post(
         "/remove-market",
         {
