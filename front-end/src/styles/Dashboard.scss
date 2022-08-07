@@ -205,10 +205,18 @@
   flex-direction: column;
   padding-bottom: 3rem;
   margin-top: 3rem;
+  &-document-map-containers {
+    padding: 1rem;
+    overflow: scroll;
+    width: fit-content;
+    display: flex;
+  }
   &-images-container {
     width: 100%;
+
     display: flex;
     align-items: center;
+    gap: 1rem;
     & span {
       color: rgba(99, 69, 69, 0.647);
     }
@@ -221,7 +229,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 30%;
+      min-width: 30%;
       max-width: 85px;
       font-size: 0.8rem;
 
@@ -260,6 +268,9 @@
       gap: 1rem;
       width: 100%;
       & span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         color: rgba(99, 69, 69, 0.647);
       }
       & a {
