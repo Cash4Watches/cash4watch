@@ -123,9 +123,44 @@ class OrdersController < ApplicationController
       user = User.find(payload['user_id'])
       if user.is_admin
         page_param = params[:page] || 1
-        orders = Order.order(:created_at).page params[:page]
-        count = Order.count
-        render json: { orders: orders, count: count}
+        # p params[:order_id]
+        if params[:brand] == nil || params[:brand] == ""
+          if params[:order_id] == nil || params[:order_id] == ""
+            if params[:date] == 'true'
+              orders = Order.order('created_at ASC')
+            else
+              orders = Order.order('created_at DESC')
+            end
+          else
+            if params[:date] == 'true'
+              orders = Order.where(id: params[:order_id]).order('created_at ASC')
+            else
+              orders = Order.where(id: params[:order_id])
+            end
+          end
+        else
+          if params[:order_id] == nil || params[:order_id] == ""
+            if params[:date] == 'true'
+              orders = Order.where(brand_name: params[:brand]).order('created_at ASC')
+            else
+              orders = Order.where(brand_name: params[:brand]).order('created_at DESC')
+            end
+          else
+            if params[:date] == 'true'
+              orders = Order.where(brand_name: params[:brand]).where(id: params[:order_id]).order('created_at ASC')
+            else
+              orders = Order.where(brand_name: params[:brand]).where(id: params[:order_id])
+            end
+          end
+        end
+        
+        
+        count = orders.length / 10
+        orders = orders.page params[:page]
+      
+        x = orders.as_json(only: [:id, :brand_name, :model_number, :condition, :previous_service, :previous_polish, :papers, :included_items,
+          :extra_comment, :order_type, :tracking_number, :created_at, :updated_at], methods: [:user_name])
+        render json: { orders: x , count: count}
       else
         render json: { message: 'Unauthorized Route' }
       end
@@ -140,7 +175,7 @@ class OrdersController < ApplicationController
     if payload
       user = User.find(payload['user_id'])
       if user
-        orders = user.orders
+        orders = user.orders.order('created_at DESC')
         render json: { orders: orders }
       else
         render json: { message: 'Invalid or Expired Token' }

@@ -70,6 +70,63 @@
     }
   }
 }
+.Admin-Order{
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  align-items: center;
+  &-map-container {
+    overflow: scroll;
+    max-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 1rem;
+    // align-self: flex-start;
+  }
+  &-view {
+    border: 2px solid var(--dashboard-nav-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    // width: 100%;
+    & section{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+  &-filter{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    &-search{
+    display: flex;
+    flex-direction: column;
+    // align-items: flex-start;
+    margin-left: 3vw;
+    font-size: medium;
+    margin-right: 30vw;
+    & input{
+      width: 15vw;
+      height: 5vh;
+    }
+    }
+    &-drop{
+      & select{
+        margin-right: 5vw;
+        margin-left: 1vw;
+        width: 10vw;
+        height: 5vh;
+        font-size: medium;
+      }
+    }
+    // align-self: flex-start;
+  }
+}
 .AdminMarket {
   width: 100vw;
   display: flex;

@@ -64,6 +64,7 @@ class UsersController < ApplicationController
     if payload
       user = User.find(payload['user_id'])
       user.update(user_edit_params)
+      user.save!(validate: false)
       render json: user
     else
       render json: {message: "Missing Token"}
