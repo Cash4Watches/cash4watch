@@ -267,7 +267,7 @@ export default function OrderView({ data }) {
               imageArr.map((img, i) => (
                 <a target="_blank" rel="noreferrer" href={img.file_url} key={i}>
                   {cleanFileName(img.name)}
-                  <ImageRoundedIcon fontSize="large" />
+                  <ImageRoundedIcon />
                 </a>
               ))
             ) : (
