@@ -1,17 +1,69 @@
 import { useState } from "react";
 import TextField from "@mui/material/TextField";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import api from "../../services/AxiosConfig.js";
+import { setUser } from "../../state/user.js";
+import CircularProgress from "@mui/material/CircularProgress";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import Alert from "@mui/material/Alert";
+
 function Account() {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [form, setForm] = useState({ ...user.profile });
-
+  const [loading, setLoading] = useState({
+    isLoading: false,
+    isDone: false,
+    isError: false,
+  });
   let updateForm = (e) => {
-    console.log(user.profile);
     let { name, value } = e.target;
     setForm({
       ...form,
       [name]: value,
     });
+  };
+  let handleUpdateAccount = async () => {
+    setLoading({
+      isLoading: true,
+      isDone: false,
+      isError: false,
+    });
+    try {
+      let token = localStorage.getItem("jwt_token");
+      let response = await api.post("/update-account", form, {
+        headers: {
+          Authentication: `Bearer ${token}`,
+        },
+      });
+      if (!response.data["message"]) {
+        setLoading({
+          isLoading: false,
+          isDone: true,
+          isError: false,
+        });
+        dispatch(
+          setUser({
+            name: response.data.full_name,
+            profile: response.data,
+          })
+        );
+      } else {
+        setLoading({
+          isLoading: false,
+          isDone: false,
+          isError: true,
+        });
+        alert(response.data["message"]);
+      }
+    } catch (e) {
+      setLoading({
+        isLoading: false,
+        isDone: false,
+        isError: true,
+      });
+      alert(e.response.statusText);
+    }
   };
   return (
     <div className="Account">
@@ -26,15 +78,6 @@ function Account() {
             onChange={updateForm}
             value={form.full_name}
             inputProps={{ pattern: "[a-zA-Z ]+" }}
-            required
-          />
-          <TextField
-            type="text"
-            name="email"
-            label="Email"
-            placeholder="Email Address"
-            onChange={updateForm}
-            value={form.email}
             required
           />
           <TextField
@@ -99,7 +142,23 @@ function Account() {
             required
           />
         </div>
-        <button className="Account-submit"> Update </button>
+        {loading.isLoading ? (
+          <CircularProgress />
+        ) : loading.isError ? (
+          <Alert severity="error">
+            Something went wrong trying to update your account please try at a
+            later date!
+          </Alert>
+        ) : !loading.isDone ? (
+          <button className="Account-submit" onClick={handleUpdateAccount}>
+            Update
+          </button>
+        ) : (
+          <CheckCircleOutlineIcon
+            sx={{ color: "green", fontSize: "5rem" }}
+            fontSize="inherit"
+          />
+        )}
       </div>
     </div>
   );

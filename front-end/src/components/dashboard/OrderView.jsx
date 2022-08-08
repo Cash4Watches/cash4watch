@@ -6,13 +6,17 @@ import StepLabel from "@mui/material/StepLabel";
 import ColorHash from "color-hash";
 import { useState, useEffect, useRef } from "react";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import ImageRoundedIcon from "@mui/icons-material/ImageRounded";
 import api from "../../services/AxiosConfig.js";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 export default function OrderView({ data }) {
   let colorHash = new ColorHash();
+  const [reFetch, setReFetch] = useState(false);
   const details = useRef(null);
   const imageRef = useRef(null);
   const [stepperStyle, setStepperStyle] = useState({
@@ -21,7 +25,13 @@ export default function OrderView({ data }) {
   });
   const [stepValue, setStepValue] = useState(0);
   const [documents, setDocuments] = useState([{}]);
+  const [imageArr, setImageArr] = useState([{}]);
   const [stepsArr, setStepsArr] = useState([]);
+  const [loadingPhase, setLoadingPhase] = useState({
+    isLoading: false,
+    isDone: false,
+    isError: false,
+  });
   const [modalOpen, setModalOpen] = useState(false);
 
   let showDetails = () => {
@@ -76,6 +86,7 @@ export default function OrderView({ data }) {
           window.location.reload();
         } else {
           setDocuments(response.data.documents);
+          setImageArr(response.data.images);
           setStepsArr(response.data.steps);
         }
       } catch (e) {
@@ -84,11 +95,18 @@ export default function OrderView({ data }) {
     };
 
     getStepCount();
-  }, [data.id]);
+  }, [data.id, reFetch]);
 
   useEffect(() => {
     checkProgress();
-  }, [stepsArr]);
+    if (!modalOpen) {
+      setLoadingPhase({
+        isDone: false,
+        isLoading: false,
+        isError: false,
+      });
+    }
+  }, [stepsArr, modalOpen]);
   const style = {
     position: "absolute",
     top: "50%",
@@ -109,13 +127,32 @@ export default function OrderView({ data }) {
       return "";
     }
   };
+  let cleanFileName = (fileName) => {
+    if (fileName) {
+      if (fileName.length < 10) {
+        return fileName;
+      } else {
+        let name = fileName.split(".")[0];
+        let apprevatedName = name.slice(0, 6) + "~ .";
+        return apprevatedName + fileName.split(".")[1];
+      }
+    }
+  };
   let handleSubmitImage = async () => {
+    if (imageRef.current.files.length === 0) {
+      alert("Please enter a file ");
+      return false;
+    }
+
+    setLoadingPhase({
+      isDone: false,
+      isLoading: true,
+      isError: false,
+    });
     let uploadForm = new FormData();
     let fileName = imageRef.current.files[0].name;
-    let file = imageRef.current.files[0]
+    let file = imageRef.current.files[0];
     let type = imageRef.current.files[0].type;
-    let uri = imageRef.current.value;
-    console.log(fileName, type, uri);
     uploadForm.append("file", file);
     uploadForm.append("type", type);
     uploadForm.append("name", fileName);
@@ -130,10 +167,28 @@ export default function OrderView({ data }) {
       });
       if (response.data["message"]) {
         alert(response.data["message"]);
+        setLoadingPhase({
+          isDone: false,
+          isLoading: false,
+          isError: true,
+        });
       } else {
-        console.log(response);
+        if (response.status === 200) {
+          setLoadingPhase({
+            isDone: true,
+            isLoading: false,
+            isError: false,
+          });
+          setReFetch((prev) => !prev);
+          setModalOpen(false);
+        }
       }
     } catch (e) {
+      setLoadingPhase({
+        isDone: false,
+        isLoading: false,
+        isError: true,
+      });
       alert(e.response.statusText);
     }
   };
@@ -156,7 +211,17 @@ export default function OrderView({ data }) {
               accept="image/png, image/gif, image/jpeg"
               ref={imageRef}
             />
-            <button onClick={handleSubmitImage}>Submit</button>
+            {loadingPhase.isError ? (
+              <Alert severity="error">
+                Something went wrong try refreshing or trying at a later date!
+              </Alert>
+            ) : loadingPhase.isLoading ? (
+              <CircularProgress sx={{ color: "green" }} />
+            ) : loadingPhase.isDone ? (
+              <CheckCircleOutlineIcon sx={{ color: "green" }} />
+            ) : (
+              <button onClick={handleSubmitImage}>Submit</button>
+            )}
           </div>
         </Box>
       </Modal>
@@ -175,24 +240,38 @@ export default function OrderView({ data }) {
       </h2>
       <div className="OrderView-main">
         <p>
-          <span>Full ID :</span> {data.id}
-        </p>
-        <p>
           <span>Model :</span> {data.model_number}
         </p>
         <p>
           <span>Documents :</span>
-          {documents.length !== 0 ? (
-            documents.map((doc, i) => (
-              <a target="_blank" rel="noreferrer" href={doc.file_url} key={i}>
-                {doc.name}
-                <PictureAsPdfIcon />
-              </a>
-            ))
-          ) : (
-            <span>Cant seem to grab docs</span>
-          )}
+          <div className="OrderView-document-map-containers">
+            {documents.length !== 0 ? (
+              documents.map((doc, i) => (
+                <a target="_blank" rel="noreferrer" href={doc.file_url} key={i}>
+                  {doc.name}
+                  <PictureAsPdfIcon />
+                </a>
+              ))
+            ) : (
+              <p>No Documents</p>
+            )}
+          </div>
         </p>
+        <div className="OrderView-images-container">
+          <span>Images :</span>
+          <div className="OrderView-document-map-containers">
+            {imageArr.length !== 0 ? (
+              imageArr.map((img, i) => (
+                <a target="_blank" rel="noreferrer" href={img.file_url} key={i}>
+                  {cleanFileName(img.name)}
+                  <ImageRoundedIcon fontSize="large" />
+                </a>
+              ))
+            ) : (
+              <p>No Images</p>
+            )}
+          </div>
+        </div>
       </div>
 
       <h4 onClick={showDetails}>More Details</h4>

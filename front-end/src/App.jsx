@@ -7,6 +7,7 @@ import Form from "./screens/Form.jsx";
 import Login from "./screens/Login.jsx";
 import Register from "./screens/Register.jsx";
 import PresistProfile from "./components/PersistProfile.jsx";
+import AdminOrderDetail from "./components/dashboard/admin/AdminOrderDetail.jsx";
 function App() {
   return (
     <>
@@ -33,6 +34,11 @@ function App() {
           }
         />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route
+          path="/dashboard/detail/:order_id"
+          element={<AdminOrderDetail />}
+        />
+
         <Route
           path="/login"
           element={
