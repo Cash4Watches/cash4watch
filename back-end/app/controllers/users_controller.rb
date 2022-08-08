@@ -63,7 +63,8 @@ class UsersController < ApplicationController
     payload = decode(token)
     if payload
     user = User.find(payload['user_id'])
-    if user.is_admin
+    if user.is_admin3579
+      
       users = User.where(email: params[:email])
       render json: users
     else

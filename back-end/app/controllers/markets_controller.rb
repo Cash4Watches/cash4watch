@@ -6,7 +6,7 @@ class MarketsController < ApplicationController
     if payload
       user = User.find(payload['user_id'])
       if user.is_admin
-        market = Market.create(name: params[:name], price: params[:price])
+        market = Market.create(name: params[:name], price: params[:price], date: params[:date])
         if market
           render json: market
         else

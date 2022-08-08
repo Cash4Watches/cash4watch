@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_01_201244) do
   create_table "markets", force: :cascade do |t|
     t.string "name"
     t.integer "price"
+    t.string "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
