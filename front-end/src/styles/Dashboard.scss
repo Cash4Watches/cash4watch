@@ -210,6 +210,9 @@
     overflow: scroll;
     width: fit-content;
     display: flex;
+    gap: 1rem;
+    max-width: 80%;
+    overflow: scroll;
   }
   &-images-container {
     width: 100%;
@@ -221,6 +224,7 @@
       color: rgba(99, 69, 69, 0.647);
     }
     & a {
+      text-align: center;
       display: flex;
       flex-direction: column-reverse;
       color: var(--dashboard-nav-color);
@@ -229,11 +233,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 30%;
-      max-width: 85px;
+      min-width: fit-content;
+      max-width: 120px;
       font-size: 0.8rem;
-
       overflow: hidden;
+      // margin-left: 1rem;
       &:hover {
         color: #6529dc;
       }
@@ -262,11 +266,11 @@
     display: flex;
     width: 450px;
     flex-wrap: wrap;
-
     & p {
       display: flex;
       gap: 1rem;
       width: 100%;
+      align-items: center;
       & span {
         display: flex;
         align-items: center;
@@ -274,6 +278,7 @@
         color: rgba(99, 69, 69, 0.647);
       }
       & a {
+        text-align: center;
         color: var(--dashboard-nav-color);
         font-weight: bolder;
         text-decoration: none;
@@ -401,11 +406,6 @@
       }
     }
   }
-  .OrderView-images-container {
-    & a {
-      max-width: fit-content;
-    }
-  }
 }
 @media (max-width: 650px) {
   .OrderView {
@@ -420,6 +420,10 @@
         align-items: center;
         gap: 1rem;
       }
+    }
+    &-images-container {
+      flex-direction: column;
+      align-items: center;
     }
   }
 }
