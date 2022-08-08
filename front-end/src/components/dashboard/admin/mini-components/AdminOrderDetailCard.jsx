@@ -93,9 +93,6 @@ export default function AdminOrderDetailCard({ data, forceRefresh }) {
     }
   }, [data.steps]);
 
-  let fakeFunc = () => {
-    console.log("here");
-  };
   let cleanFileName = (fileName) => {
     if (fileName) {
       if (fileName.length < 15) {
@@ -133,7 +130,6 @@ export default function AdminOrderDetailCard({ data, forceRefresh }) {
     }
   };
   let handleDeleteOrder = async () => {
-    console.log(data.id);
     try {
       let token = localStorage.getItem("jwt_token");
       let response = await api.post(
@@ -177,6 +173,23 @@ export default function AdminOrderDetailCard({ data, forceRefresh }) {
             fontSize="large"
           />
         </h1>
+        <span>ID: {data.id}</span>
+
+        <p
+          style={{
+            color: "#242951",
+          }}
+        >
+          {data.user_info.name}
+          <span
+            style={{
+              color: colorHash.hex(data.user_info.name),
+            }}
+          >
+            |
+          </span>
+          {data.user_info.email}
+        </p>
         <h2>Steps : </h2>
         <div className="AdminOrderDetail-card-steps">
           <div className="AdminOrderDetail-card-steps-container">
@@ -184,8 +197,8 @@ export default function AdminOrderDetailCard({ data, forceRefresh }) {
               <StepButton
                 key={i}
                 data={step}
-                isLoading={false}
-                handleClick={fakeFunc}
+                orderId={data.id}
+                forceRefresh={forceRefresh}
               />
             ))}
           </div>
