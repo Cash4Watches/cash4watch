@@ -221,6 +221,7 @@
     align-items: center;
     gap: 1rem;
     & span {
+      min-width: fit-content;
       color: rgba(99, 69, 69, 0.647);
     }
     & a {
