@@ -245,13 +245,13 @@ export default function OrderView({ data }) {
         <p>
           <span>Model :</span> {data.model_number}
         </p>
-        <p>
+        <div className="OrderView-images-container">
           <span>Documents :</span>
           <div className="OrderView-document-map-containers">
             {documents.length !== 0 ? (
               documents.map((doc, i) => (
                 <a target="_blank" rel="noreferrer" href={doc.file_url} key={i}>
-                  {doc.name}
+                  {cleanFileName(doc.name)}
                   <PictureAsPdfIcon />
                 </a>
               ))
@@ -259,7 +259,7 @@ export default function OrderView({ data }) {
               <p>No Documents</p>
             )}
           </div>
-        </p>
+        </div>
         <div className="OrderView-images-container">
           <span>Images :</span>
           <div className="OrderView-document-map-containers">
@@ -267,7 +267,7 @@ export default function OrderView({ data }) {
               imageArr.map((img, i) => (
                 <a target="_blank" rel="noreferrer" href={img.file_url} key={i}>
                   {cleanFileName(img.name)}
-                  <ImageRoundedIcon fontSize="large" />
+                  <ImageRoundedIcon />
                 </a>
               ))
             ) : (
