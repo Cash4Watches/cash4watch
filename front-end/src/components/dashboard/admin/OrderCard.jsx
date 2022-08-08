@@ -4,7 +4,9 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useNavigate } from "react-router-dom";
 function OrderCard({ order }) {
+  const navigate = useNavigate();
   const [expanded, setExpanded] = React.useState(false);
 
   const handleChange = (panel) => {
@@ -39,7 +41,7 @@ function OrderCard({ order }) {
             <h4>{order.created_at.split("T")[0]}</h4>
           </Typography>
           <button
-            onClick={() => console.log("clicked")}
+            onClick={() => navigate(`/dashboard/detail/${order.id}`)}
             style={{
               border: "2px solid var(--dashboard-nav-color)",
               borderRadius: "5px",

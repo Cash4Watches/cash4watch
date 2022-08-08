@@ -15,7 +15,6 @@ export default function AdminOrderDetail() {
   const [content, setContent] = useState(null);
   useEffect(() => {
     let grabOrder = async () => {
-      console.log("here");
       try {
         let token = localStorage.getItem("jwt_token");
         let response = await api.post(

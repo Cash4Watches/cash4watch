@@ -39,11 +39,14 @@ export default function OrderView({ data }) {
   };
 
   let checkProgress = () => {
+    console.log(stepsArr);
+    let tempVal = 0;
     stepsArr.forEach((step) => {
       if (step) {
-        if (step.completed) setStepValue((prev) => prev + 1);
+        if (step.completed) tempVal++;
       }
     });
+    setStepValue(tempVal);
   };
 
   useEffect(() => {
