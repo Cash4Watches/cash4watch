@@ -365,11 +365,12 @@
     flex-wrap: wrap;
     height: fit-content;
     width: 90%;
+    max-width: 500px;
     gap: 1rem;
     overflow: scroll;
     padding-top: 2rem;
     margin-bottom: 2rem;
-    border: 1px solid red;
+    // border: 1px solid red;
   }
   &-submit {
     color: white;

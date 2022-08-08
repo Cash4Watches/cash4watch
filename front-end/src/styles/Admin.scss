@@ -70,7 +70,7 @@
     }
   }
 }
-.Admin-Order{
+.Admin-Order {
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -92,31 +92,31 @@
     justify-content: space-between;
     padding: 0.5rem 1rem 0.5rem 1rem;
     // width: 100%;
-    & section{
+    & section {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
     }
   }
-  &-filter{
+  &-filter {
     display: flex;
     flex-direction: row;
     align-items: center;
-    &-search{
-    display: flex;
-    flex-direction: column;
-    // align-items: flex-start;
-    margin-left: 3vw;
-    font-size: medium;
-    margin-right: 30vw;
-    & input{
-      width: 15vw;
-      height: 5vh;
+    &-search {
+      display: flex;
+      flex-direction: column;
+      // align-items: flex-start;
+      margin-left: 3vw;
+      font-size: medium;
+      margin-right: 30vw;
+      & input {
+        width: 15vw;
+        height: 5vh;
+      }
     }
-    }
-    &-drop{
-      & select{
+    &-drop {
+      & select {
         margin-right: 5vw;
         margin-left: 1vw;
         width: 10vw;
@@ -132,7 +132,6 @@
   display: flex;
   flex-direction: column;
   max-height: 90vh;
-
   &-map-container {
     overflow: scroll;
     max-height: 90vh;

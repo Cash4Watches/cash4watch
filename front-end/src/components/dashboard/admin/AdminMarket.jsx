@@ -81,7 +81,7 @@ export default function AdminMarket() {
   };
   return (
     <div className="AdminMarket">
-      <h1>Market Control Panel</h1>
+      <h1 style={{ alignSelf: "center" }}>Market Control Panel</h1>
       <div className="AdminMarket-map-container">
         <h2>Market prices </h2>
         {market.isLoaded ? (
