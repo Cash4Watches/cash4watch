@@ -46,7 +46,7 @@ export default function AdminMarketView(props) {
         <p>{data.price}</p>
       </div>
       <div className="AdminMarket-view-date">
-        <p>{cleanDataString(data.updated_at)}</p>
+        <p>{cleanDataString(data.date)}</p>
         <DeleteForeverRoundedIcon
           onClick={handleDelete}
           className="AdminMarket-view-date-trash-icon"

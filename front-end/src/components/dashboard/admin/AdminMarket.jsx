@@ -9,6 +9,7 @@ import Modal from "@mui/material/Modal";
 export default function AdminMarket() {
   const nameRef = useRef(null);
   const priceRef = useRef(null);
+  const dateRef = useRef(null);
   const [market, setMarket] = useState({
     content: [],
     isLoaded: false,
@@ -59,6 +60,7 @@ export default function AdminMarket() {
         {
           name: nameRef.current.value,
           price: priceRef.current.value,
+          date: dateRef.current.value,
         },
         {
           headers: {
@@ -116,6 +118,7 @@ export default function AdminMarket() {
           <div className="AdminMarket-modal-form">
             <input type="text" ref={nameRef} placeholder="Name" />
             <input type="text" ref={priceRef} placeholder="Price" />
+            <input type="date" ref={dateRef} placeholder="Date" />
             <button onClick={handleCreate}> Submit</button>
           </div>
         </Box>
