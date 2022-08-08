@@ -58,6 +58,21 @@ class UsersController < ApplicationController
     render json: {message: "Missing Token"}
   end
   end
+  def admin_users
+    token = request.headers['Authentication'].split(' ')[1]
+    payload = decode(token)
+    if payload
+    user = User.find(payload['user_id'])
+    if user.is_admin
+      users = User.where(email: params[:email])
+      render json: users
+    else
+      render json: {message: "Unauthorized Route"}
+    end
+  else
+    render json: {message: "Missing Token"}
+  end
+  end
   def user_update_details
     token = request.headers['Authentication'].split(' ')[1]
     payload = decode(token)

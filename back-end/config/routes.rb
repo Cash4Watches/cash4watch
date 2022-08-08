@@ -29,4 +29,5 @@ Rails.application.routes.draw do
   post '/add-market', to: 'markets#create'
   post '/remove-market', to: 'markets#delete'
   post'/update-account', to: 'users#user_update_details'
+  post '/admin-users', to: 'users#admin_users'
 end

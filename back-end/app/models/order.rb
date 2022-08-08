@@ -9,6 +9,9 @@ class Order < ApplicationRecord
   def user_name
     user.full_name
   end
+  def user_info
+    {name: user.full_name, email: user.email,company: user.company ,street1: user.street1,street2: user.street2 ,city: user.city,state: user.state,zip: user.zip, phone: user.phone}
+  end
   # private
   # def randomize_id
   #   begin
