@@ -103,7 +103,7 @@ function Landing() {
           ></iframe>
         </div>
         <div className="Landing__about-container">
-          <h1>About</h1>
+          <h1>About Us</h1>
           <p>
             We are a high end watch consignment company with elite methods to
             maximize your watches' value. Our long and trusted reputation in the
