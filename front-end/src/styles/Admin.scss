@@ -165,3 +165,157 @@
     }
   }
 }
+.AdminOrderDetail {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+
+  &-card {
+    width: 80%;
+    max-width: 800px;
+    height: fit-content;
+    min-height: 70vh;
+    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
+      0 2px 6px 2px rgb(60 64 67 / 15%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 3rem;
+    margin-bottom: 5vh;
+    padding-bottom: 5vh;
+
+    &-steps {
+      max-width: 700px;
+      width: 90%;
+      &-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 5%;
+      }
+      &-button {
+        width: fit-content;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        & p {
+          margin: 0px;
+          font-size: 15px;
+        }
+      }
+    }
+    &-title {
+      font-size: 2rem;
+    }
+    &-document {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &-map-container {
+        height: fit-content;
+        padding: 2rem;
+        width: 70%;
+        overflow: scroll;
+        display: flex;
+        gap: 2rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        & a {
+          text-decoration: none;
+          color: var(--dashboard-nav-color);
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+          align-items: center;
+          justify-content: center;
+          min-width: 125px;
+
+          &:hover {
+            color: rgb(86, 70, 225);
+          }
+        }
+      }
+      & button {
+        border: 1px solid rgb(32, 18, 126);
+        border-radius: 10px;
+        color: rgb(30, 18, 190);
+        background-color: rgba(1, 31, 255, 0.05);
+        margin-right: 2rem;
+        width: 150px;
+        height: 200px;
+        font-size: 3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        & p {
+          font-size: 1rem;
+        }
+        &:hover {
+          cursor: pointer;
+          color: rgb(43, 129, 26);
+          background-color: rgba(43, 255, 47, 0.05);
+          border-color: rgba(14, 107, 15, 1);
+        }
+      }
+    }
+    &-item-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+  }
+  &-deleteImg {
+    color: red;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &-deleteOrder {
+    width: 30%;
+    height: 4rem;
+    letter-spacing: 2px;
+    border: 1px solid rgb(255, 1, 0.5);
+    background-color: rgba(181, 175, 175, 0.097);
+    border-radius: 10px;
+    color: rgb(190, 18, 18);
+    transition: all ease 0.25s;
+    font-size: 1.1rem;
+    &:hover {
+      cursor: pointer;
+      color: rgb(255, 0, 0);
+      font-weight: 700;
+      border: 1.5px solid rgb(255, 1, 1);
+      background-color: rgba(255, 1, 1, 0.1);
+    }
+  }
+}
+.Delete-modal {
+  & button {
+    width: 250px;
+    height: 4rem;
+    letter-spacing: 2px;
+    border: 1px solid rgb(255, 1, 0.5);
+    background-color: rgba(181, 175, 175, 0.097);
+    border-radius: 10px;
+    color: rgb(190, 18, 18);
+    transition: all ease 0.25s;
+    font-size: 1.1rem;
+    &:hover {
+      cursor: pointer;
+      color: rgb(255, 0, 0);
+      font-weight: 700;
+      border: 1.5px solid rgb(255, 1, 1);
+      background-color: rgba(255, 1, 1, 0.1);
+    }
+  }
+}
