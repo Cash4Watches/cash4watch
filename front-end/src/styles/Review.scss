@@ -32,6 +32,7 @@
       font-weight: 500;
       align-self: flex-end;
       color: gray;
+      font-style: italic;
     }
     & h1 {
       display: flex;
@@ -42,7 +43,6 @@
       word-wrap: break-word;
       overflow: scroll;
       font-weight: 400;
-      font-style: italic;
     }
   }
 }

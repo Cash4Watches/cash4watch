@@ -5,10 +5,15 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 export default function AdminMarket() {
   const nameRef = useRef(null);
   const priceRef = useRef(null);
+  const [value, setValue] = useState({});
   const [market, setMarket] = useState({
     content: [],
     isLoaded: false,
@@ -59,6 +64,7 @@ export default function AdminMarket() {
         {
           name: nameRef.current.value,
           price: priceRef.current.value,
+          date: value.toLocaleDateString(),
         },
         {
           headers: {
@@ -114,9 +120,35 @@ export default function AdminMarket() {
             Create Ticker
           </Typography>
           <div className="AdminMarket-modal-form">
-            <input type="text" ref={nameRef} placeholder="Name" />
-            <input type="text" ref={priceRef} placeholder="Price" />
-            <button onClick={handleCreate}> Submit</button>
+            <input
+              className="AdminMarket-modal-form-input"
+              type="text"
+              ref={nameRef}
+              placeholder="Name"
+            />
+            <input
+              className="AdminMarket-modal-form-input"
+              type="text"
+              ref={priceRef}
+              placeholder="Price"
+            />
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DatePicker
+                label="Enter Date"
+                value={value || null}
+                onChange={(newValue) => {
+                  console.log(typeof newValue);
+                  setValue(newValue);
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
+            <button
+              className="AdminMarket-modal-form-button"
+              onClick={handleCreate}
+            >
+              Submit
+            </button>
           </div>
         </Box>
       </Modal>

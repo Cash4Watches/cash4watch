@@ -101,10 +101,11 @@ function Navbar() {
         <div ref={marketRef} className="Market-container">
           {market.isLoaded ? (
             market.content.map((ticker, i) => (
-              <p key={i}>
-                {ticker.name} :
+              <div key={i}>
+                <p>{ticker.name} :</p>
                 <span style={{ color: "lawnGreen" }}> ${ticker.price}</span>
-              </p>
+                <p>{ticker.date}</p>
+              </div>
             ))
           ) : (
             <p>Loading ....</p>
