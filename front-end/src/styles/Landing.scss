@@ -205,6 +205,7 @@
     height: fit-content;
     border-radius: 0px 0px 30px 30px;
     border: 1px solid black;
+    border-top: none;
     gap: 2rem;
     & button {
       align-self: flex-end;
@@ -245,7 +246,8 @@
     }
   }
   &-title {
-    background-color: #6f0707;
+    background-color: #6f0707ed;
+    backdrop-filter: blur(5px);
     color: white;
     display: flex;
     border-radius: 30px 30px 0px 00px;
@@ -254,6 +256,33 @@
     justify-content: center;
     max-width: 390px;
     letter-spacing: 3px;
+  }
+  &-contact {
+    background-color: #6f0707ed;
+    backdrop-filter: blur(5px);
+    border: 1px solid black;
+    border-top: none;
+    border-bottom: none;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & a {
+      padding: 0.25rem;
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-weight: 600;
+      transition: all ease 1s;
+      &:hover {
+        color: rgb(251, 222, 222);
+      }
+    }
   }
 }
 @media (max-width: 800px) {
@@ -321,5 +350,15 @@
         }
       }
     }
+  }
+  .LandingBox-title {
+    // background-color: rgba(0, 0, 0, 0.3);
+  }
+  .LandingBox-contact {
+    background-image: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    // & a {
+    //   background-color: rgba(122, 80, 240, 0.7);
+    // }
   }
 }

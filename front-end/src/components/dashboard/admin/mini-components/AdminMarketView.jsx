@@ -5,7 +5,6 @@ import api from "../../../../services/AxiosConfig.js";
 export default function AdminMarketView(props) {
   const { data, setMarket, market } = props;
   let handleDelete = async () => {
-    console.log(data.id);
     try {
       let token = localStorage.getItem("jwt_token");
       let response = await api.post(
@@ -46,7 +45,7 @@ export default function AdminMarketView(props) {
         <p>{data.price}</p>
       </div>
       <div className="AdminMarket-view-date">
-        <p>{cleanDataString(data.updated_at)}</p>
+        <p>{cleanDataString(data.date)}</p>
         <DeleteForeverRoundedIcon
           onClick={handleDelete}
           className="AdminMarket-view-date-trash-icon"

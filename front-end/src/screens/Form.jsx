@@ -12,7 +12,7 @@ function Form() {
   let navigate = useNavigate();
   const [form, setForm] = useState({});
   const [disable, setDisable] = useState(false);
-
+  const [showMore, setShowMore] = useState(false);
   let vaildateForm = (form) => {
     let isVaild = true;
     //EMPTY FOR NOW BUT ALLOWS FOR VAILIDING FORM BEFORE SUBMISSION
@@ -58,6 +58,7 @@ function Form() {
               label="Order Type"
               onChange={updateFormData}
               name="order_type"
+              required
             >
               <MenuItem value={"consignment"}>Consignment/Sell</MenuItem>
               <MenuItem value={"service"}>Repair/Service</MenuItem>
@@ -97,17 +98,36 @@ function Form() {
             // type="number"
             value={form.model_number || ""}
           />
-          <TextField
-            label="Previous Service"
-            name="previous_service"
-            onChange={updateFormData}
-            fullWidth
-            multiline
-            minRows={2}
-            maxRows={5}
-            className="Form-input"
-            value={form.previous_service || ""}
-          />
+          <FormControl fullWidth className="Form-input">
+            <InputLabel id="demo-simple-select-label">
+              Previous Service
+            </InputLabel>
+            <Select
+              label="Previous Service"
+              onChange={(e) => setShowMore(e.target.value)}
+              name="previous_service"
+              required
+            >
+              <MenuItem value={true}>Yes</MenuItem>
+              <MenuItem value={false}>No</MenuItem>
+            </Select>
+          </FormControl>
+          {showMore ? (
+            <TextField
+              label="Previous Service"
+              name="previous_service"
+              onChange={updateFormData}
+              fullWidth
+              multiline
+              minRows={2}
+              maxRows={5}
+              className="Form-input"
+              value={form.previous_service || ""}
+              required
+            />
+          ) : (
+            ""
+          )}
           <TextField
             label="Previous Polish"
             name="previous_polish"
@@ -118,6 +138,7 @@ function Form() {
             maxRows={5}
             className="Form-input"
             value={form.previous_polish || ""}
+            required
           />
           <FormControl fullWidth className="Form-input">
             <InputLabel id="demo-simple-select-label">Papers</InputLabel>
@@ -156,6 +177,7 @@ function Form() {
             maxRows={5}
             className="Form-input"
             value={form.included_items || ""}
+            required
           />
           <TextField
             label="Anything Else ? "

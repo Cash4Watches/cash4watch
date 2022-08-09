@@ -25,7 +25,7 @@ function OrderCard({ order }) {
           id="panel1bh-header"
           style={{
             borderRadius: "5px",
-            border: "5px solid var(--dashboard-nav-color)",
+            border: "3px solid var(--dashboard-nav-color)",
           }}
         >
           <Typography sx={{ width: "33%", flexShrink: 0 }}>
@@ -58,9 +58,8 @@ function OrderCard({ order }) {
         <AccordionDetails
           style={{
             borderRadius: "5px",
-            borderBottom: "5px solid var(--dashboard-nav-color)",
-            borderLeft: "5px solid var(--dashboard-nav-color)",
-            borderRight: "5px solid var(--dashboard-nav-color)",
+            border: "3px solid var(--dashboard-nav-color)",
+            borderTop: "1px solid var(--dashboard-nav-color)",
           }}
         >
           <Typography>
