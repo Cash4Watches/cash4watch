@@ -33,15 +33,9 @@ function Navbar() {
         );
       }
     };
-    if (user.isAuthenticated) {
-      setNavbutton(
-        <div className="Navbar__login" onClick={() => dispatch(clearUser())}>
-          <h1>Log Out</h1>
-        </div>
-      );
-    } else {
-      handleIcon();
-    }
+
+    handleIcon();
+
     window.addEventListener("resize", handleIcon);
     return () => {
       window.removeEventListener("resize", handleIcon);
@@ -95,7 +89,13 @@ function Navbar() {
         <div className="Navbar__logo">
           <img src={logo} onClick={() => navigate("/")} alt="Cash logo" />
         </div>
-        {navbutton}
+        {user.isAuthenticated ? (
+          <div className="Navbar__login" onClick={() => dispatch(clearUser())}>
+            <h1>Log Out</h1>
+          </div>
+        ) : (
+          navbutton
+        )}
       </div>
       <div className="Market">
         <div ref={marketRef} className="Market-container">
