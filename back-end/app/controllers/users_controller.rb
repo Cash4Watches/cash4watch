@@ -30,9 +30,12 @@ class UsersController < ApplicationController
   end
   end
   def forgot_password
+    # payload = { "exp": Time.now.to_i + 2.week, 'user_id': user.id }
     user = User.find_by(email: params[:email])
     if user
-      UserMailer.with(user: user).forgot_password.deliver_later
+      payload = { "exp": Time.now.to_i + 2.minute, 'user_id': user.id, 'email': true }
+      token = encode(payload)
+      UserMailer.with(user: user,token: token).forgot_password.deliver_later
       render json: {message: "Email sent"}
     else
       render json: { message: 'Invalid or Wrong Email', authenticated: false }
@@ -63,7 +66,7 @@ class UsersController < ApplicationController
     payload = decode(token)
     if payload
     user = User.find(payload['user_id'])
-    if user.is_admin3579
+    if user.is_admin
       
       users = User.where(email: params[:email])
       render json: users
@@ -84,6 +87,41 @@ class UsersController < ApplicationController
       render json: user
     else
       render json: {message: "Missing Token"}
+    end
+  end
+  def change_password
+    token = request.headers['Authentication'].split(' ')[1]
+    payload = decode(token)
+    if payload
+      user = User.find(payload['user_id'])
+      if user&.authenticate(params[:password])
+        user.password = params[:new_password]
+        user.save!
+        render json: user
+      else
+        render json: {
+          message: 'Incorrect Old Password',
+          authenticated: false
+        }
+      end
+    else
+      render json: {message: "Missing or Invalid Token"}
+    end
+  end
+  def change_password_email
+    token = request.headers['Authentication'].split(' ')[1]
+    payload = decode(token)
+    if payload
+      user = User.find(payload['user_id'])
+        if payload['email']
+          user.password = params[:new_password]
+          user.save!
+          render json: user
+        else
+          render json: {message: 'Incorrect Token'}
+        end
+    else
+      render json: {message: "Missing or Invalid Token"}
     end
   end
   private
