@@ -118,10 +118,10 @@ class UsersController < ApplicationController
           user.save!
           render json: user
         else
-          render json: {message: 'Incorrect Token'}
+          render json: {message: 'Incorrect Link. Try Requesting another Link'}
         end
     else
-      render json: {message: "Missing or Invalid Token"}
+      render json: {message: "Expired Link. Try Requesting another Link"}
     end
   end
   private

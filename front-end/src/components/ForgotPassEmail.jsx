@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
-// import "../styles/Register.scss";
 import { useNavigate } from "react-router-dom";
 import api from "../services/AxiosConfig.js";
-function ForgottenPassword() {
+function ForgotPassEmail() {
   let navigate = useNavigate();
   const [token, setToken] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   console.log(token);
   useEffect(() => {
     let windowToken = window.location.search.substr(1);
@@ -15,20 +14,11 @@ function ForgottenPassword() {
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let response = await api.post(
-        "/change-forgotten-password",
-        {
-          new_password: password,
-        },
-        {
-          headers: {
-            Authentication: `Bearer ${token}`,
-          },
-        }
-      );
-      !response.data["message"]
-        ? navigate("/")
-        : alert(response.data["message"]);
+      let response = await api.post("/forgot-password", {
+        email: email,
+      });
+      alert(response.data["message"]);
+      navigate("/");
     } catch (e) {
       alert(e.response.statusText);
     }
@@ -50,15 +40,15 @@ function ForgottenPassword() {
         }}
         style={{ display: "flex", flexDirection: "column" }}
       >
-        <h1>Enter your new password:</h1>
+        <h1>Enter Your Email:</h1>
         <TextField
-          label="Password"
-          type="password"
-          name="password"
+          label="Email"
+          type="text"
+          name="email"
           onChange={(e) => {
-            setPassword(e.target.value);
+            setEmail(e.target.value);
           }}
-          value={password}
+          value={email}
           required
         />
       </form>
@@ -66,4 +56,4 @@ function ForgottenPassword() {
   );
 }
 
-export default ForgottenPassword;
+export default ForgotPassEmail;
