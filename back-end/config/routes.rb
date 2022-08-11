@@ -30,4 +30,6 @@ Rails.application.routes.draw do
   post '/remove-market', to: 'markets#delete'
   post'/update-account', to: 'users#user_update_details'
   post '/admin-users', to: 'users#admin_users'
+  post '/change-password', to: 'users#change_password'
+  post '/change-forgotten-password', to: 'users#change_password_email'
 end

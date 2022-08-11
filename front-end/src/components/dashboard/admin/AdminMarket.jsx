@@ -14,6 +14,7 @@ export default function AdminMarket() {
   const nameRef = useRef(null);
   const priceRef = useRef(null);
   const [value, setValue] = useState({});
+  const dateRef = useRef(null);
   const [market, setMarket] = useState({
     content: [],
     isLoaded: false,

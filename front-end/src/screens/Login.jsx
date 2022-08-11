@@ -57,6 +57,9 @@ function Login() {
           <p onClick={() => navigate("/register")}>
             Need an account ? Sign up{" "}
           </p>
+          <p onClick={() => navigate("/forgot-password")}>
+            Forgot your password?{" "}
+          </p>
         </form>
       </div>
     </>

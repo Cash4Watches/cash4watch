@@ -8,6 +8,8 @@ import Login from "./screens/Login.jsx";
 import Register from "./screens/Register.jsx";
 import PresistProfile from "./components/PersistProfile.jsx";
 import AdminOrderDetail from "./components/dashboard/admin/AdminOrderDetail.jsx";
+import ForgottenPassword from "./components/ForgottenPassword.jsx";
+import ForgotPassEmail from "./components/ForgotPassEmail.jsx";
 function App() {
   return (
     <>
@@ -38,7 +40,6 @@ function App() {
           path="/dashboard/detail/:order_id"
           element={<AdminOrderDetail />}
         />
-
         <Route
           path="/login"
           element={
@@ -55,6 +56,26 @@ function App() {
             <>
               <Navbar />
               <Register />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/forgot"
+          element={
+            <>
+              <Navbar />
+              <ForgottenPassword />
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <>
+              <Navbar />
+              <ForgotPassEmail />
               <Footer />
             </>
           }
