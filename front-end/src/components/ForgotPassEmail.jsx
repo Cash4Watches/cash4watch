@@ -17,6 +17,7 @@ function ForgotPassEmail() {
       let response = await api.post("/forgot-password", {
         email: email,
       });
+      console.log("hger");
       alert(response.data["message"]);
       navigate("/");
     } catch (e) {
