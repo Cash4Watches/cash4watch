@@ -1,5 +1,4 @@
 import "../styles/Landing.scss";
-import moblieRolex from "../media/rolexMoblie.svg";
 import desktopRolex from "../media/rolexDesktop.svg";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -15,19 +14,53 @@ import api from "../services/AxiosConfig.js";
 function Landing() {
   const reviewContainer = useRef(null);
   const user = useSelector((state) => state.user);
-  const [background, setBackground] = useState("");
+  const [landingPage, setLandingPage] = useState("");
   const [reviews, setReviews] = useState([]);
   let handleResize = () => {
     if (800 <= window.innerWidth) {
-      setBackground(
-        <div className="Landing__rolex-desktop">
-          <img src={desktopRolex} alt="rolex" />
-        </div>
+      setLandingPage(
+        <>
+          <div className="Landing__rolex-desktop">
+            <img src={desktopRolex} alt="rolex" />
+          </div>
+          <div className="desktop-wrapper">
+            <div className="desktop-left">
+              <h1 className="desktop-left-title">About Us</h1>
+              <p>
+                We are a high end watch consignment company with elite methods
+                to maximize your watches' value. Our long and trusted reputation
+                in the industry of over 10 years speaks for itself. Our tenure
+                in the industry has allowed us to build relationships stretching
+                to the other side of the globe which help us get you the most
+                money possible for your watch.
+              </p>
+            </div>
+            <div className="Landing__form-container">
+              {!user.isAuthenticated ? <LandingForm /> : <LandingBox />}
+            </div>
+          </div>
+        </>
       );
     } else {
-      setBackground(
-        <div className="Landing__rolex-moblie">
-          <img src={moblieRolex} alt="rolex" />
+      setLandingPage(
+        <div className="Landing__about-container">
+          <h1
+            className="Landing__about-container-title"
+            style={{ marginTop: "10vh" }}
+          >
+            About Us
+          </h1>
+          <p style={{ marginBottom: "10vh" }}>
+            We are a high end watch consignment company with elite methods to
+            maximize your watches' value. Our long and trusted reputation in the
+            industry of over 10 years speaks for itself. Our tenure in the
+            industry has allowed us to build relationships stretching to the
+            other side of the globe which help us get you the most money
+            possible for your watch.
+          </p>
+          <div className="Landing__form-container">
+            {!user.isAuthenticated ? <LandingForm /> : <LandingBox />}
+          </div>
         </div>
       );
     }
@@ -41,28 +74,24 @@ function Landing() {
     }
   };
   useEffect(() => {
-    grabReviews();
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [user.isAuthenticated]);
   useEffect(() => {
     if (reviews.length > 3) {
       reviewContainer.current.style.justifyContent = "flex-start";
     }
   }, [reviews]);
+  useEffect(() => {
+    grabReviews();
+  }, []);
   return (
     <>
       <div className="Landing">
-        <div className="Landing__landing-wrapper">
-          {background}
-
-          <div className="Landing__form-container">
-            {!user.isAuthenticated ? <LandingForm /> : <LandingBox />}
-          </div>
-        </div>
+        <div className="Landing__landing-wrapper">{landingPage}</div>
 
         <div className="Landing__banner-container">
           <div className="Landing__banner-container__item">
@@ -102,17 +131,7 @@ function Landing() {
             allowFullScreen
           ></iframe>
         </div>
-        <div className="Landing__about-container">
-          <h1>About Us</h1>
-          <p>
-            We are a high end watch consignment company with elite methods to
-            maximize your watches' value. Our long and trusted reputation in the
-            industry of over 10 years speaks for itself. Our tenure in the
-            industry has allowed us to build relationships stretching to the
-            other side of the globe which help us get you the most money
-            possible for your watch.
-          </p>
-        </div>
+
         <div className="Landing-Reviews">
           <div className="Landing-Reviews-title">
             <p>Hear what our customers are saying about us !</p>

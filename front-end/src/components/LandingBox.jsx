@@ -18,33 +18,27 @@ export default function LandingBox() {
     }
   };
   return (
-    <>
-      <div className="LandingBox">
-        <div className="LandingBox-title">
-          <p>Cash4Watches</p>
-        </div>
-        <div className="LandingBox-contact">
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href="mailto:info@cash4watches.com"
-          >
-            <EmailIcon fontSize="large" />
-            <p>info@cash4watches.com</p>
-          </a>
-        </div>
-        <div className="LandingBox-content">
-          <div className="LandingBox-content-text">
-            <h1>
-              Hello, <span>{abbreviateName()}</span>
-            </h1>
-          </div>
-          <button onClick={() => navigate("/dashboard")}>My Dashboard</button>
-          <button onClick={() => navigate("/form")}>
-            New Order <AddIcon fontSize="large" />
-          </button>
-        </div>
+    <div className="LandingBox">
+      <div className="LandingBox-title">
+        <p>Cash4Watches</p>
       </div>
-    </>
+      <div className="LandingBox-contact">
+        <a target="_blank" rel="noreferrer" href="mailto:info@cash4watches.com">
+          <EmailIcon fontSize="large" />
+          <p>info@cash4watches.com</p>
+        </a>
+      </div>
+      <div className="LandingBox-content">
+        <div className="LandingBox-content-text">
+          <h1>
+            Hello, <span>{abbreviateName()}</span>
+          </h1>
+        </div>
+        <button onClick={() => navigate("/dashboard")}>My Dashboard</button>
+        <button onClick={() => navigate("/form")}>
+          New Order <AddIcon fontSize="large" />
+        </button>
+      </div>
+    </div>
   );
 }

@@ -109,7 +109,7 @@ const LandingForm = () => {
   };
 
   return (
-    <div className="Landing-Form">
+    <div className="Landing-form">
       <div className="Landing__form__title">
         <p>We Buy Your Watches at Top End Prices</p>
       </div>
