@@ -57,3 +57,40 @@
     margin-left: 0.5rem;
   }
 }
+
+.form-image {
+  &-array {
+    min-height: 75px;
+    width: fit-content;
+    max-width: 40vw;
+    display: flex;
+    align-items: center;
+    overflow: scroll;
+  }
+  &-submit {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    color: #242951;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  }
+  &-button {
+    border: 1px solid #242951;
+    border-radius: 5px;
+    background-color: #253fff08;
+    padding: 1rem;
+    font-size: 2.5rem;
+    transition: color ease 0.35s;
+    &:hover {
+      color: #790220;
+      border-color: #790220;
+      background-color: #ff252508;
+
+      cursor: pointer;
+    }
+  }
+}

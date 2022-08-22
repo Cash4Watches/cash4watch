@@ -1,6 +1,6 @@
 import "../styles/Form.scss";
 import PublishIcon from "@mui/icons-material/Publish";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -8,34 +8,63 @@ import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import { useNavigate } from "react-router-dom";
 import api from "../services/AxiosConfig.js";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import AddPhotoAlternateRoundedIcon from "@mui/icons-material/AddPhotoAlternateRounded";
 function Form() {
   let navigate = useNavigate();
+  const imageRef = useRef(null);
   const [form, setForm] = useState({});
   const [disable, setDisable] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  let vaildateForm = (form) => {
-    let isVaild = true;
-    //EMPTY FOR NOW BUT ALLOWS FOR VAILIDING FORM BEFORE SUBMISSION
-    return isVaild;
-  };
+  const [modalOpen, setModalOpen] = useState(false);
+  const [imageArr, setImageArr] = useState([
+    {
+      src: "/static/images/default-image.jpeg",
+    },
+  ]);
+  // let handleSubmitImage = async (order_id, image_title) => {
+  //   if (imageRef.current.files.length === 0) {
+  //     alert("Please enter a file ");
+  //     return false;
+  //   }
+  //   let uploadForm = new FormData();
+  //   let fileName = imageRef.current.files[0].name;
+  //   let file = imageRef.current.files[0];
+  //   let type = imageRef.current.files[0].type;
+  //   uploadForm.append("file", file);
+  //   uploadForm.append("type", type);
+  //   uploadForm.append("name", fileName);
+  //   uploadForm.append("order_id", order_id);
+  //   try {
+  //     let token = localStorage.getItem("jwt_token");
+  //     let response = await api.post("/upload-image", uploadForm, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //         Authentication: `Bearer ${token}`,
+  //       },
+  //     });
+  //     if (response.data["message"]) alert(response.data["message"]);
+  //   } catch (e) {
+  //     alert(e.response.statusText);
+  //   }
+  // };
+
   let handleSubmit = async (e) => {
     e.preventDefault();
-    if (vaildateForm(e.target)) {
-      try {
-        setDisable(true);
-        await api.post("/create-new-order", form, {
-          headers: {
-            Authentication: `Bearer ${localStorage.getItem("jwt_token")}`,
-          },
-        });
-        navigate("/dashboard");
-      } catch (e) {
-        alert(e.response.statusText);
-      }
-    } else {
-      // due to time constraints this error message is alert for now
-      alert("Double check form inputs");
+    try {
+      setDisable(true);
+      await api.post("/create-new-order", form, {
+        headers: {
+          Authentication: `Bearer ${localStorage.getItem("jwt_token")}`,
+        },
+      });
+      navigate("/dashboard");
+    } catch (e) {
+      alert(e.response.statusText);
     }
+
     setDisable(false);
   };
   let updateFormData = (e) => {
@@ -45,7 +74,27 @@ function Form() {
       [name]: value,
     });
   };
-
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+  let addImage = () => {
+    if (imageRef.current.files.length === 0) {
+      alert("Please enter a file ");
+      return false;
+    }
+    let reader = new FileReader();
+    console.log(reader);
+    // reader.onloadend = () => {
+    let url = reader.readAsDataURL(imageRef.current.files[0]);
+  };
   return (
     <>
       <div className="Form">
@@ -166,6 +215,25 @@ function Form() {
               <MenuItem value={"Used"}>Used</MenuItem>
             </Select>
           </FormControl>
+          <div className="form-image-submit">
+            <p>Images of Watch:</p>
+            <div className="form-image-array">
+              {imageArr.length > 0
+                ? imageArr.map((image) => (
+                    <div className="form-image">
+                      <img src="" alt="image 1" />
+                    </div>
+                  ))
+                : ""}
+            </div>
+            <AddPhotoAlternateRoundedIcon
+              className="form-image-button"
+              onClick={() => {
+                setModalOpen(true);
+              }}
+              fontSize="inherit"
+            />
+          </div>
           <TextField
             label="Whats included "
             helperText="(e.g, box, manuals)"
@@ -190,12 +258,34 @@ function Form() {
             className="Form-input"
             value={form.extra_comment || ""}
           />
+
           <button className="Form-submit" type="submit" disabled={disable}>
             <p>Submit</p>
             <PublishIcon className="Form-submit-icon" sx={{ fontSize: 40 }} />
           </button>
         </form>
       </div>
+      <Modal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style} className="OrderView-modal">
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Upload Images
+          </Typography>
+          <div className="OrderView-modal-form">
+            <input
+              type="file"
+              name="Image"
+              accept="image/png, image/gif, image/jpeg"
+              ref={imageRef}
+            />
+            <button onClick={addImage}>Add Image</button>
+          </div>
+        </Box>
+      </Modal>
     </>
   );
 }
