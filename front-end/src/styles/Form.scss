@@ -59,6 +59,12 @@
 }
 
 .form-image {
+  max-height: 90px;
+  overflow: hidden;
+  & img {
+    width: 90px;
+    height: 90px;
+  }
   &-array {
     min-height: 75px;
     width: fit-content;

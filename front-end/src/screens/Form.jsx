@@ -19,11 +19,7 @@ function Form() {
   const [disable, setDisable] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [imageArr, setImageArr] = useState([
-    {
-      src: "/static/images/default-image.jpeg",
-    },
-  ]);
+  const [imageArr, setImageArr] = useState([]);
   // let handleSubmitImage = async (order_id, image_title) => {
   //   if (imageRef.current.files.length === 0) {
   //     alert("Please enter a file ");
@@ -91,9 +87,13 @@ function Form() {
       return false;
     }
     let reader = new FileReader();
-    console.log(reader);
-    // reader.onloadend = () => {
-    let url = reader.readAsDataURL(imageRef.current.files[0]);
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setImageArr([...imageArr, { src: reader.result }]);
+      }
+    };
+    reader.readAsDataURL(imageRef.current.files[0]);
+    setModalOpen(false);
   };
   return (
     <>
@@ -219,9 +219,9 @@ function Form() {
             <p>Images of Watch:</p>
             <div className="form-image-array">
               {imageArr.length > 0
-                ? imageArr.map((image) => (
-                    <div className="form-image">
-                      <img src="" alt="image 1" />
+                ? imageArr.map((image, i) => (
+                    <div key={i} className="form-image">
+                      <img src={image.src} alt="image 1" />
                     </div>
                   ))
                 : ""}
@@ -231,7 +231,7 @@ function Form() {
               onClick={() => {
                 setModalOpen(true);
               }}
-              fontSize="inherit"
+              fontSize="1rem"
             />
           </div>
           <TextField
