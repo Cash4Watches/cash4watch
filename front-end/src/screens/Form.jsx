@@ -20,48 +20,55 @@ function Form() {
   const [showMore, setShowMore] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [imageArr, setImageArr] = useState([]);
-  // let handleSubmitImage = async (order_id, image_title) => {
-  //   if (imageRef.current.files.length === 0) {
-  //     alert("Please enter a file ");
-  //     return false;
-  //   }
-  //   let uploadForm = new FormData();
-  //   let fileName = imageRef.current.files[0].name;
-  //   let file = imageRef.current.files[0];
-  //   let type = imageRef.current.files[0].type;
-  //   uploadForm.append("file", file);
-  //   uploadForm.append("type", type);
-  //   uploadForm.append("name", fileName);
-  //   uploadForm.append("order_id", order_id);
-  //   try {
-  //     let token = localStorage.getItem("jwt_token");
-  //     let response = await api.post("/upload-image", uploadForm, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //         Authentication: `Bearer ${token}`,
-  //       },
-  //     });
-  //     if (response.data["message"]) alert(response.data["message"]);
-  //   } catch (e) {
-  //     alert(e.response.statusText);
-  //   }
-  // };
+  let handleSubmitImages = async (order_id) => {
+    console.log("adding images ...  ");
+    for (let i = 0; i < imageArr.length; i++) {
+      let uploadForm = new FormData();
+      let fileName = imageArr[i].name;
+      let file = imageArr[i].src;
+      let type = imageArr[i].type;
+      uploadForm.append("file", file);
+      uploadForm.append("type", type);
+      uploadForm.append("name", fileName);
+      uploadForm.append("order_id", order_id);
+      try {
+        console.log(`adding image ${i + 1} `);
+        let token = localStorage.getItem("jwt_token");
+        let response = await api.post("/upload-image", uploadForm, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authentication: `Bearer ${token}`,
+          },
+        });
+        if (response.data["message"]) alert(response.data["message"]);
+        console.log(`image ${i + 1} uploaded`);
+      } catch (e) {
+        return alert(e.response.statusText);
+      }
+    }
+    console.log(`Order and images done`);
+    navigate("/dashboard");
+  };
 
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setDisable(true);
-      await api.post("/create-new-order", form, {
-        headers: {
-          Authentication: `Bearer ${localStorage.getItem("jwt_token")}`,
-        },
-      });
-      navigate("/dashboard");
+      if (imageArr.length >= 2) {
+        setDisable(true);
+        console.log("Creating order ....");
+        let response = await api.post("/create-new-order", form, {
+          headers: {
+            Authentication: `Bearer ${localStorage.getItem("jwt_token")}`,
+          },
+        });
+        console.log("Created order :)");
+        handleSubmitImages(response.data.id);
+      } else {
+        alert("Please add at least two photos of your watch front/back");
+      }
     } catch (e) {
       alert(e.response.statusText);
     }
-
-    setDisable(false);
   };
   let updateFormData = (e) => {
     let { name, value } = e.target;
@@ -86,10 +93,16 @@ function Form() {
       alert("Please enter a file ");
       return false;
     }
+    let name = imageRef.current.files[0].name;
+    let type = imageRef.current.files[0].type;
+    let file = imageRef.current.files[0];
     let reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
-        setImageArr([...imageArr, { src: reader.result }]);
+        setImageArr([
+          ...imageArr,
+          { src: reader.result, file: file, name: name, type: type },
+        ]);
       }
     };
     reader.readAsDataURL(imageRef.current.files[0]);
@@ -216,15 +229,19 @@ function Form() {
             </Select>
           </FormControl>
           <div className="form-image-submit">
-            <p>Images of Watch:</p>
-            <div className="form-image-array">
-              {imageArr.length > 0
-                ? imageArr.map((image, i) => (
-                    <div key={i} className="form-image">
-                      <img src={image.src} alt="image 1" />
-                    </div>
-                  ))
-                : ""}
+            <p style={{ width: "14vw", maxWidth: "215px" }}>
+              Images of Watch {"(front/back)"} :
+            </p>
+            <div className="form-image-wrapper">
+              <div className="form-image-array">
+                {imageArr.length > 0
+                  ? imageArr.map((image, i) => (
+                      <div key={i} className="form-image">
+                        <img src={image.src} alt="image 1" />
+                      </div>
+                    ))
+                  : ""}
+              </div>
             </div>
             <AddPhotoAlternateRoundedIcon
               className="form-image-button"
@@ -273,7 +290,7 @@ function Form() {
       >
         <Box sx={style} className="OrderView-modal">
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Upload Images
+            Upload Images of Watch
           </Typography>
           <div className="OrderView-modal-form">
             <input

@@ -65,13 +65,17 @@
     width: 90px;
     height: 90px;
   }
+  &-wrapper {
+    max-width: 40vw;
+    overflow: scroll;
+    display: flex;
+  }
   &-array {
     min-height: 75px;
     width: fit-content;
-    max-width: 40vw;
     display: flex;
+    gap: 1rem;
     align-items: center;
-    overflow: scroll;
   }
   &-submit {
     width: 100%;
