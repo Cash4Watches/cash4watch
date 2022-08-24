@@ -12,14 +12,21 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import AddPhotoAlternateRoundedIcon from "@mui/icons-material/AddPhotoAlternateRounded";
+import LinearProgress from "@mui/material/LinearProgress";
+
 function Form() {
   let navigate = useNavigate();
   const imageRef = useRef(null);
   const [form, setForm] = useState({});
-  const [disable, setDisable] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [imageArr, setImageArr] = useState([]);
+  const [loading, setLoading] = useState({
+    progress: 30,
+    isLoading: true,
+    isError: false,
+    loadingMessage: "Loading...",
+  });
   let handleSubmitImages = async (order_id) => {
     console.log("adding images ...  ");
     for (let i = 0; i < imageArr.length; i++) {
@@ -54,7 +61,6 @@ function Form() {
     e.preventDefault();
     try {
       if (imageArr.length >= 2) {
-        setDisable(true);
         console.log("Creating order ....");
         let response = await api.post("/create-new-order", form, {
           headers: {
@@ -276,10 +282,27 @@ function Form() {
             value={form.extra_comment || ""}
           />
 
-          <button className="Form-submit" type="submit" disabled={disable}>
-            <p>Submit</p>
-            <PublishIcon className="Form-submit-icon" sx={{ fontSize: 40 }} />
-          </button>
+          {loading.isLoading ? (
+            <>
+              <LinearProgress
+                sx={{
+                  width: "80%",
+                  height: "1.3rem",
+                  borderRadius: "20px",
+                  color: "rgb(97 110 220 / 91%)",
+                }}
+                variant="determinate"
+                value={loading.progress}
+                color="inherit"
+              />
+              <h1>{loading.loadingMessage}</h1>
+            </>
+          ) : (
+            <button className="Form-submit" type="submit">
+              <p>Submit</p>
+              <PublishIcon className="Form-submit-icon" sx={{ fontSize: 40 }} />
+            </button>
+          )}
         </form>
       </div>
       <Modal
