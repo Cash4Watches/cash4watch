@@ -22,24 +22,31 @@ function Form() {
   const [modalOpen, setModalOpen] = useState(false);
   const [imageArr, setImageArr] = useState([]);
   const [loading, setLoading] = useState({
-    progress: 30,
-    isLoading: true,
+    progress: 0,
+    isLoading: false,
     isError: false,
     loadingMessage: "Loading...",
   });
   let handleSubmitImages = async (order_id) => {
-    console.log("adding images ...  ");
+    setLoading({
+      ...loading,
+      progress: 60,
+      loadingMessage: "Uploading your images ....",
+    });
     for (let i = 0; i < imageArr.length; i++) {
       let uploadForm = new FormData();
       let fileName = imageArr[i].name;
-      let file = imageArr[i].src;
+      let file = imageArr[i].file;
       let type = imageArr[i].type;
       uploadForm.append("file", file);
       uploadForm.append("type", type);
       uploadForm.append("name", fileName);
       uploadForm.append("order_id", order_id);
       try {
-        console.log(`adding image ${i + 1} `);
+        setLoading({
+          ...loading,
+          loadingMessage: `Uploading image ${i + 1} ...`,
+        });
         let token = localStorage.getItem("jwt_token");
         let response = await api.post("/upload-image", uploadForm, {
           headers: {
@@ -48,31 +55,60 @@ function Form() {
           },
         });
         if (response.data["message"]) alert(response.data["message"]);
-        console.log(`image ${i + 1} uploaded`);
+
+        setLoading({
+          ...loading,
+          progress: loading.progress + 30 / imageArr.length,
+          loadingMessage: `Image ${i + 1} Uploaded !`,
+        });
       } catch (e) {
+        setLoading({
+          ...loading,
+          isError: true,
+          loadingMessage: `Something went wrong uploading image ${i + 1}!`,
+        });
+        navigate("/dashboard");
         return alert(e.response.statusText);
       }
     }
-    console.log(`Order and images done`);
+    setLoading({
+      ...loading,
+      progress: 100,
+      loadingMessage: `All  ${imageArr.length} Images  Uploaded and Order Created !`,
+    });
     navigate("/dashboard");
   };
 
   let handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       if (imageArr.length >= 2) {
-        console.log("Creating order ....");
+        setLoading({
+          ...loading,
+          isLoading: true,
+          loadingMessage: "Creating Order ...",
+        });
         let response = await api.post("/create-new-order", form, {
           headers: {
             Authentication: `Bearer ${localStorage.getItem("jwt_token")}`,
           },
         });
-        console.log("Created order :)");
+        setLoading({
+          ...loading,
+          progress: 50,
+          loadingMessage: "Order Created !",
+        });
         handleSubmitImages(response.data.id);
       } else {
         alert("Please add at least two photos of your watch front/back");
       }
     } catch (e) {
+      setLoading({
+        ...loading,
+        isError: true,
+        loadingMessage: "Something went wrong x_x",
+      });
       alert(e.response.statusText);
     }
   };
