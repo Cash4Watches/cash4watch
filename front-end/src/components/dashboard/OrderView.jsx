@@ -39,7 +39,6 @@ export default function OrderView({ data }) {
   };
 
   let checkProgress = () => {
-    console.log(stepsArr);
     let tempVal = 0;
     stepsArr.forEach((step) => {
       if (step) {
