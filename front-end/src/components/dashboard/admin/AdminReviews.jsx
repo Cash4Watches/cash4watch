@@ -11,7 +11,7 @@ export default function AdminReviews() {
       let token = localStorage.getItem("jwt_token");
       try {
         let response = await axios.get(
-          "https://pacific-escarpment-97348.herokuapp.com/admin-show-reviews",
+          "https://cash4watches-db.herokuapp.com/admin-show-reviews",
           {
             headers: {
               Authentication: `Bearer ${token}`,

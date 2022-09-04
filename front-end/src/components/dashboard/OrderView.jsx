@@ -294,6 +294,12 @@ export default function OrderView({ data }) {
         <p>
           <span>Last Updated :</span> {cleanDataString(data.updated_at)}
         </p>
+        <p>
+          <span>Tracking Number :</span> {data.tracking_number}
+        </p>
+        <p>
+          <span>Return Tracking Number :</span> {data.return_tracking_number}
+        </p>
       </div>
       <h3>Current Status:</h3>
       <Stepper

@@ -9,6 +9,9 @@ import Alert from "@mui/material/Alert";
 
 function Account() {
   const dispatch = useDispatch();
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  console.log({ password: oldPassword, new_password: newPassword });
   const user = useSelector((state) => state.user);
   const [form, setForm] = useState({ ...user.profile });
   const [loading, setLoading] = useState({
@@ -16,6 +19,30 @@ function Account() {
     isDone: false,
     isError: false,
   });
+  let handlePasswordSubmit = async () => {
+    try {
+      let token = localStorage.getItem("jwt_token");
+      let response = await api.post(
+        "/change-password",
+        { password: oldPassword, new_password: newPassword },
+        {
+          headers: {
+            Authentication: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
+      if (!response.data["message"]) {
+        alert("Password Updated");
+        setOldPassword("");
+        setNewPassword("");
+      } else {
+        alert(response.data["message"]);
+      }
+    } catch (e) {
+      alert(e.response.statusText);
+    }
+  };
   let updateForm = (e) => {
     let { name, value } = e.target;
     setForm({
@@ -93,15 +120,14 @@ function Account() {
           <TextField
             type="text"
             name="company"
-            label="Company"
-            placeholder="Optional"
+            label="Company (optional)"
             onChange={updateForm}
             value={form.company}
           />
           <TextField
             type="text"
             name="street1"
-            label="streetOne"
+            label="Street 1"
             onChange={updateForm}
             value={form.street1}
             required
@@ -109,8 +135,7 @@ function Account() {
           <TextField
             type="text"
             name="street2"
-            label="streetTwo"
-            placeholder="Optional"
+            label="Street 2 (optional)"
             onChange={updateForm}
             value={form.street2}
           />
@@ -125,7 +150,7 @@ function Account() {
           <TextField
             type="text"
             name="state"
-            label="state"
+            label="State"
             onChange={updateForm}
             value={form.state}
             required
@@ -142,6 +167,7 @@ function Account() {
             required
           />
         </div>
+
         {loading.isLoading ? (
           <CircularProgress />
         ) : loading.isError ? (
@@ -159,6 +185,53 @@ function Account() {
             fontSize="inherit"
           />
         )}
+        <div
+          style={{
+            // border: "1px solid red",
+            display: "flex",
+            flexDirection: "column",
+            marginTop: "5vh",
+            alignItems: "center",
+          }}
+        >
+          <TextField
+            className="Register-input"
+            type="password"
+            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+            name="oldPassword"
+            label="Old Password"
+            placeholder="Old Password"
+            onChange={(e) => setOldPassword(e.target.value)}
+            value={oldPassword}
+            required
+            style={{
+              marginTop: "2vh",
+              width: "40vw",
+            }}
+          />
+          <TextField
+            className="Register-input"
+            type="password"
+            inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+            name="newPassword"
+            label="New Password"
+            placeholder="New Password"
+            onChange={(e) => setNewPassword(e.target.value)}
+            value={newPassword}
+            required
+            style={{
+              marginTop: "2vh",
+              width: "40vw",
+            }}
+          />
+          <button
+            className="Account-submit"
+            style={{ marginTop: "2vh", fontSize: "18px" }}
+            onClick={() => handlePasswordSubmit()}
+          >
+            Update Password
+          </button>
+        </div>
       </div>
     </div>
   );
