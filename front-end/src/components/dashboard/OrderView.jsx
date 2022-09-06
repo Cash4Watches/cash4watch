@@ -295,10 +295,20 @@ export default function OrderView({ data }) {
           <span>Last Updated :</span> {cleanDataString(data.updated_at)}
         </p>
         <p>
-          <span>Tracking Number :</span> {data.tracking_number}
+          <span>Tracking Number :</span>
+          <a
+            href={`https://www.fedex.com/fedextrack/?tracknumbers=${data.tracking_number}`}
+          >
+            {data.tracking_number}
+          </a>
         </p>
         <p>
-          <span>Return Tracking Number :</span> {data.return_tracking_number}
+          <span>Return Tracking Number :</span>{" "}
+          <a
+            href={`https://www.fedex.com/fedextrack/?tracknumbers=${data.return_tracking_number}`}
+          >
+            {data.return_tracking_number}
+          </a>
         </p>
       </div>
       <h3>Current Status:</h3>

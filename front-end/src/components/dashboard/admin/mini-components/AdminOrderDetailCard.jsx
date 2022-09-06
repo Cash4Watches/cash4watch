@@ -13,6 +13,7 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import api from "../../../../services/AxiosConfig.js";
 import { useNavigate } from "react-router-dom";
+import { set } from "date-fns";
 
 export default function AdminOrderDetailCard({ data, forceRefresh }) {
   let colorHash = new ColorHash();
@@ -22,11 +23,39 @@ export default function AdminOrderDetailCard({ data, forceRefresh }) {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState("Document");
   const [stepArray, setStepArry] = useState([]);
+  const [returnTrackingInput, setReturnTrackingInput] = useState("");
   const [loadingPhase, setLoadingPhase] = useState({
     isLoading: false,
     isDone: false,
     isError: false,
   });
+  let handleReturnTrackingchange = async () => {
+    try {
+      let token = localStorage.getItem("jwt_token");
+      // post /edit-return-tracking
+      // new_tracking_number
+      // order_id
+      // auth
+      let response = await api.post(
+        "/edit-return-tracking",
+        { new_tracking_number: returnTrackingInput, order_id: data.id },
+        {
+          headers: {
+            Authentication: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.data["message"]) {
+        setReturnTrackingInput(response.data.return_tracking_number);
+        console.log(response.data);
+      } else {
+        alert(response.data["message"]);
+      }
+    } catch (e) {
+      alert(e.response.statusText);
+    }
+  };
   let handleSubmitImage = async () => {
     let fileType = imageRef.current.name;
     let url = fileType === "Document" ? "/upload" : "/upload-image";
@@ -88,6 +117,7 @@ export default function AdminOrderDetailCard({ data, forceRefresh }) {
 
   useEffect(() => {
     //because there is no guarante the steps come out in a incrementing order so we sort by index
+    setReturnTrackingInput(data.return_tracking_number);
     if (data.steps.length > 0) {
       setStepArry(data.steps.sort((a, b) => a.index - b.index));
     }
@@ -268,6 +298,17 @@ export default function AdminOrderDetailCard({ data, forceRefresh }) {
           className="AdminOrderDetail-deleteOrder"
         >
           DELETE ORDER
+        </button>
+        <h4>Return Tracking Number:</h4>
+        <input
+          value={returnTrackingInput}
+          onChange={(e) => setReturnTrackingInput(e.target.value)}
+        ></input>
+        <button
+          style={{ marginTop: "2vh" }}
+          onClick={() => handleReturnTrackingchange()}
+        >
+          Update
         </button>
       </div>
       <Modal
