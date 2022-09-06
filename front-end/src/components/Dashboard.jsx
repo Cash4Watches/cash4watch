@@ -112,7 +112,11 @@ function Dashboard() {
             </div>
           </div>
 
-          <div ref={dashboardScreen} className="Dashboard-screen">
+          <div
+            ref={dashboardScreen}
+            className="Dashboard-screen"
+            style={{ marginTop: "5rem" }}
+          >
             {content}
           </div>
         </div>
